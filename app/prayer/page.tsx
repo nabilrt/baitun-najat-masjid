@@ -1,8 +1,25 @@
+import type { Metadata } from "next";
 import { listPrayerTimes } from "../../lib/db";
 import PrayerTimesGrid from "../components/PrayerTimesGrid";
 import { getLang, translations } from "../../lib/i18n";
 
 export const runtime = "nodejs";
+
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: { lang?: string };
+}): Promise<Metadata> {
+  const lang = getLang(searchParams?.lang);
+  const copy = translations[lang];
+  const title = `${copy.brand.name} | ${copy.nav.prayer}`;
+  const description = copy.prayer.subtitle;
+  return {
+    title,
+    description,
+    openGraph: { title, description }
+  };
+}
 
 export default async function PrayerDisplayPage({ searchParams }: { searchParams?: { lang?: string } }) {
   const lang = getLang(searchParams?.lang);

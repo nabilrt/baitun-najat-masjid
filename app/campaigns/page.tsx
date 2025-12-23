@@ -1,8 +1,25 @@
+import type { Metadata } from "next";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import { listActiveAnnouncements, listActiveCampaignsWithTotals } from "../../lib/db";
 import { getLang, translations, withLang } from "../../lib/i18n";
 
 export const runtime = "nodejs";
+
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: { lang?: string };
+}): Promise<Metadata> {
+  const lang = getLang(searchParams?.lang);
+  const copy = translations[lang];
+  const title = `${copy.brand.name} | ${copy.nav.campaigns}`;
+  const description = copy.campaigns.subtitle;
+  return {
+    title,
+    description,
+    openGraph: { title, description }
+  };
+}
 
 export default async function CampaignsPage({ searchParams }: { searchParams?: { lang?: string } }) {
   const lang = getLang(searchParams?.lang);

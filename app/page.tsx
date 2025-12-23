@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import MobileNav from "./components/MobileNav";
 import {
@@ -13,6 +14,22 @@ import { getLang, translations, withLang } from "../lib/i18n";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: { lang?: string };
+}): Promise<Metadata> {
+  const lang = getLang(searchParams?.lang);
+  const copy = translations[lang];
+  const title = `${copy.brand.name} | ${copy.nav.home}`;
+  const description = copy.hero.subtitle;
+  return {
+    title,
+    description,
+    openGraph: { title, description }
+  };
+}
 
 export default async function HomePage({ searchParams }: { searchParams?: { lang?: string } }) {
   noStore();

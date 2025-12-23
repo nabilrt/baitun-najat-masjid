@@ -1,7 +1,27 @@
+import type { Metadata } from "next";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import { Amiri } from "next/font/google";
 import { getLang, translations, withLang } from "../../lib/i18n";
 
 export const runtime = "nodejs";
+
+const arabicFont = Amiri({ subsets: ["arabic"], weight: ["400", "700"] });
+
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: { lang?: string };
+}): Promise<Metadata> {
+  const lang = getLang(searchParams?.lang);
+  const copy = translations[lang];
+  const title = `${copy.brand.name} | ${copy.guides.namazTitle}`;
+  const description = copy.namazGuide.subtitle;
+  return {
+    title,
+    description,
+    openGraph: { title, description }
+  };
+}
 
 export default function NamazGuidePage({ searchParams }: { searchParams?: { lang?: string } }) {
   const lang = getLang(searchParams?.lang);
@@ -64,6 +84,96 @@ export default function NamazGuidePage({ searchParams }: { searchParams?: { lang
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+
+        <div className="mt-8 rounded-3xl bg-white p-6 shadow-soft">
+          <h2 className="text-lg font-semibold text-moss-900">{copy.namazGuide.duasTitle}</h2>
+          <div className="mt-4 grid gap-4">
+            {copy.namazGuide.duasItems.map((dua) => (
+              <div key={dua.name} className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-4">
+                <div className="text-sm font-semibold text-moss-800">{dua.name}</div>
+                <div className={`${arabicFont.className} mt-3 text-2xl text-moss-900`} dir="rtl">
+                  {dua.arabic}
+                </div>
+                <div className="mt-4 grid gap-3 text-sm text-moss-700">
+                  {lang === "bn" ? (
+                    <>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.transliterationBnLabel}</div>
+                        <div className="mt-1">{dua.transliterationBn}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.meaningBnLabel}</div>
+                        <div className="mt-1 text-moss-600">{dua.translationBn}</div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.transliterationEnLabel}</div>
+                        <div className="mt-1">{dua.transliterationEn}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.meaningEnLabel}</div>
+                        <div className="mt-1 text-moss-600">{dua.translationEn}</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-8 rounded-3xl bg-white p-6 shadow-soft">
+          <h2 className="text-lg font-semibold text-moss-900">{copy.namazGuide.specialTitle}</h2>
+          <p className="mt-2 text-sm text-moss-600">{copy.namazGuide.specialSubtitle}</p>
+          <div className="mt-4 grid gap-4">
+            {copy.namazGuide.specialItems.map((dua) => (
+              <div key={dua.name} className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-4">
+                <div className="text-sm font-semibold text-moss-800">{dua.name}</div>
+                <div className={`${arabicFont.className} mt-3 text-2xl text-moss-900`} dir="rtl">
+                  {dua.arabic}
+                </div>
+                <div className="mt-4 grid gap-3 text-sm text-moss-700">
+                  {lang === "bn" ? (
+                    <>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.transliterationBnLabel}</div>
+                        <div className="mt-1">{dua.transliterationBn}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.meaningBnLabel}</div>
+                        <div className="mt-1 text-moss-600">{dua.translationBn}</div>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.transliterationEnLabel}</div>
+                        <div className="mt-1">{dua.transliterationEn}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs font-semibold uppercase text-moss-500">{copy.namazGuide.meaningEnLabel}</div>
+                        <div className="mt-1 text-moss-600">{dua.translationEn}</div>
+                      </div>
+                    </>
+                  )}
+                </div>
+                <div className="mt-4 rounded-2xl border border-gold-300/40 bg-white px-4 py-3 text-sm text-moss-700">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-gold-600">{copy.namazGuide.hadithLabel}</div>
+                  <div className="mt-2 space-y-3">
+                    {dua.hadiths.map((hadith) => (
+                      <div key={hadith.text}>
+                        <div className="text-moss-800">“{hadith.text}”</div>
+                        <div className="mt-1 text-xs text-moss-500">{hadith.ref}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

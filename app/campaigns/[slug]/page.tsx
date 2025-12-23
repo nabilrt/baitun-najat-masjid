@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import LanguageSwitcher from "../../components/LanguageSwitcher";
 import ShareLink from "../../components/ShareLink";
 import { notFound } from "next/navigation";
@@ -6,6 +7,31 @@ import CampaignDonationForm from "../../components/CampaignDonationForm";
 import { getLang, translations, withLang } from "../../../lib/i18n";
 
 export const runtime = "nodejs";
+
+export async function generateMetadata({
+  params,
+  searchParams
+}: {
+  params: { slug: string };
+  searchParams?: { lang?: string };
+}): Promise<Metadata> {
+  const lang = getLang(searchParams?.lang);
+  const copy = translations[lang];
+  const campaign = await getCampaignBySlugWithTotals(params.slug);
+  if (!campaign) {
+    return {
+      title: `${copy.brand.name} | ${copy.nav.campaigns}`,
+      description: copy.campaigns.subtitle
+    };
+  }
+  const title = `${copy.brand.name} | ${campaign.title}`;
+  const description = campaign.description;
+  return {
+    title,
+    description,
+    openGraph: { title, description }
+  };
+}
 
 export default async function CampaignDetailPage({
   params,

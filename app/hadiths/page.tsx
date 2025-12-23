@@ -1,7 +1,24 @@
+import type { Metadata } from "next";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import { getLang, translations, withLang } from "../../lib/i18n";
 
 export const runtime = "nodejs";
+
+export async function generateMetadata({
+  searchParams
+}: {
+  searchParams?: { lang?: string };
+}): Promise<Metadata> {
+  const lang = getLang(searchParams?.lang);
+  const copy = translations[lang];
+  const title = `${copy.brand.name} | ${copy.guides.hadithTitle}`;
+  const description = copy.hadithLibrary.subtitle;
+  return {
+    title,
+    description,
+    openGraph: { title, description }
+  };
+}
 
 export default function HadithLibraryPage({ searchParams }: { searchParams?: { lang?: string } }) {
   const lang = getLang(searchParams?.lang);

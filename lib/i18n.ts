@@ -114,6 +114,31 @@ type Copy = {
     rakahItems: { name: string; detail: string }[];
     rulesTitle: string;
     rules: string[];
+    duasTitle: string;
+    transliterationEnLabel: string;
+    transliterationBnLabel: string;
+    meaningEnLabel: string;
+    meaningBnLabel: string;
+    hadithLabel: string;
+    specialTitle: string;
+    specialSubtitle: string;
+    duasItems: {
+      name: string;
+      arabic: string;
+      transliterationEn: string;
+      translationEn: string;
+      transliterationBn: string;
+      translationBn: string;
+    }[];
+    specialItems: {
+      name: string;
+      arabic: string;
+      transliterationEn: string;
+      translationEn: string;
+      transliterationBn: string;
+      translationBn: string;
+      hadiths: { text: string; ref: string }[];
+    }[];
   };
   hadithLibrary: {
     title: string;
@@ -453,6 +478,147 @@ export const translations: Record<Lang, Copy> = {
         "Face the Qiblah and make intention (niyyah).",
         "Maintain khushu (focus), avoid unnecessary movements or speech.",
         "Complete all pillars (standing, ruku, sujud, and tashahhud)."
+      ],
+      duasTitle: "Essential Duas & Recitations",
+      transliterationEnLabel: "Transliteration (English)",
+      transliterationBnLabel: "উচ্চারণ (বাংলা)",
+      meaningEnLabel: "Meaning (English)",
+      meaningBnLabel: "অর্থ (বাংলা)",
+      hadithLabel: "Authentic Hadith",
+      specialTitle: "Post-Prayer Adhkar",
+      specialSubtitle: "Highlighted recitations with authentic hadith references.",
+      duasItems: [
+        {
+          name: "Opening (Thana)",
+          arabic:
+            "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَٰهَ غَيْرُكَ",
+          transliterationEn:
+            "Subhanaka Allahumma wa bihamdika, wa tabarakasmuka, wa ta'ala jadduka, wa la ilaha ghayruk.",
+          translationEn:
+            "Glory is to You, O Allah, and praise. Blessed is Your name, exalted is Your majesty, and none has the right to be worshiped but You.",
+          transliterationBn: "সুবহানাকা আল্লাহুম্মা ওয়া বিহামদিকা, ওয়া তাবারাকাসমুকা, ওয়া তা‘আলা জাদ্দুকা, ওয়া লা ইলাহা গাইরুকা।",
+          translationBn: "হে আল্লাহ! তুমি পবিত্র, তোমারই প্রশংসা। তোমার নাম বরকতময়, তোমার মর্যাদা উচ্চ, এবং তুমি ছাড়া কোন ইলাহ নেই।"
+        },
+        {
+          name: "Ruku",
+          arabic: "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
+          transliterationEn: "Subhana Rabbiyal Azim.",
+          translationEn: "Glory is to my Lord, the Most Great.",
+          transliterationBn: "সুবহানা রব্বিয়াল আযীম।",
+          translationBn: "আমার মহান রব পবিত্র।"
+        },
+        {
+          name: "Sujud",
+          arabic: "سُبْحَانَ رَبِّيَ الْأَعْلَى",
+          transliterationEn: "Subhana Rabbiyal A'la.",
+          translationEn: "Glory is to my Lord, the Most High.",
+          transliterationBn: "সুবহানা রব্বিয়াল আ‘লা।",
+          translationBn: "আমার সর্বোচ্চ রব পবিত্র।"
+        },
+        {
+          name: "Tashahhud",
+          arabic:
+            "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+          transliterationEn:
+            "At-tahiyyatu lillahi was-salawatu wat-tayyibat. As-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuh. As-salamu 'alayna wa 'ala 'ibadillahis-salihin. Ashhadu an la ilaha illallah, wa ashhadu anna Muhammadan 'abduhu wa rasuluh.",
+          translationEn:
+            "All greetings, prayers, and good deeds are for Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and messenger.",
+          transliterationBn:
+            "আত্তাহিয়্যাতু লিল্লাহি ওয়াসসালাওয়াতু ওয়াত্তয়্যিবাত। আসসালামু আলাইকা আইয়্যুহান্নাবিয়্যু ওয়া রহমাতুল্লাহি ওয়া বারাকাতুহ। আসসালামু আলাইনা ওয়া আলা ইবাদিল্লাহিস সালিহিন। আশহাদু আল্লাহা ইল্লাল্লাহ, ওয়া আশহাদু আন্না মুহাম্মাদান আবদুহু ওয়া রাসুলুহ।",
+          translationBn:
+            "সব সম্মান, নামাজ ও পবিত্র কথা আল্লাহর জন্য। হে নবী! আপনার উপর শান্তি বর্ষিত হোক এবং আল্লাহর রহমত ও বরকত। আমাদের উপর এবং আল্লাহর সৎ বান্দাদের উপর শান্তি বর্ষিত হোক। আমি সাক্ষ্য দিচ্ছি যে আল্লাহ ছাড়া আর কোনো ইলাহ নেই এবং মুহাম্মদ তাঁর বান্দা ও রাসূল।"
+        },
+        {
+          name: "Durood Ibrahim",
+          arabic:
+            "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ",
+          transliterationEn:
+            "Allahumma salli 'ala Muhammad wa 'ala ali Muhammad, kama sallayta 'ala Ibrahim wa 'ala ali Ibrahim, innaka Hamidun Majid. Allahumma barik 'ala Muhammad wa 'ala ali Muhammad, kama barakta 'ala Ibrahim wa 'ala ali Ibrahim, innaka Hamidun Majid.",
+          translationEn:
+            "O Allah, send prayers upon Muhammad and the family of Muhammad as You sent prayers upon إبراهيم and the family of إبراهيم. You are Praiseworthy and Glorious. O Allah, bless Muhammad and the family of Muhammad as You blessed إبراهيم and the family of إبراهيم. You are Praiseworthy and Glorious.",
+          transliterationBn:
+            "আল্লাহুম্মা সাল্লি আলা মুহাম্মাদ ওয়া আলা আলি মুহাম্মাদ, কামা সাল্লাইতা আলা ইব্রাহিম ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মজিদ। আল্লাহুম্মা বারিক আলা মুহাম্মাদ ওয়া আলা আলি মুহাম্মাদ, কামা বারাকতা আলা ইব্রাহিম ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মজিদ।",
+          translationBn:
+            "হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারকে দরুদ পাঠ করুন যেমন আপনি ইব্রাহিম ও তাঁর পরিবারকে দরুদ পাঠ করেছেন। আপনি প্রশংসিত ও মহিমান্বিত। হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারকে বরকত দিন যেমন আপনি ইব্রাহিম ও তাঁর পরিবারকে বরকত দিয়েছেন।"
+        },
+        {
+          name: "Qunoot (Witr)",
+          arabic:
+            "اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ، وَنُؤْمِنُ بِكَ وَنَتَوَكَّلُ عَلَيْكَ، وَنُثْنِي عَلَيْكَ الْخَيْرَ، وَنَشْكُرُكَ وَلَا نَكْفُرُكَ، وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ. اللَّهُمَّ إِيَّاكَ نَعْبُدُ، وَلَكَ نُصَلِّي وَنَسْجُدُ، وَإِلَيْكَ نَسْعَى وَنَحْفِدُ، وَنَرْجُو رَحْمَتَكَ، وَنَخْشَى عَذَابَكَ، إِنَّ عَذَابَكَ الْجِدَّ بِالْكُفَّارِ مُلْحِقٌ",
+          transliterationEn:
+            "Allahumma inna nasta'inuka wa nastaghfiruk, wa nu'minu bika wa natawakkalu 'alayk, wa nuthni 'alaykal khayr, wa nashkuruka wa la nakfuruk, wa nakhla'u wa natruku man yafjuruk. Allahumma iyyaka na'budu, wa laka nusalli wa nasjudu, wa ilayka nas'a wa nahfidu, wa narju rahmataka, wa nakhsha 'adhabaka, inna 'adhabaka al-jidda bil-kuffari mulhiq.",
+          translationEn:
+            "O Allah, we seek Your help and Your forgiveness. We believe in You and rely on You. We praise You with all goodness, we thank You and do not deny You. We disassociate from and abandon whoever disobeys You. O Allah, You alone we worship; to You we pray and prostrate, towards You we strive and hasten. We hope for Your mercy and fear Your punishment. Indeed, Your severe punishment will overtake the disbelievers.",
+          transliterationBn:
+            "আল্লাহুম্মা ইন্না নাস্তা‘ইনুকা ওয়া নাস্তাগফিরুকা, ওয়া নু’মিনু বিকা ওয়া নাতাওয়াক্কালু ‘আলাইক, ওয়া নুছনি ‘আলাইকাল খাইর, ওয়া নাশকুরুকা ওয়া লা নাকফুরুকা, ওয়া নাখলাউ ওয়া নাতরুকু মান ইয়াফজুরুকা। আল্লাহুম্মা ইইয়াকা না‘বুদু, ওয়া লাকা নুসাল্লি ওয়া নাসজুদু, ওয়া ইলাইকা নাস‘আ ওয়া নাহফিদু, ওয়া নারজু রাহমাতাকা, ওয়া নাখশা আযাবাকা, ইন্না আযাবাকা আল-জিদ্দা বিল-কুফফারি মুলহিক।",
+          translationBn:
+            "হে আল্লাহ! আমরা আপনার সাহায্য চাই এবং আপনার ক্ষমা প্রার্থনা করি। আমরা আপনার ওপর ঈমান রাখি ও আপনার ওপর ভরসা করি। আমরা আপনার প্রশংসা করি উত্তম কথায়, আপনার শোকর করি এবং অকৃতজ্ঞ হই না। আমরা তাদের থেকে বিচ্ছিন্ন হই ও ত্যাগ করি যারা আপনার অবাধ্য হয়। হে আল্লাহ! আমরা কেবল আপনারই ইবাদত করি, আপনারই জন্য নামাজ পড়ি ও সিজদা করি। আপনার দিকেই আমরা ছুটে যাই ও সেবায় দ্রুত অগ্রসর হই। আমরা আপনার রহমত আশা করি এবং আপনার শাস্তিকে ভয় করি। নিশ্চয়ই আপনার কঠিন শাস্তি কাফেরদের ওপর পতিত হবে।"
+        },
+        {
+          name: "Rabbana (Between Two Sujud)",
+          arabic: "رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَاهْدِنِي وَعَافِنِي وَارْزُقْنِي",
+          transliterationEn: "Rabbighfir li warhamni wahdini wa 'afini warzuqni.",
+          translationEn: "My Lord, forgive me, have mercy on me, guide me, grant me well-being, and provide for me.",
+          transliterationBn: "রব্বিগফির লি ওয়ারহামনি ওয়াহদিনি ওয়া ‘আফিনি ওয়ারযুকনি।",
+          translationBn: "হে আমার রব! আমাকে ক্ষমা করুন, দয়া করুন, হেদায়েত দিন, সুস্থতা দিন এবং রিজিক দিন।"
+        },
+        {
+          name: "Masura Dua",
+          arabic:
+            "رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
+          transliterationEn:
+            "Rabbana zalamna anfusana wa in lam taghfir lana wa tarhamna lanakunanna minal khasirin.",
+          translationEn:
+            "Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy on us, we will surely be among the losers.",
+          transliterationBn:
+            "রব্বানা জালামনা আনফুসানা ওয়া ইন লাম তাগফির লানা ওয়া তারহামনা লানাকুনান্না মিনাল খাসিরিন।",
+          translationBn:
+            "হে আমাদের রব! আমরা নিজেদের উপর জুলুম করেছি। আপনি যদি আমাদের ক্ষমা না করেন ও দয়া না করেন তবে আমরা অবশ্যই ক্ষতিগ্রস্তদের অন্তর্ভুক্ত হব।"
+        },
+      ],
+      specialItems: [
+        {
+          name: "Ayatul Kursi",
+          arabic:
+            "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+          transliterationEn:
+            "Allahu la ilaha illa Huwa al-Hayyul Qayyum. La ta'khudhuhu sinatun wa la nawm. Lahu ma fis-samawati wa ma fil-ard. Man dhal-ladhi yashfa'u 'indahu illa bi-idhnih. Ya'lamu ma bayna aydihim wa ma khalfahum. Wa la yuhituna bishay'in min 'ilmihi illa bima sha'. Wasi'a kursiyyuhus-samawati wal-ard. Wa la ya'uduhu hifzuhuma. Wa Huwal 'Aliyyul 'Azim.",
+          translationEn:
+            "Allah—there is no deity except Him, the Ever-Living, the Sustainer. Neither drowsiness nor sleep overtakes Him. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is before them and what is behind them, and they encompass not a thing of His knowledge except for what He wills. His Kursi extends over the heavens and the earth, and their preservation does not tire Him. And He is the Most High, the Most Great.",
+          transliterationBn:
+            "আল্লাহু লা ইলাহা ইল্লা হুয়াল হাইয়্যুল কাইয়্যুম। লা তা’খুজুহু সিনাতুন ওয়া লা নাওম। লাহু মা ফিস্-সামাওয়াতি ওয়া মা ফিল-আরদ। মান্‌যাল্লাজি ইয়াশফা‘উ ‘ইনদাহু ইল্লা বিইযনিহ। ইয়ালামু মা বাইনা আইদিহিম ওয়া মা খালফাহুম। ওয়া লা ইয়ুহিতুনা বিশাই’ইম মিন ‘ইলমিহি ইল্লা বিমা শা’আ। ওয়াসি‘আ কুরসিয়্যুহুস্-সামাওয়াতি ওয়াল-আরদ। ওয়া লা ইয়াউদুহু হিফজুহুমা। ওয়া হুয়াল ‘আলিয়্যুল ‘আজিম।",
+          translationBn:
+            "আল্লাহ—তিনি ছাড়া কোনো ইলাহ নেই; তিনি চিরঞ্জীব, সর্বপ্রতিষ্ঠিত। তাঁকে তন্দ্রা বা নিদ্রা স্পর্শ করে না। আসমানসমূহ ও জমিনে যা কিছু আছে সবই তাঁর। তাঁর অনুমতি ছাড়া কে তাঁর কাছে সুপারিশ করবে? তিনি জানেন তাদের সামনে ও পেছনে যা আছে। তাঁর জ্ঞানের কিছুই তারা আয়ত্ত করতে পারে না—যতটুকু তিনি চান। তাঁর কুরসী আসমানসমূহ ও জমিনকে পরিব্যাপ্ত করে আছে, আর এদের হেফাজত তাঁকে ক্লান্ত করে না। আর তিনি সর্বোচ্চ, মহান।",
+          hadiths: [
+            {
+              text: "Whoever recites Ayat al-Kursi at night will have a protector from Allah and no devil will approach him until morning.",
+              ref: "Sahih al-Bukhari 2311"
+            },
+            {
+              text: "Whoever recites Ayat al-Kursi after every obligatory prayer, nothing prevents him from entering Paradise except death.",
+              ref: "Sunan an-Nasa'i 992"
+            }
+          ]
+        },
+        {
+          name: "Sayyidul Istighfar",
+          arabic:
+            "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+          transliterationEn:
+            "Allahumma anta Rabbi la ilaha illa Anta, khalaqtani wa ana 'abduka, wa ana 'ala 'ahdika wa wa'dika mastata'tu. A'udhu bika min sharri ma sana'tu, abu'u laka bini'matika 'alayya, wa abu'u bi dhanbi faghfir li, fa innahu la yaghfirudh-dhunuba illa Anta.",
+          translationEn:
+            "O Allah, You are my Lord. None has the right to be worshiped except You. You created me and I am Your servant, and I abide by Your covenant and promise as best I can. I seek refuge in You from the evil I have done. I acknowledge Your favor upon me and I acknowledge my sin, so forgive me, for none forgives sins except You.",
+          transliterationBn:
+            "আল্লাহুম্মা আনতা রব্বি লা ইলাহা ইল্লা আনতা, খালাকতানি ওয়া আনা ‘আবদুকা, ওয়া আনা ‘আলা ‘আহদিকা ওয়া ওয়া‘দিকা মস্তাতা‘তু। আ‘উযু বিকা মিন শার্রি মা সান‘তু, আবু’উ লাকা বিনি‘মাতিকা ‘আলাইয়া, ওয়া আবু’উ বিযাম্বি ফাগফির লি, ফা ইন্নাহু লা ইয়াগফিরুধ্-ধুনুবা ইল্লা আনতা।",
+          translationBn:
+            "হে আল্লাহ! আপনি আমার রব; আপনি ছাড়া কোনো ইলাহ নেই। আপনি আমাকে সৃষ্টি করেছেন এবং আমি আপনার বান্দা। আমি যতটুকু পারি আপনার অঙ্গীকার ও প্রতিশ্রুতির উপর আছি। আমি আমার কৃতকর্মের অনিষ্ট থেকে আপনার আশ্রয় চাই। আমি আপনার দয়া স্বীকার করছি এবং আমার গুনাহ স্বীকার করছি; অতএব আমাকে ক্ষমা করুন। আপনি ছাড়া কেউ গুনাহ ক্ষমা করতে পারে না।",
+          hadiths: [
+            {
+              text: "Whoever says this in the morning with firm belief and dies before evening will enter Paradise; and whoever says it in the evening with firm belief and dies before morning will enter Paradise.",
+              ref: "Sahih al-Bukhari 6306"
+            }
+          ]
+        }
       ]
     },
     hadithLibrary: {
@@ -469,6 +635,18 @@ export const translations: Record<Lang, Copy> = {
             {
               text: "The closest that a servant comes to his Lord is when he is prostrating.",
               ref: "Sahih Muslim 482"
+            },
+            {
+              text: "Straighten your rows, for straightening the rows is part of establishing the prayer.",
+              ref: "Sahih al-Bukhari 722"
+            },
+            {
+              text: "Between a man and shirk and kufr is the abandonment of prayer.",
+              ref: "Sahih Muslim 82"
+            },
+            {
+              text: "If people knew the reward of the call to prayer and the first row, they would draw lots for it.",
+              ref: "Sahih al-Bukhari 615"
             }
           ]
         },
@@ -476,21 +654,30 @@ export const translations: Record<Lang, Copy> = {
           title: "Charity",
           items: [
             { text: "Charity does not decrease wealth.", ref: "Sahih Muslim 2588" },
-            { text: "The believer’s shade on the Day of Resurrection will be his charity.", ref: "Jami` at-Tirmidhi 604" }
+            { text: "The believer’s shade on the Day of Resurrection will be his charity.", ref: "Jami` at-Tirmidhi 604" },
+            { text: "Protect yourselves from the Fire, even with half a date.", ref: "Sahih al-Bukhari 1417" },
+            { text: "Every good deed is charity.", ref: "Sahih al-Bukhari 6021" },
+            { text: "Charity extinguishes sin as water extinguishes fire.", ref: "Jami` at-Tirmidhi 614" }
           ]
         },
         {
           title: "Knowledge",
           items: [
             { text: "Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise.", ref: "Sahih Muslim 2699" },
-            { text: "The best among you are those who learn the Qur'an and teach it.", ref: "Sahih al-Bukhari 5027" }
+            { text: "The best among you are those who learn the Qur'an and teach it.", ref: "Sahih al-Bukhari 5027" },
+            { text: "Seeking knowledge is an obligation upon every Muslim.", ref: "Sunan Ibn Majah 224" },
+            { text: "The scholars are the heirs of the prophets.", ref: "Sunan Abu Dawud 3641" },
+            { text: "The angels lower their wings for the seeker of knowledge.", ref: "Jami` at-Tirmidhi 2682" }
           ]
         },
         {
           title: "Character",
           items: [
             { text: "The heaviest thing on the believer’s scale is good character.", ref: "Jami` at-Tirmidhi 2003" },
-            { text: "None of you truly believes until he loves for his brother what he loves for himself.", ref: "Sahih al-Bukhari 13" }
+            { text: "None of you truly believes until he loves for his brother what he loves for himself.", ref: "Sahih al-Bukhari 13" },
+            { text: "The most beloved to me and nearest to me on the Day of Resurrection are those of you who have the best character.", ref: "Jami` at-Tirmidhi 2018" },
+            { text: "The best of you are those who are best in character.", ref: "Sahih al-Bukhari 6029" },
+            { text: "The strong is not the one who overcomes people by his strength, but the one who controls himself while in anger.", ref: "Sahih al-Bukhari 6114" }
           ]
         }
       ]
@@ -827,6 +1014,147 @@ export const translations: Record<Lang, Copy> = {
         "কিবলার দিকে মুখ করে নিয়ত করুন।",
         "খুশু বজায় রাখুন, অপ্রয়োজনীয় কাজ এড়িয়ে চলুন।",
         "রুকু, সিজদা ও তাশাহহুদসহ সব ফরজ ঠিকভাবে করুন।"
+      ],
+      duasTitle: "প্রয়োজনীয় দোয়া ও তিলাওয়াত",
+      transliterationEnLabel: "উচ্চারণ (English)",
+      transliterationBnLabel: "উচ্চারণ (বাংলা)",
+      meaningEnLabel: "অর্থ (English)",
+      meaningBnLabel: "অর্থ (বাংলা)",
+      hadithLabel: "সহিহ হাদিস",
+      specialTitle: "নামাজ-পরবর্তী আমল",
+      specialSubtitle: "সহিহ হাদিসের আলোকে গুরুত্বপূর্ণ তিলাওয়াত।",
+      duasItems: [
+        {
+          name: "সানা",
+          arabic:
+            "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَٰهَ غَيْرُكَ",
+          transliterationEn:
+            "Subhanaka Allahumma wa bihamdika, wa tabarakasmuka, wa ta'ala jadduka, wa la ilaha ghayruk.",
+          translationEn:
+            "Glory is to You, O Allah, and praise. Blessed is Your name, exalted is Your majesty, and none has the right to be worshiped but You.",
+          transliterationBn: "সুবহানাকা আল্লাহুম্মা ওয়া বিহামদিকা, ওয়া তাবারাকাসমুকা, ওয়া তা‘আলা জাদ্দুকা, ওয়া লা ইলাহা গাইরুকা।",
+          translationBn: "হে আল্লাহ! তুমি পবিত্র, তোমারই প্রশংসা। তোমার নাম বরকতময়, তোমার মর্যাদা উচ্চ, এবং তুমি ছাড়া কোন ইলাহ নেই।"
+        },
+        {
+          name: "রুকু",
+          arabic: "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
+          transliterationEn: "Subhana Rabbiyal Azim.",
+          translationEn: "Glory is to my Lord, the Most Great.",
+          transliterationBn: "সুবহানা রব্বিয়াল আযীম।",
+          translationBn: "আমার মহান রব পবিত্র।"
+        },
+        {
+          name: "সিজদা",
+          arabic: "سُبْحَانَ رَبِّيَ الْأَعْلَى",
+          transliterationEn: "Subhana Rabbiyal A'la.",
+          translationEn: "Glory is to my Lord, the Most High.",
+          transliterationBn: "সুবহানা রব্বিয়াল আ‘লা।",
+          translationBn: "আমার সর্বোচ্চ রব পবিত্র।"
+        },
+        {
+          name: "তাশাহহুদ",
+          arabic:
+            "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+          transliterationEn:
+            "At-tahiyyatu lillahi was-salawatu wat-tayyibat. As-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuh. As-salamu 'alayna wa 'ala 'ibadillahis-salihin. Ashhadu an la ilaha illallah, wa ashhadu anna Muhammadan 'abduhu wa rasuluh.",
+          translationEn:
+            "All greetings, prayers, and good deeds are for Allah. Peace be upon you, O Prophet, and the mercy of Allah and His blessings. Peace be upon us and upon the righteous servants of Allah. I bear witness that there is no god but Allah, and I bear witness that Muhammad is His servant and messenger.",
+          transliterationBn:
+            "আত্তাহিয়্যাতু লিল্লাহি ওয়াসসালাওয়াতু ওয়াত্তয়্যিবাত। আসসালামু আলাইকা আইয়্যুহান্নাবিয়্যু ওয়া রহমাতুল্লাহি ওয়া বারাকাতুহ। আসসালামু আলাইনা ওয়া আলা ইবাদিল্লাহিস সালিহিন। আশহাদু আল্লাহা ইল্লাল্লাহ, ওয়া আশহাদু আন্না মুহাম্মাদান আবদুহু ওয়া রাসুলুহ।",
+          translationBn:
+            "সব সম্মান, নামাজ ও পবিত্র কথা আল্লাহর জন্য। হে নবী! আপনার উপর শান্তি বর্ষিত হোক এবং আল্লাহর রহমত ও বরকত। আমাদের উপর এবং আল্লাহর সৎ বান্দাদের উপর শান্তি বর্ষিত হোক। আমি সাক্ষ্য দিচ্ছি যে আল্লাহ ছাড়া আর কোনো ইলাহ নেই এবং মুহাম্মদ তাঁর বান্দা ও রাসূল।"
+        },
+        {
+          name: "দরুদ ইব্রাহিম",
+          arabic:
+            "اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ",
+          transliterationEn:
+            "Allahumma salli 'ala Muhammad wa 'ala ali Muhammad, kama sallayta 'ala Ibrahim wa 'ala ali Ibrahim, innaka Hamidun Majid. Allahumma barik 'ala Muhammad wa 'ala ali Muhammad, kama barakta 'ala Ibrahim wa 'ala ali Ibrahim, innaka Hamidun Majid.",
+          translationEn:
+            "O Allah, send prayers upon Muhammad and the family of Muhammad as You sent prayers upon Ibrahim and the family of Ibrahim. You are Praiseworthy and Glorious. O Allah, bless Muhammad and the family of Muhammad as You blessed Ibrahim and the family of Ibrahim.",
+          transliterationBn:
+            "আল্লাহুম্মা সাল্লি আলা মুহাম্মাদ ওয়া আলা আলি মুহাম্মাদ, কামা সাল্লাইতা আলা ইব্রাহিম ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মজিদ। আল্লাহুম্মা বারিক আলা মুহাম্মাদ ওয়া আলা আলি মুহাম্মাদ, কামা বারাকতা আলা ইব্রাহিম ওয়া আলা আলি ইব্রাহিম, ইন্নাকা হামিদুম মজিদ।",
+          translationBn:
+            "হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারকে দরুদ পাঠ করুন যেমন আপনি ইব্রাহিম ও তাঁর পরিবারকে দরুদ পাঠ করেছেন। আপনি প্রশংসিত ও মহিমান্বিত। হে আল্লাহ! মুহাম্মদ ও তাঁর পরিবারকে বরকত দিন যেমন আপনি ইব্রাহিম ও তাঁর পরিবারকে বরকত দিয়েছেন।"
+        },
+        {
+          name: "কুনুত (বিতর)",
+          arabic:
+            "اللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ، وَنُؤْمِنُ بِكَ وَنَتَوَكَّلُ عَلَيْكَ، وَنُثْنِي عَلَيْكَ الْخَيْرَ، وَنَشْكُرُكَ وَلَا نَكْفُرُكَ، وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ. اللَّهُمَّ إِيَّاكَ نَعْبُدُ، وَلَكَ نُصَلِّي وَنَسْجُدُ، وَإِلَيْكَ نَسْعَى وَنَحْفِدُ, وَنَرْجُو رَحْمَتَكَ، وَنَخْشَى عَذَابَكَ، إِنَّ عَذَابَكَ الْجِدَّ بِالْكُفَّارِ مُلْحِقٌ",
+          transliterationEn:
+            "Allahumma inna nasta'inuka wa nastaghfiruk, wa nu'minu bika wa natawakkalu 'alayk, wa nuthni 'alaykal khayr, wa nashkuruka wa la nakfuruk, wa nakhla'u wa natruku man yafjuruk. Allahumma iyyaka na'budu, wa laka nusalli wa nasjudu, wa ilayka nas'a wa nahfidu, wa narju rahmataka, wa nakhsha 'adhabaka, inna 'adhabaka al-jidda bil-kuffari mulhiq.",
+          translationEn:
+            "O Allah, we seek Your help and Your forgiveness. We believe in You and rely on You. We praise You with all goodness, we thank You and do not deny You. We disassociate from and abandon whoever disobeys You. O Allah, You alone we worship; to You we pray and prostrate, towards You we strive and hasten. We hope for Your mercy and fear Your punishment. Indeed, Your severe punishment will overtake the disbelievers.",
+          transliterationBn:
+            "আল্লাহুম্মা ইন্না নাস্তা‘ইনুকা ওয়া নাস্তাগফিরুকা, ওয়া নু’মিনু বিকা ওয়া নাতাওয়াক্কালু ‘আলাইক, ওয়া নুছনি ‘আলাইকাল খাইর, ওয়া নাশকুরুকা ওয়া লা নাকফুরুকা, ওয়া নাখলাউ ওয়া নাতরুকু মান ইয়াফজুরুকা। আল্লাহুম্মা ইইয়াকা না‘বুদু, ওয়া লাকা নুসাল্লি ওয়া নাসজুদু, ওয়া ইলাইকা নাস‘আ ওয়া নাহফিদু, ওয়া নারজু রাহমাতাকা, ওয়া নাখশা আযাবাকা, ইন্না আযাবাকা আল-জিদ্দা বিল-কুফফারি মুলহিক।",
+          translationBn:
+            "হে আল্লাহ! আমরা আপনার সাহায্য চাই এবং আপনার ক্ষমা প্রার্থনা করি। আমরা আপনার ওপর ঈমান রাখি ও আপনার ওপর ভরসা করি। আমরা আপনার প্রশংসা করি উত্তম কথায়, আপনার শোকর করি এবং অকৃতজ্ঞ হই না। আমরা তাদের থেকে বিচ্ছিন্ন হই ও ত্যাগ করি যারা আপনার অবাধ্য হয়। হে আল্লাহ! আমরা কেবল আপনারই ইবাদত করি, আপনারই জন্য নামাজ পড়ি ও সিজদা করি। আপনার দিকেই আমরা ছুটে যাই ও সেবায় দ্রুত অগ্রসর হই। আমরা আপনার রহমত আশা করি এবং আপনার শাস্তিকে ভয় করি। নিশ্চয়ই আপনার কঠিন শাস্তি কাফেরদের ওপর পতিত হবে।"
+        },
+        {
+          name: "রব্বানা (দুই সিজদার মাঝে)",
+          arabic: "رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَاهْدِنِي وَعَافِنِي وَارْزُقْنِي",
+          transliterationEn: "Rabbighfir li warhamni wahdini wa 'afini warzuqni.",
+          translationEn: "My Lord, forgive me, have mercy on me, guide me, grant me well-being, and provide for me.",
+          transliterationBn: "রব্বিগফির লি ওয়ারহামনি ওয়াহদিনি ওয়া ‘আফিনি ওয়ারযুকনি।",
+          translationBn: "হে আমার রব! আমাকে ক্ষমা করুন, দয়া করুন, হেদায়েত দিন, সুস্থতা দিন এবং রিজিক দিন।"
+        },
+        {
+          name: "দোয়া মাসূরা",
+          arabic:
+            "رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
+          transliterationEn:
+            "Rabbana zalamna anfusana wa in lam taghfir lana wa tarhamna lanakunanna minal khasirin.",
+          translationEn:
+            "Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy on us, we will surely be among the losers.",
+          transliterationBn:
+            "রব্বানা জালামনা আনফুসানা ওয়া ইন লাম তাগফির লানা ওয়া তারহামনা লানাকুনান্না মিনাল খাসিরিন।",
+          translationBn:
+            "হে আমাদের রব! আমরা নিজেদের উপর জুলুম করেছি। আপনি যদি আমাদের ক্ষমা না করেন ও দয়া না করেন তবে আমরা অবশ্যই ক্ষতিগ্রস্তদের অন্তর্ভুক্ত হব।"
+        },
+      ],
+      specialItems: [
+        {
+          name: "আয়াতুল কুরসি",
+          arabic:
+            "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+          transliterationEn:
+            "Allahu la ilaha illa Huwa al-Hayyul Qayyum. La ta'khudhuhu sinatun wa la nawm. Lahu ma fis-samawati wa ma fil-ard. Man dhal-ladhi yashfa'u 'indahu illa bi-idhnih. Ya'lamu ma bayna aydihim wa ma khalfahum. Wa la yuhituna bishay'in min 'ilmihi illa bima sha'. Wasi'a kursiyyuhus-samawati wal-ard. Wa la ya'uduhu hifzuhuma. Wa Huwal 'Aliyyul 'Azim.",
+          translationEn:
+            "Allah—there is no deity except Him, the Ever-Living, the Sustainer. Neither drowsiness nor sleep overtakes Him. To Him belongs whatever is in the heavens and whatever is on the earth. Who is it that can intercede with Him except by His permission? He knows what is before them and what is behind them, and they encompass not a thing of His knowledge except for what He wills. His Kursi extends over the heavens and the earth, and their preservation does not tire Him. And He is the Most High, the Most Great.",
+          transliterationBn:
+            "আল্লাহু লা ইলাহা ইল্লা হুয়াল হাইয়্যুল কাইয়্যুম। লা তা’খুজুহু সিনাতুন ওয়া লা নাওম। লাহু মা ফিস্-সামাওয়াতি ওয়া মা ফিল-আরদ। মান্‌যাল্লাজি ইয়াশফা‘উ ‘ইনদাহু ইল্লা বিইযনিহ। ইয়ালামু মা বাইনা আইদিহিম ওয়া মা খালফাহুম। ওয়া লা ইয়ুহিতুনা বিশাই’ইম মিন ‘ইলমিহি ইল্লা বিমা শা’আ। ওয়াসি‘আ কুরসিয়্যুহস্-সামাওয়াতি ওয়াল-আরদ। ওয়া লা ইয়াউদুহু হিফজুহুমা। ওয়া হুয়াল ‘আলিয়্যুল ‘আজিম।",
+          translationBn:
+            "আল্লাহ—তিনি ছাড়া কোনো ইলাহ নেই; তিনি চিরঞ্জীব, সর্বপ্রতিষ্ঠিত। তাঁকে তন্দ্রা বা নিদ্রা স্পর্শ করে না। আসমানসমূহ ও জমিনে যা কিছু আছে সবই তাঁর। তাঁর অনুমতি ছাড়া কে তাঁর কাছে সুপারিশ করবে? তিনি জানেন তাদের সামনে ও পেছনে যা আছে। তাঁর জ্ঞানের কিছুই তারা আয়ত্ত করতে পারে না—যতটুকু তিনি চান। তাঁর কুরসী আসমানসমূহ ও জমিনকে পরিব্যাপ্ত করে আছে, আর এদের হেফাজত তাঁকে ক্লান্ত করে না। আর তিনি সর্বোচ্চ, মহান।",
+          hadiths: [
+            {
+              text: "রাতে আয়াতুল কুরসি পড়লে আল্লাহর পক্ষ থেকে রক্ষাকারী থাকে এবং সকাল পর্যন্ত শয়তান কাছে আসে না।",
+              ref: "সহিহ আল-বুখারি ২৩১১"
+            },
+            {
+              text: "প্রত্যেক ফরজ নামাজের পর আয়াতুল কুরসি পড়লে মৃত্যু ছাড়া জান্নাতে প্রবেশে আর কিছু বাধা থাকে না।",
+              ref: "সুনান আন-নাসাঈ ৯৯২"
+            }
+          ]
+        },
+        {
+          name: "সাইয়্যিদুল ইস্তেগফার",
+          arabic:
+            "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+          transliterationEn:
+            "Allahumma anta Rabbi la ilaha illa Anta, khalaqtani wa ana 'abduka, wa ana 'ala 'ahdika wa wa'dika mastata'tu. A'udhu bika min sharri ma sana'tu, abu'u laka bini'matika 'alayya, wa abu'u bi dhanbi faghfir li, fa innahu la yaghfirudh-dhunuba illa Anta.",
+          translationEn:
+            "O Allah, You are my Lord. None has the right to be worshiped except You. You created me and I am Your servant, and I abide by Your covenant and promise as best I can. I seek refuge in You from the evil I have done. I acknowledge Your favor upon me and I acknowledge my sin, so forgive me, for none forgives sins except You.",
+          transliterationBn:
+            "আল্লাহুম্মা আনতা রব্বি লা ইলাহা ইল্লা আনতা, খালাকতানি ওয়া আনা ‘আবদুকা, ওয়া আনা ‘আলা ‘আহদিকা ওয়া ওয়া‘দিকা মস্তাতা‘তু। আ‘উযু বিকা মিন শার্রি মা সান‘তু, আবু’উ লাকা বিনি‘মাতিকা ‘আলাইয়া, ওয়া আবু’উ বিযাম্বি ফাগফির লি, ফা ইন্নাহু লা ইয়াগফিরুধ্-ধুনুবা ইল্লা আনতা।",
+          translationBn:
+            "হে আল্লাহ! আপনি আমার রব; আপনি ছাড়া কোনো ইলাহ নেই। আপনি আমাকে সৃষ্টি করেছেন এবং আমি আপনার বান্দা। আমি যতটুকু পারি আপনার অঙ্গীকার ও প্রতিশ্রুতির উপর আছি। আমি আমার কৃতকর্মের অনিষ্ট থেকে আপনার আশ্রয় চাই। আমি আপনার দয়া স্বীকার করছি এবং আমার গুনাহ স্বীকার করছি; অতএব আমাকে ক্ষমা করুন। আপনি ছাড়া কেউ গুনাহ ক্ষমা করতে পারে না।",
+          hadiths: [
+            {
+              text: "যে ব্যক্তি এটি সকালে দৃঢ় বিশ্বাস নিয়ে বলে এবং সন্ধ্যার আগে মারা যায়, সে জান্নাতে প্রবেশ করবে; আর যে ব্যক্তি সন্ধ্যায় বলে এবং সকাল হওয়ার আগে মারা যায়, সে জান্নাতে প্রবেশ করবে।",
+              ref: "সহিহ আল-বুখারি ৬৩০৬"
+            }
+          ]
+        }
       ]
     },
     hadithLibrary: {
@@ -843,6 +1171,18 @@ export const translations: Record<Lang, Copy> = {
             {
               text: "বান্দা তার রবের সবচেয়ে নিকট থাকে সিজদার অবস্থায়।",
               ref: "সহিহ মুসলিম ৪৮২"
+            },
+            {
+              text: "কাতার সোজা করো, কেননা কাতার সোজা করা নামাজ প্রতিষ্ঠার অংশ।",
+              ref: "সহিহ আল-বুখারি ৭২২"
+            },
+            {
+              text: "নামাজ ত্যাগ করাই শিরক ও কুফরের সাথে পার্থক্য।",
+              ref: "সহিহ মুসলিম ৮২"
+            },
+            {
+              text: "যদি মানুষ আজান ও প্রথম কাতারের ফজিলত জানত, তবে তারা এর জন্য লটারিও করত।",
+              ref: "সহিহ আল-বুখারি ৬১৫"
             }
           ]
         },
@@ -850,21 +1190,30 @@ export const translations: Record<Lang, Copy> = {
           title: "দান",
           items: [
             { text: "সদকা সম্পদ কমায় না।", ref: "সহিহ মুসলিম ২৫৮৮" },
-            { text: "কিয়ামতের দিনে মুমিনের ছায়া হবে তার সদকা।", ref: "জামি` আত-তিরমিজি ৬০৪" }
+            { text: "কিয়ামতের দিনে মুমিনের ছায়া হবে তার সদকা।", ref: "জামি` আত-তিরমিজি ৬০৪" },
+            { text: "অর্ধেক খেজুর হলেও সদকা দিয়ে আগুন থেকে বাঁচার চেষ্টা করো।", ref: "সহিহ আল-বুখারি ১৪১৭" },
+            { text: "প্রতিটি ভালো কাজই সদকা।", ref: "সহিহ আল-বুখারি ৬০২১" },
+            { text: "সদকা পানি যেমন আগুন নিভিয়ে দেয় তেমনি গুনাহ মুছে দেয়।", ref: "জামি` আত-তিরমিজি ৬১৪" }
           ]
         },
         {
           title: "জ্ঞান",
           items: [
             { text: "যে ব্যক্তি জ্ঞান অর্জনের পথে চলে, আল্লাহ তার জন্য জান্নাতের পথ সহজ করে দেন।", ref: "সহিহ মুসলিম ২৬৯৯" },
-            { text: "তোমাদের মধ্যে উত্তম সে, যে কুরআন শেখে ও শেখায়।", ref: "সহিহ আল-বুখারি ৫০২৭" }
+            { text: "তোমাদের মধ্যে উত্তম সে, যে কুরআন শেখে ও শেখায়।", ref: "সহিহ আল-বুখারি ৫০২৭" },
+            { text: "জ্ঞান অর্জন করা প্রত্যেক মুসলিমের উপর ফরজ।", ref: "সুনান ইবনে মাজাহ ২২৪" },
+            { text: "আলেমরা নবীদের উত্তরাধিকারী।", ref: "সুনান আবু দাউদ ৩৬৪১" },
+            { text: "জ্ঞান অন্বেষণকারীর জন্য ফেরেশতারা তাদের পাখা বিছিয়ে দেন।", ref: "জামি` আত-তিরমিজি ২৬৮২" }
           ]
         },
         {
           title: "আখলাক",
           items: [
             { text: "মুমিনের আমলনামায় সবচেয়ে ভারী হবে উত্তম চরিত্র।", ref: "জামি` আত-তিরমিজি ২০০৩" },
-            { text: "তোমাদের কেউ ঈমানদার হবে না যতক্ষণ না সে নিজের জন্য যা ভালবাসে, তার ভাইয়ের জন্যও তা ভালবাসে।", ref: "সহিহ আল-বুখারি ১৩" }
+            { text: "তোমাদের কেউ ঈমানদার হবে না যতক্ষণ না সে নিজের জন্য যা ভালবাসে, তার ভাইয়ের জন্যও তা ভালবাসে।", ref: "সহিহ আল-বুখারি ১৩" },
+            { text: "আমার নিকট এবং কিয়ামতের দিনে আমার সবচেয়ে নিকট হবে তোমাদের মধ্যে সর্বোত্তম চরিত্রের অধিকারীরা।", ref: "জামি` আত-তিরমিজি ২০১৮" },
+            { text: "তোমাদের মধ্যে উত্তম সে, যার চরিত্র সবচেয়ে উত্তম।", ref: "সহিহ আল-বুখারি ৬০২৯" },
+            { text: "শক্তিশালী সে নয়, যে মানুষকে পরাজিত করতে পারে; বরং শক্তিশালী সে, যে রাগের সময় নিজেকে নিয়ন্ত্রণ করে।", ref: "সহিহ আল-বুখারি ৬১১৪" }
           ]
         }
       ]
