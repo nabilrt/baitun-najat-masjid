@@ -1,0 +1,22 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
+  "/admin/campaigns/[id]/qr/route": "app/admin/campaigns/[id]/qr/route.js",
+  "/admin/page": "app/admin/page.js",
+  "/campaigns/share/[token]/page": "app/campaigns/share/[token]/page.js",
+  "/admin/campaigns/[id]/poster/page": "app/admin/campaigns/[id]/poster/page.js",
+  "/display/prayer/[token]/page": "app/display/prayer/[token]/page.js",
+  "/health/page": "app/health/page.js",
+  "/campaigns/page": "app/campaigns/page.js",
+  "/campaigns/[slug]/page": "app/campaigns/[slug]/page.js",
+  "/prayer/page": "app/prayer/page.js",
+  "/page": "app/page.js",
+  "/admin/(dashboard)/displays/prayer/qr/route": "app/admin/(dashboard)/displays/prayer/qr/route.js",
+  "/admin/(dashboard)/campaigns/page": "app/admin/(dashboard)/campaigns/page.js",
+  "/admin/(dashboard)/announcements/page": "app/admin/(dashboard)/announcements/page.js",
+  "/admin/(dashboard)/displays/page": "app/admin/(dashboard)/displays/page.js",
+  "/admin/(dashboard)/hadiths/page": "app/admin/(dashboard)/hadiths/page.js",
+  "/admin/(dashboard)/donations/page": "app/admin/(dashboard)/donations/page.js",
+  "/admin/(dashboard)/prayer/page": "app/admin/(dashboard)/prayer/page.js",
+  "/admin/(dashboard)/displays/prayer/poster/page": "app/admin/(dashboard)/displays/prayer/poster/page.js"
+}
