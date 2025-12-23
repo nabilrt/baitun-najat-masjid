@@ -380,6 +380,11 @@ export async function confirmDonation(id: number) {
   await exec("UPDATE donations SET confirmed = 1, confirmed_at = ? WHERE id = ?", [now, id]);
 }
 
+export async function deleteDonation(id: number) {
+  await initDb();
+  await exec("DELETE FROM donations WHERE id = ?", [id]);
+}
+
 export async function listActiveCampaigns(): Promise<Campaign[]> {
   await initDb();
   const res = await exec("SELECT * FROM campaigns WHERE is_active = 1 ORDER BY created_at DESC");

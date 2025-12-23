@@ -17,6 +17,8 @@ type Copy = {
     iqamah: string;
     timeLeft: string;
     next: string;
+    friday: string;
+    fridayOnly: string;
   };
 };
 
@@ -31,9 +33,13 @@ function parseTimeToMinutes(value: string) {
   return hour * 60 + minute;
 }
 
-function getNowMinutes(timeZone: string) {
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone }));
-  return now.getHours() * 60 + now.getMinutes();
+function getNowInTimeZone(timeZone: string) {
+  return new Date(new Date().toLocaleString("en-US", { timeZone }));
+}
+
+function isJumuahName(value: string, valueBn?: string | null) {
+  const combined = `${value} ${valueBn ?? ""}`;
+  return /jumu|jummah|jumu'ah|jumua/i.test(combined) || /জুম/.test(combined);
 }
 
 export default function PrayerTimesGrid({
@@ -53,6 +59,7 @@ export default function PrayerTimesGrid({
     [times]
   );
   const [nextId, setNextId] = useState<number | null>(null);
+  const [isFriday, setIsFriday] = useState(false);
 
   useEffect(() => {
     const computeNext = () => {
@@ -61,10 +68,17 @@ export default function PrayerTimesGrid({
         return;
       }
 
-      const nowMinutes = getNowMinutes(timeZone);
+      const now = getNowInTimeZone(timeZone);
+      const nowMinutes = now.getHours() * 60 + now.getMinutes();
+      const friday = now.getDay() === 5;
+      setIsFriday(friday);
       let nextEntry: { id: number; minutes: number; diff: number } | null = null;
 
       for (const entry of entries) {
+        const time = times.find((item) => item.id === entry.id);
+        if (time && isJumuahName(time.name, time.name_bn) && !friday) {
+          continue;
+        }
         const minutes = entry.minutes as number;
         const diff = minutes - nowMinutes;
         if (diff >= 0 && (!nextEntry || diff < nextEntry.diff)) {
@@ -73,25 +87,33 @@ export default function PrayerTimesGrid({
       }
 
       if (!nextEntry) {
-        const earliest = entries.reduce((current, entry) => {
-          if (current.minutes === null) return entry;
-          return (entry.minutes as number) < (current.minutes as number) ? entry : current;
-        }, entries[0]);
-        nextEntry = { id: earliest.id, minutes: earliest.minutes as number, diff: 0 };
+        const nextEntries = entries.filter((entry) => {
+          const time = times.find((item) => item.id === entry.id);
+          if (!time) return false;
+          return !isJumuahName(time.name, time.name_bn) || friday;
+        });
+        if (nextEntries.length) {
+          const earliest = nextEntries.reduce((current, entry) => {
+            if (current.minutes === null) return entry;
+            return (entry.minutes as number) < (current.minutes as number) ? entry : current;
+          }, nextEntries[0]);
+          nextEntry = { id: earliest.id, minutes: earliest.minutes as number, diff: 0 };
+        }
       }
 
-      setNextId(nextEntry.id);
+      setNextId(nextEntry ? nextEntry.id : null);
     };
 
     computeNext();
     const interval = window.setInterval(computeNext, 30000);
     return () => window.clearInterval(interval);
-  }, [entries, timeZone]);
+  }, [entries, timeZone, times]);
 
   return (
     <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {times.map((time) => {
         const isNext = time.id === nextId;
+        const isJumuah = isJumuahName(time.name, time.name_bn);
         return (
           <div
             key={time.id}
@@ -111,6 +133,11 @@ export default function PrayerTimesGrid({
                     {copy.prayerDisplay.next}
                   </div>
                 ) : null}
+                {isJumuah ? (
+                  <div className="rounded-full border border-gold-300/60 px-3 py-1 text-xs font-semibold text-gold-200">
+                    {isFriday ? copy.prayerDisplay.friday : copy.prayerDisplay.fridayOnly}
+                  </div>
+                ) : null}
               </div>
             </div>
             <div className="mt-5 flex items-center justify-between rounded-2xl bg-[#10281e] px-4 py-3">
@@ -124,7 +151,11 @@ export default function PrayerTimesGrid({
                 <div className="mt-1 text-lg font-semibold text-[#f5f7f2]">{time.prayer_time}</div>
               </div>
             </div>
-            <IqamahCountdown timeLabel={copy.prayerDisplay.timeLeft} timeValue={time.prayer_time} />
+            <IqamahCountdown
+              timeLabel={copy.prayerDisplay.timeLeft}
+              timeValue={time.prayer_time}
+              weekday={isJumuah ? 5 : undefined}
+            />
           </div>
         );
       })}

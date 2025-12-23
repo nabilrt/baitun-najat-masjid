@@ -1,6 +1,7 @@
-import { listActiveCampaigns, listPendingDonations } from "../../../../lib/db";
+import { listActiveCampaigns, listConfirmedDonations, listPendingDonations } from "../../../../lib/db";
 import { addAdminDonationAction, confirmDonationAction } from "../../../../lib/actions";
 import { getLang, translations } from "../../../../lib/i18n";
+import DeleteDonationButton from "../../../components/DeleteDonationButton";
 
 export const runtime = "nodejs";
 
@@ -8,6 +9,7 @@ export default async function AdminDonationsPage({ searchParams }: { searchParam
   const lang = getLang(searchParams?.lang);
   const copy = translations[lang];
   const pendingDonations = await listPendingDonations();
+  const confirmedDonations = await listConfirmedDonations();
   const campaigns = await listActiveCampaigns();
 
   return (
@@ -47,12 +49,13 @@ export default async function AdminDonationsPage({ searchParams }: { searchParam
                 <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.bkash}</th>
                 <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.trx}</th>
                 <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.confirm}</th>
+                <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.delete}</th>
               </tr>
             </thead>
             <tbody>
               {pendingDonations.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="py-4 text-moss-500">{copy.admin.donations.table.empty}</td>
+                  <td colSpan={6} className="py-4 text-moss-500">{copy.admin.donations.table.empty}</td>
                 </tr>
               )}
               {pendingDonations.map((donation) => (
@@ -67,8 +70,63 @@ export default async function AdminDonationsPage({ searchParams }: { searchParam
                     <button className="rounded-full bg-gold-400 px-4 py-2 text-xs font-semibold text-[#1a1a1a]" type="submit">{copy.admin.donations.confirm}</button>
                   </form>
                 </td>
+                <td className="py-3">
+                  <DeleteDonationButton
+                    id={donation.id}
+                    label={copy.admin.donations.delete}
+                    confirmTitle={copy.admin.donations.deleteTitle}
+                    confirmMessage={copy.admin.donations.deleteMessage}
+                    cancelLabel={copy.admin.donations.deleteCancel}
+                    confirmLabel={copy.admin.donations.deleteConfirm}
+                  />
+                </td>
               </tr>
             ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="rounded-3xl bg-white p-5 shadow-soft sm:p-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-moss-900">{copy.admin.donations.confirmedTitle}</h2>
+          <span className="text-xs text-moss-500">{copy.admin.donations.confirmedHint}</span>
+        </div>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[560px] text-sm">
+            <thead className="text-moss-600">
+              <tr>
+                <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.name}</th>
+                <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.amount}</th>
+                <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.bkash}</th>
+                <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.trx}</th>
+                <th className="pb-3 text-left font-semibold">{copy.admin.donations.table.delete}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {confirmedDonations.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="py-4 text-moss-500">{copy.admin.donations.table.empty}</td>
+                </tr>
+              )}
+              {confirmedDonations.map((donation) => (
+                <tr key={donation.id} className="border-t border-moss-100">
+                  <td className="py-3 font-medium text-moss-800">{donation.name}</td>
+                  <td className="py-3 text-moss-700">BDT {donation.amount}</td>
+                  <td className="py-3 text-moss-700">{donation.bkash_number}</td>
+                  <td className="py-3 text-moss-700">{donation.transaction_id}</td>
+                  <td className="py-3">
+                    <DeleteDonationButton
+                      id={donation.id}
+                      label={copy.admin.donations.delete}
+                      confirmTitle={copy.admin.donations.deleteTitle}
+                      confirmMessage={copy.admin.donations.deleteMessage}
+                      cancelLabel={copy.admin.donations.deleteCancel}
+                      confirmLabel={copy.admin.donations.deleteConfirm}
+                    />
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

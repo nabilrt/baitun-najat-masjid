@@ -87,6 +87,8 @@ type Copy = {
     iqamah: string;
     timeLeft: string;
     next: string;
+    friday: string;
+    fridayOnly: string;
   };
   poster: {
     kicker: string;
@@ -141,6 +143,8 @@ type Copy = {
       addHint: string;
       pendingTitle: string;
       pendingHint: string;
+      confirmedTitle: string;
+      confirmedHint: string;
       fields: {
         name: string;
         amount: string;
@@ -156,9 +160,15 @@ type Copy = {
         bkash: string;
         trx: string;
         confirm: string;
+        delete: string;
         empty: string;
       };
       confirm: string;
+      delete: string;
+      deleteTitle: string;
+      deleteMessage: string;
+      deleteCancel: string;
+      deleteConfirm: string;
     };
     campaigns: {
       title: string;
@@ -358,7 +368,9 @@ export const translations: Record<Lang, Copy> = {
       adhan: "Adhan",
       iqamah: "Iqamah",
       timeLeft: "Time left",
-      next: "Next"
+      next: "Next",
+      friday: "Friday",
+      fridayOnly: "Friday only"
     },
     poster: {
       kicker: "Donation Campaign",
@@ -424,6 +436,8 @@ export const translations: Record<Lang, Copy> = {
         addHint: "Creates a confirmed entry",
         pendingTitle: "Pending Donations",
         pendingHint: "Confirm when received",
+        confirmedTitle: "Approved Donations",
+        confirmedHint: "Visible on the public site",
         fields: {
           name: "Donor name",
           amount: "Amount (BDT)",
@@ -439,9 +453,15 @@ export const translations: Record<Lang, Copy> = {
           bkash: "bKash",
           trx: "Transaction",
           confirm: "Confirm",
+          delete: "Delete",
           empty: "No pending donations."
         },
-        confirm: "Confirm"
+        confirm: "Confirm",
+        delete: "Delete",
+        deleteTitle: "Delete donation?",
+        deleteMessage: "This will remove the donation permanently.",
+        deleteCancel: "Cancel",
+        deleteConfirm: "Delete"
       },
       campaigns: {
         title: "Donation Campaigns",
@@ -629,7 +649,9 @@ export const translations: Record<Lang, Copy> = {
       adhan: "আজান",
       iqamah: "ইকামত",
       timeLeft: "বাকি সময়",
-      next: "পরবর্তী"
+      next: "পরবর্তী",
+      friday: "শুক্রবার",
+      fridayOnly: "শুধু শুক্রবার"
     },
     poster: {
       kicker: "দান ক্যাম্পেইন",
@@ -694,6 +716,8 @@ export const translations: Record<Lang, Copy> = {
         addHint: "নিশ্চিত দান হিসেবে যোগ হবে",
         pendingTitle: "অপেক্ষমান দান",
         pendingHint: "প্রাপ্ত হলে নিশ্চিত করুন",
+        confirmedTitle: "অনুমোদিত দান",
+        confirmedHint: "সবার জন্য প্রদর্শিত হয়",
         fields: {
           name: "দাতার নাম",
           amount: "পরিমাণ (BDT)",
@@ -709,9 +733,15 @@ export const translations: Record<Lang, Copy> = {
           bkash: "বিকাশ",
           trx: "ট্রানজাকশন",
           confirm: "নিশ্চিত",
+          delete: "মুছুন",
           empty: "কোনো অপেক্ষমান দান নেই।"
         },
-        confirm: "নিশ্চিত"
+        confirm: "নিশ্চিত",
+        delete: "মুছুন",
+        deleteTitle: "দান মুছবেন?",
+        deleteMessage: "এটি স্থায়ীভাবে মুছে যাবে।",
+        deleteCancel: "বাতিল",
+        deleteConfirm: "মুছুন"
       },
       campaigns: {
         title: "দান ক্যাম্পেইন",

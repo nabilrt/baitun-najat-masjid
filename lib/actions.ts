@@ -11,6 +11,7 @@ import {
   archiveAnnouncement,
   archiveCampaign,
   confirmDonation,
+  deleteDonation,
   deleteAnnouncement,
   deleteHadith,
   restoreCampaign,
@@ -71,6 +72,8 @@ export async function updatePrayerTimeAction(formData: FormData) {
   revalidatePath("/admin/prayer");
   revalidatePath("/admin");
   revalidatePath("/");
+  revalidatePath("/prayer", "page");
+  revalidatePath("/display/prayer/[token]", "page");
   const langParam = lang === "bn" ? "lang=bn&" : "";
   redirect(`/admin/prayer?${langParam}saved=1`);
 }
@@ -98,6 +101,17 @@ export async function confirmDonationAction(formData: FormData) {
   const id = toNumber(formData.get("id"));
   if (!id) return;
   await confirmDonation(id);
+  revalidatePath("/admin/donations");
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/campaigns");
+  revalidatePath("/campaigns/[slug]", "page");
+}
+
+export async function deleteDonationAction(formData: FormData) {
+  const id = toNumber(formData.get("id"));
+  if (!id) return;
+  await deleteDonation(id);
   revalidatePath("/admin/donations");
   revalidatePath("/admin");
   revalidatePath("/");

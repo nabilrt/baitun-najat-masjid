@@ -6,6 +6,7 @@ type Props = {
   timeLabel: string;
   timeValue: string;
   timeZone?: string;
+  weekday?: number;
 };
 
 function parseTime(value: string) {
@@ -23,7 +24,7 @@ function getNowInTimeZone(timeZone: string) {
   return new Date(new Date().toLocaleString("en-US", { timeZone }));
 }
 
-export default function IqamahCountdown({ timeLabel, timeValue, timeZone = "Asia/Dhaka" }: Props) {
+export default function IqamahCountdown({ timeLabel, timeValue, timeZone = "Asia/Dhaka", weekday }: Props) {
   const parsed = useMemo(() => parseTime(timeValue), [timeValue]);
   const [display, setDisplay] = useState("--");
 
@@ -37,18 +38,30 @@ export default function IqamahCountdown({ timeLabel, timeValue, timeZone = "Asia
       const now = getNowInTimeZone(timeZone);
       const target = new Date(now);
       target.setHours(parsed.hour, parsed.minute, 0, 0);
-      if (target.getTime() < now.getTime()) {
+
+      if (typeof weekday === "number") {
+        const day = now.getDay();
+        let daysUntil = (weekday - day + 7) % 7;
+        if (daysUntil === 0 && target.getTime() <= now.getTime()) {
+          daysUntil = 7;
+        }
+        target.setDate(target.getDate() + daysUntil);
+      } else if (target.getTime() < now.getTime()) {
         target.setDate(target.getDate() + 1);
       }
+
       const diffMs = target.getTime() - now.getTime();
       const totalMinutes = Math.max(0, Math.floor(diffMs / 60000));
-      const hours = Math.floor(totalMinutes / 60);
+      const days = Math.floor(totalMinutes / 1440);
+      const hours = Math.floor((totalMinutes % 1440) / 60);
       const minutes = totalMinutes % 60;
       if (totalMinutes === 0) {
         setDisplay("Now");
         return;
       }
-      if (hours > 0) {
+      if (days > 0) {
+        setDisplay(`${days}d ${hours}h ${minutes}m`);
+      } else if (hours > 0) {
         setDisplay(`${hours}h ${minutes}m`);
       } else {
         setDisplay(`${minutes}m`);
@@ -58,7 +71,7 @@ export default function IqamahCountdown({ timeLabel, timeValue, timeZone = "Asia
     update();
     const interval = window.setInterval(update, 30000);
     return () => window.clearInterval(interval);
-  }, [parsed, timeZone]);
+  }, [parsed, timeZone, weekday]);
 
   return (
     <div className="mt-4 flex items-center justify-between rounded-2xl border border-[#1e3c2e] bg-[#112c21] px-4 py-2 text-xs text-[#c7d8c9]">

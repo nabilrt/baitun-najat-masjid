@@ -1,6 +1,7 @@
 import { listHadiths } from "../../../../lib/db";
-import { addHadithAction, deleteHadithAction } from "../../../../lib/actions";
+import { deleteHadithAction } from "../../../../lib/actions";
 import { getLang, translations } from "../../../../lib/i18n";
+import HadithForm from "../../../components/HadithForm";
 
 export const runtime = "nodejs";
 
@@ -12,11 +13,7 @@ export default async function AdminHadithsPage({ searchParams }: { searchParams?
   return (
     <div className="rounded-3xl bg-white p-5 shadow-soft sm:p-6">
       <h2 className="text-lg font-semibold text-moss-900">{copy.admin.hadiths.title}</h2>
-      <form className="mt-4 grid gap-3 sm:grid-cols-[1fr_220px_auto]" action={addHadithAction}>
-        <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="text" placeholder={copy.admin.hadiths.fields.text} required />
-        <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="source" placeholder={copy.admin.hadiths.fields.source} required />
-        <button className="rounded-full bg-moss-600 px-6 py-3 text-sm font-semibold text-white" type="submit">{copy.admin.hadiths.add}</button>
-      </form>
+      <HadithForm copy={copy} />
       <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[520px] text-sm">
           <thead className="text-moss-600">

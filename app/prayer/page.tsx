@@ -8,6 +8,13 @@ export default async function PrayerDisplayPage({ searchParams }: { searchParams
   const lang = getLang(searchParams?.lang);
   const copy = translations[lang];
   const prayerTimes = await listPrayerTimes();
+  const prayerTimesPlain = prayerTimes.map((time) => ({
+    id: time.id,
+    name: time.name,
+    name_bn: time.name_bn ?? null,
+    azan_time: time.azan_time,
+    prayer_time: time.prayer_time
+  }));
 
   return (
     <main className="min-h-screen bg-[#0f211a] text-[#f5f7f2]">
@@ -33,7 +40,7 @@ export default async function PrayerDisplayPage({ searchParams }: { searchParams
           </div>
         </header>
 
-        <PrayerTimesGrid times={prayerTimes} copy={copy} />
+        <PrayerTimesGrid times={prayerTimesPlain} copy={copy} />
 
       </div>
     </main>

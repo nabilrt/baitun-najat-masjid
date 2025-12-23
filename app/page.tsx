@@ -7,7 +7,7 @@ import {
   listHadiths,
   listPrayerTimes
 } from "../lib/db";
-import { submitDonationAction } from "../lib/actions";
+import DonationForm from "./components/DonationForm";
 import { getLang, translations, withLang } from "../lib/i18n";
 
 export const runtime = "nodejs";
@@ -147,20 +147,7 @@ export default async function HomePage({ searchParams }: { searchParams?: { lang
           <div className="rounded-3xl bg-white p-6 shadow-soft">
             <div className="inline-flex items-center gap-2 rounded-full bg-moss-100 px-4 py-2 text-sm font-semibold text-moss-700">bKash: {bkashNumber}</div>
             <h3 className="mt-4 text-lg font-semibold text-moss-900">{copy.donate.formTitle}</h3>
-            <form className="mt-4 grid gap-3" action={submitDonationAction}>
-              <select className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="campaignId">
-                <option value="">{copy.donate.fields.campaign}</option>
-                {campaigns.map((campaign) => (
-                  <option key={campaign.id} value={campaign.id}>{campaign.title}</option>
-                ))}
-              </select>
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="name" placeholder={copy.donate.fields.name} required />
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="amount" type="number" min="1" placeholder={copy.donate.fields.amount} required />
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="bkashNumber" placeholder={copy.donate.fields.bkash} required />
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="transactionId" placeholder={copy.donate.fields.trx} required />
-              <textarea className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="note" placeholder={copy.donate.fields.note} rows={3} />
-              <button className="mt-2 rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-[#1a1a1a] shadow-soft" type="submit">{copy.donate.fields.submit}</button>
-            </form>
+            <DonationForm campaigns={campaigns} copy={copy} />
           </div>
           <div className="rounded-3xl bg-white p-6 shadow-soft">
             <h3 className="text-lg font-semibold text-moss-900">{copy.donate.confirmedTitle}</h3>
