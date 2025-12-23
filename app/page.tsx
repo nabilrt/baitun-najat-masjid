@@ -11,6 +11,7 @@ import DonationForm from "./components/DonationForm";
 import { getLang, translations, withLang } from "../lib/i18n";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export default async function HomePage({ searchParams }: { searchParams?: { lang?: string } }) {
   const lang = getLang(searchParams?.lang);
