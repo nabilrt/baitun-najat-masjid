@@ -1,6 +1,7 @@
 import { listAllCampaignsWithTotals } from "../../../../lib/db";
-import { addCampaignAction, archiveCampaignAction, restoreCampaignAction } from "../../../../lib/actions";
+import { archiveCampaignAction, restoreCampaignAction } from "../../../../lib/actions";
 import { getLang, translations } from "../../../../lib/i18n";
+import CampaignForm from "../../../components/CampaignForm";
 
 export const runtime = "nodejs";
 
@@ -12,12 +13,7 @@ export default async function AdminCampaignsPage({ searchParams }: { searchParam
   return (
     <div className="rounded-3xl bg-white p-5 shadow-soft sm:p-6">
       <h2 className="text-lg font-semibold text-moss-900">{copy.admin.campaigns.title}</h2>
-      <form className="mt-4 grid gap-3 lg:grid-cols-[1fr_260px_auto]" action={addCampaignAction}>
-        <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="title" placeholder={copy.admin.campaigns.fields.title} required />
-        <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="goalAmount" type="number" min="1" placeholder={copy.admin.campaigns.fields.goal} />
-        <button className="rounded-full bg-moss-600 px-6 py-3 text-sm font-semibold text-white" type="submit">{copy.admin.campaigns.create}</button>
-        <textarea className="lg:col-span-3 w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="description" placeholder={copy.admin.campaigns.fields.description} rows={3} required />
-      </form>
+      <CampaignForm copy={copy} />
       <div className="mt-6 overflow-x-auto">
         <table className="w-full min-w-[980px] text-sm">
           <thead className="text-moss-600">

@@ -8,12 +8,14 @@ import {
   listPrayerTimes
 } from "../lib/db";
 import DonationForm from "./components/DonationForm";
+import { unstable_noStore as noStore } from "next/cache";
 import { getLang, translations, withLang } from "../lib/i18n";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage({ searchParams }: { searchParams?: { lang?: string } }) {
+  noStore();
   const lang = getLang(searchParams?.lang);
   const copy = translations[lang];
   const prayerTimes = await listPrayerTimes();
@@ -38,6 +40,7 @@ export default async function HomePage({ searchParams }: { searchParams?: { lang
             <a href={withLang("/prayer", lang)} className="hover:text-moss-900">{copy.nav.prayer}</a>
             <a href={withLang("/#donate", lang)} className="hover:text-moss-900">{copy.nav.donate}</a>
             <a href={withLang("/campaigns", lang)} className="hover:text-moss-900">{copy.nav.campaigns}</a>
+            <a href={withLang("/#guides", lang)} className="hover:text-moss-900">{copy.nav.guides}</a>
             <a href={withLang("/#hadith", lang)} className="hover:text-moss-900">{copy.nav.hadith}</a>
             <a href={withLang("/admin", lang)} className="rounded-full bg-gold-400 px-4 py-2 text-sm font-semibold text-[#1a1a1a] shadow-soft">{copy.nav.admin}</a>
             <LanguageSwitcher
@@ -54,6 +57,7 @@ export default async function HomePage({ searchParams }: { searchParams?: { lang
               prayer: copy.nav.prayer,
               donate: copy.nav.donate,
               campaigns: copy.nav.campaigns,
+              guides: copy.nav.guides,
               hadith: copy.nav.hadith,
               admin: copy.nav.admin,
               language: copy.language.label,
@@ -222,6 +226,72 @@ export default async function HomePage({ searchParams }: { searchParams?: { lang
           {campaigns.length === 0 && (
             <div className="rounded-3xl bg-white p-6 shadow-soft text-sm text-moss-500">{copy.campaigns.noActive}</div>
           )}
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto w-full px-4 sm:px-6" id="guides">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="font-display text-3xl text-moss-900">{copy.guides.title}</h2>
+            <p className="max-w-2xl text-moss-700">{copy.guides.subtitle}</p>
+          </div>
+        </div>
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          <div className="rounded-3xl bg-white p-6 shadow-soft">
+            <h3 className="text-lg font-semibold text-moss-900">{copy.guides.namazTitle}</h3>
+            <p className="mt-2 text-sm text-moss-600">{copy.guides.namazSubtitle}</p>
+            <a
+              href={withLang("/namaz", lang)}
+              className="mt-4 inline-flex items-center rounded-full border border-moss-200 px-5 py-2 text-sm font-semibold text-moss-700 hover:bg-moss-50"
+            >
+              {copy.guides.namazCta}
+            </a>
+          </div>
+          <div className="rounded-3xl bg-white p-6 shadow-soft">
+            <h3 className="text-lg font-semibold text-moss-900">{copy.guides.hadithTitle}</h3>
+            <p className="mt-2 text-sm text-moss-600">{copy.guides.hadithSubtitle}</p>
+            <a
+              href={withLang("/hadiths", lang)}
+              className="mt-4 inline-flex items-center rounded-full border border-moss-200 px-5 py-2 text-sm font-semibold text-moss-700 hover:bg-moss-50"
+            >
+              {copy.guides.hadithCta}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-7xl mx-auto w-full px-4 sm:px-6" id="learning">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-3xl bg-white p-6 shadow-soft">
+            <h2 className="text-lg font-semibold text-moss-900">{copy.teacher.title}</h2>
+            <p className="mt-2 text-sm text-moss-600">{copy.teacher.subtitle}</p>
+            <div className="mt-4 grid gap-3 text-sm text-moss-700">
+              <div className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3">
+                <div className="text-xs font-semibold uppercase text-moss-500">{copy.teacher.nameLabel}</div>
+                <div className="mt-1 font-semibold text-moss-800">{copy.teacher.name}</div>
+              </div>
+              <div className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3">
+                <div className="text-xs font-semibold uppercase text-moss-500">{copy.teacher.postLabel}</div>
+                <div className="mt-1 font-semibold text-moss-800">{copy.teacher.post}</div>
+              </div>
+              <div className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3">
+                <div className="text-xs font-semibold uppercase text-moss-500">{copy.teacher.phoneLabel}</div>
+                <div className="mt-1 font-semibold text-moss-800">{copy.teacher.phone}</div>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-3xl bg-white p-6 shadow-soft">
+            <h2 className="text-lg font-semibold text-moss-900">{copy.events.title}</h2>
+            <p className="mt-2 text-sm text-moss-600">{copy.events.subtitle}</p>
+            <div className="mt-4 grid gap-3 text-sm text-moss-700">
+              {copy.events.items.map((event) => (
+                <div key={event.title} className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3">
+                  <div className="font-semibold text-moss-800">{event.title}</div>
+                  <div className="text-sm text-moss-600">{event.time}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 

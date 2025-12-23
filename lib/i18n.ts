@@ -6,6 +6,7 @@ type Copy = {
     donate: string;
     campaigns: string;
     hadith: string;
+    guides: string;
     admin: string;
     home: string;
   };
@@ -79,6 +80,45 @@ type Copy = {
   location: {
     title: string;
     subtitle: string;
+  };
+  guides: {
+    title: string;
+    subtitle: string;
+    namazTitle: string;
+    namazSubtitle: string;
+    namazCta: string;
+    hadithTitle: string;
+    hadithSubtitle: string;
+    hadithCta: string;
+  };
+  teacher: {
+    title: string;
+    subtitle: string;
+    nameLabel: string;
+    postLabel: string;
+    phoneLabel: string;
+    name: string;
+    post: string;
+    phone: string;
+  };
+  events: {
+    title: string;
+    subtitle: string;
+    items: { title: string; time: string }[];
+  };
+  namazGuide: {
+    title: string;
+    subtitle: string;
+    rakahTitle: string;
+    rakahNote: string;
+    rakahItems: { name: string; detail: string }[];
+    rulesTitle: string;
+    rules: string[];
+  };
+  hadithLibrary: {
+    title: string;
+    subtitle: string;
+    categories: { title: string; items: { text: string; ref: string }[] }[];
   };
   prayerDisplay: {
     kicker: string;
@@ -285,6 +325,7 @@ export const translations: Record<Lang, Copy> = {
       donate: "Donate",
       campaigns: "Campaigns",
       hadith: "Hadith",
+      guides: "Guides",
       admin: "Admin",
       home: "Home"
     },
@@ -361,6 +402,98 @@ export const translations: Record<Lang, Copy> = {
     location: {
       title: "Mosque Location",
       subtitle: "Find Baitun Najat Jame Mosjid in Kharampotty, Kishoreganj."
+    },
+    guides: {
+      title: "Guides & Learning",
+      subtitle: "Quick references for prayer and authentic hadith collections.",
+      namazTitle: "Namaz: Rakah & Rules",
+      namazSubtitle: "Rakah counts and core rules for daily prayers.",
+      namazCta: "View Namaz Guide",
+      hadithTitle: "Authentic Hadiths",
+      hadithSubtitle: "Verified hadiths by topic with references.",
+      hadithCta: "View Hadith Library"
+    },
+    teacher: {
+      title: "Qur'an & Hadith Learning Support",
+      subtitle: "For learning the Qur'an and hadiths for yourself or your children, contact:",
+      nameLabel: "Name",
+      postLabel: "Post",
+      phoneLabel: "Number",
+      name: "Md Abdul Sunny",
+      post: "Muazzin, Baitun Najat Jame Mosjid",
+      phone: "+8801948008918"
+    },
+    events: {
+      title: "Daily & Weekly Programs",
+      subtitle: "Regular activities at the mosque.",
+      items: [
+        { title: "Daily Mashohara", time: "After Fajr Prayer (Everyday)" },
+        { title: "Weekly Dawah Program", time: "Wednesday After Asr Prayer" },
+        { title: "Weekly Deen Discussion", time: "Wednesday After Maghrib Prayer" },
+        { title: "Daily Hadith Recitation", time: "After Isha Prayer" }
+      ]
+    },
+    namazGuide: {
+      title: "Namaz: Rakah & Rules",
+      subtitle: "A simple reference for daily prayers.",
+      rakahTitle: "Rakah Counts",
+      rakahNote: "Counts may vary by sunnah and nafl practices.",
+      rakahItems: [
+        { name: "Fajr", detail: "2 Sunnah + 2 Fard" },
+        { name: "Dhuhr", detail: "4 Sunnah + 4 Fard + 2 Sunnah" },
+        { name: "Asr", detail: "4 Sunnah + 4 Fard" },
+        { name: "Maghrib", detail: "3 Fard + 2 Sunnah" },
+        { name: "Isha", detail: "4 Sunnah + 4 Fard + 2 Sunnah + Witr" },
+        { name: "Jumu'ah (Friday)", detail: "Replaces Dhuhr: 2 Fard after khutbah" }
+      ],
+      rulesTitle: "Core Rules",
+      rules: [
+        "Perform wudu and ensure cleanliness of body, clothes, and place.",
+        "Pray within the correct time for each salah.",
+        "Face the Qiblah and make intention (niyyah).",
+        "Maintain khushu (focus), avoid unnecessary movements or speech.",
+        "Complete all pillars (standing, ruku, sujud, and tashahhud)."
+      ]
+    },
+    hadithLibrary: {
+      title: "Authentic Hadith Library",
+      subtitle: "Selected authentic hadiths by topic.",
+      categories: [
+        {
+          title: "Prayer",
+          items: [
+            {
+              text: "The first matter that the slave will be brought to account for on the Day of Resurrection is the prayer.",
+              ref: "Sunan Abu Dawud 864"
+            },
+            {
+              text: "The closest that a servant comes to his Lord is when he is prostrating.",
+              ref: "Sahih Muslim 482"
+            }
+          ]
+        },
+        {
+          title: "Charity",
+          items: [
+            { text: "Charity does not decrease wealth.", ref: "Sahih Muslim 2588" },
+            { text: "The believer’s shade on the Day of Resurrection will be his charity.", ref: "Jami` at-Tirmidhi 604" }
+          ]
+        },
+        {
+          title: "Knowledge",
+          items: [
+            { text: "Whoever travels a path in search of knowledge, Allah will make easy for him a path to Paradise.", ref: "Sahih Muslim 2699" },
+            { text: "The best among you are those who learn the Qur'an and teach it.", ref: "Sahih al-Bukhari 5027" }
+          ]
+        },
+        {
+          title: "Character",
+          items: [
+            { text: "The heaviest thing on the believer’s scale is good character.", ref: "Jami` at-Tirmidhi 2003" },
+            { text: "None of you truly believes until he loves for his brother what he loves for himself.", ref: "Sahih al-Bukhari 13" }
+          ]
+        }
+      ]
     },
     prayerDisplay: {
       kicker: "Prayer Schedule",
@@ -566,6 +699,7 @@ export const translations: Record<Lang, Copy> = {
       donate: "দান করুন",
       campaigns: "ক্যাম্পেইন",
       hadith: "হাদিস",
+      guides: "গাইড",
       admin: "এডমিন",
       home: "হোম"
     },
@@ -642,6 +776,98 @@ export const translations: Record<Lang, Copy> = {
     location: {
       title: "মসজিদের অবস্থান",
       subtitle: "খারামপট্টি, কিশোরগঞ্জে বাইতুন নাজাত জামে মসজিদ।"
+    },
+    guides: {
+      title: "গাইড ও শিক্ষা",
+      subtitle: "নামাজ ও সহিহ হাদিসের দ্রুত রেফারেন্স।",
+      namazTitle: "নামাজ: রাকাত ও নিয়ম",
+      namazSubtitle: "দৈনিক নামাজের রাকাত ও মূল নিয়মাবলি।",
+      namazCta: "নামাজ গাইড দেখুন",
+      hadithTitle: "সহিহ হাদিস",
+      hadithSubtitle: "বিষয়ভিত্তিক সহিহ হাদিসের তালিকা।",
+      hadithCta: "হাদিস লাইব্রেরি দেখুন"
+    },
+    teacher: {
+      title: "কুরআন ও হাদিস শিক্ষা সহায়তা",
+      subtitle: "নিজে বা শিশুদের কুরআন ও হাদিস শিখতে যোগাযোগ করুন:",
+      nameLabel: "নাম",
+      postLabel: "পদবী",
+      phoneLabel: "নম্বর",
+      name: "Md Abdul Sunny",
+      post: "মুয়াজ্জিন, বাইতুন নাজাত জামে মসজিদ",
+      phone: "+8801948008918"
+    },
+    events: {
+      title: "দৈনিক ও সাপ্তাহিক আয়োজন",
+      subtitle: "মসজিদে নিয়মিত কার্যক্রম।",
+      items: [
+        { title: "দৈনিক মাসহোয়ারা", time: "ফজরের পর প্রতিদিন" },
+        { title: "সাপ্তাহিক দাওয়াহ প্রোগ্রাম", time: "বুধবার আসরের পর" },
+        { title: "সাপ্তাহিক দ্বীন আলোচনা", time: "বুধবার মাগরিবের পর" },
+        { title: "দৈনিক হাদিস পাঠ", time: "ইশার পর" }
+      ]
+    },
+    namazGuide: {
+      title: "নামাজ: রাকাত ও নিয়ম",
+      subtitle: "দৈনিক নামাজের সহজ রেফারেন্স।",
+      rakahTitle: "রাকাত সংখ্যা",
+      rakahNote: "সুন্নত ও নফল রাকাত ভিন্ন হতে পারে।",
+      rakahItems: [
+        { name: "ফজর", detail: "২ সুন্নত + ২ ফরজ" },
+        { name: "যোহর", detail: "৪ সুন্নত + ৪ ফরজ + ২ সুন্নত" },
+        { name: "আসর", detail: "৪ সুন্নত + ৪ ফরজ" },
+        { name: "মাগরিব", detail: "৩ ফরজ + ২ সুন্নত" },
+        { name: "এশা", detail: "৪ সুন্নত + ৪ ফরজ + ২ সুন্নত + বিতর" },
+        { name: "জুমুআ (শুক্রবার)", detail: "যোহরের পরিবর্তে: খুতবার পর ২ ফরজ" }
+      ],
+      rulesTitle: "মূল নিয়মাবলি",
+      rules: [
+        "ওজু করে শরীর, পোশাক ও জায়গা পরিষ্কার রাখুন।",
+        "প্রতিটি নামাজের নির্ধারিত সময়ে আদায় করুন।",
+        "কিবলার দিকে মুখ করে নিয়ত করুন।",
+        "খুশু বজায় রাখুন, অপ্রয়োজনীয় কাজ এড়িয়ে চলুন।",
+        "রুকু, সিজদা ও তাশাহহুদসহ সব ফরজ ঠিকভাবে করুন।"
+      ]
+    },
+    hadithLibrary: {
+      title: "সহিহ হাদিস লাইব্রেরি",
+      subtitle: "বিষয়ভিত্তিক সহিহ হাদিসের নির্বাচিত তালিকা।",
+      categories: [
+        {
+          title: "নামাজ",
+          items: [
+            {
+              text: "কিয়ামতের দিনে বান্দার সর্বপ্রথম হিসাব নেওয়া হবে নামাজ সম্পর্কে।",
+              ref: "সুনান আবু দাউদ ৮৬৪"
+            },
+            {
+              text: "বান্দা তার রবের সবচেয়ে নিকট থাকে সিজদার অবস্থায়।",
+              ref: "সহিহ মুসলিম ৪৮২"
+            }
+          ]
+        },
+        {
+          title: "দান",
+          items: [
+            { text: "সদকা সম্পদ কমায় না।", ref: "সহিহ মুসলিম ২৫৮৮" },
+            { text: "কিয়ামতের দিনে মুমিনের ছায়া হবে তার সদকা।", ref: "জামি` আত-তিরমিজি ৬০৪" }
+          ]
+        },
+        {
+          title: "জ্ঞান",
+          items: [
+            { text: "যে ব্যক্তি জ্ঞান অর্জনের পথে চলে, আল্লাহ তার জন্য জান্নাতের পথ সহজ করে দেন।", ref: "সহিহ মুসলিম ২৬৯৯" },
+            { text: "তোমাদের মধ্যে উত্তম সে, যে কুরআন শেখে ও শেখায়।", ref: "সহিহ আল-বুখারি ৫০২৭" }
+          ]
+        },
+        {
+          title: "আখলাক",
+          items: [
+            { text: "মুমিনের আমলনামায় সবচেয়ে ভারী হবে উত্তম চরিত্র।", ref: "জামি` আত-তিরমিজি ২০০৩" },
+            { text: "তোমাদের কেউ ঈমানদার হবে না যতক্ষণ না সে নিজের জন্য যা ভালবাসে, তার ভাইয়ের জন্যও তা ভালবাসে।", ref: "সহিহ আল-বুখারি ১৩" }
+          ]
+        }
+      ]
     },
     prayerDisplay: {
       kicker: "নামাজের সময়সূচি",

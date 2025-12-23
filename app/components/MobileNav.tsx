@@ -8,6 +8,7 @@ type Labels = {
   prayer: string;
   donate: string;
   campaigns: string;
+  guides: string;
   hadith: string;
   admin: string;
   language: string;
@@ -38,6 +39,7 @@ export default function MobileNav({ lang, labels }: { lang: Lang; labels: Labels
           <a href={withLang("/prayer", lang)} className="text-sm font-semibold text-moss-800">{labels.prayer}</a>
           <a href={withLang("/#donate", lang)} className="text-sm font-semibold text-moss-800">{labels.donate}</a>
           <a href={withLang("/campaigns", lang)} className="text-sm font-semibold text-moss-800">{labels.campaigns}</a>
+          <a href={withLang("/#guides", lang)} className="text-sm font-semibold text-moss-800">{labels.guides}</a>
           <a href={withLang("/#hadith", lang)} className="text-sm font-semibold text-moss-800">{labels.hadith}</a>
           <a href={withLang("/admin", lang)} className="text-sm font-semibold text-moss-800">{labels.admin}</a>
           <LanguageSwitcher

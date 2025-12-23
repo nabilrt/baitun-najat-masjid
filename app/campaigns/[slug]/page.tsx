@@ -2,7 +2,7 @@ import LanguageSwitcher from "../../components/LanguageSwitcher";
 import ShareLink from "../../components/ShareLink";
 import { notFound } from "next/navigation";
 import { getCampaignBySlugWithTotals, listActiveAnnouncements } from "../../../lib/db";
-import { submitDonationAction } from "../../../lib/actions";
+import CampaignDonationForm from "../../components/CampaignDonationForm";
 import { getLang, translations, withLang } from "../../../lib/i18n";
 
 export const runtime = "nodejs";
@@ -108,15 +108,7 @@ export default async function CampaignDetailPage({
           <div className="rounded-3xl bg-white p-5 shadow-soft sm:p-6">
             <h2 className="text-lg font-semibold text-moss-900">{copy.campaignDetail.donateTitle}</h2>
             <p className="mt-2 text-sm text-moss-600">{copy.campaignDetail.donateSubtitle}</p>
-            <form className="mt-4 grid gap-3" action={submitDonationAction}>
-              <input type="hidden" name="campaignId" value={campaign.id} />
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="name" placeholder={copy.donate.fields.name} required />
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="amount" type="number" min="1" placeholder={copy.donate.fields.amount} required />
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="bkashNumber" placeholder={copy.donate.fields.bkash} required />
-              <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="transactionId" placeholder={copy.donate.fields.trx} required />
-              <textarea className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-4 py-3 text-sm" name="note" placeholder={copy.donate.fields.note} rows={3} />
-              <button className="mt-2 rounded-full bg-gold-400 px-6 py-3 text-sm font-semibold text-[#1a1a1a] shadow-soft" type="submit">{copy.donate.fields.submit}</button>
-            </form>
+            <CampaignDonationForm campaignId={campaign.id} copy={copy} />
           </div>
           <div className="rounded-3xl bg-moss-900 p-5 text-moss-50 shadow-soft sm:p-6">
             <h3 className="text-lg font-semibold">{copy.campaignDetail.bkashTitle}</h3>
