@@ -72,6 +72,7 @@ type Copy = {
     contact: string;
     phone: string;
     email: string;
+    website: string;
     quick: string;
     quickItems: string[];
   };
@@ -85,6 +86,7 @@ type Copy = {
     adhan: string;
     iqamah: string;
     timeLeft: string;
+    next: string;
   };
   poster: {
     kicker: string;
@@ -342,6 +344,7 @@ export const translations: Record<Lang, Copy> = {
       contact: "Contact",
       phone: "Phone: +880 1XXXXXXXXX",
       email: "Email: info@baitunnajat.org",
+      website: "Website",
       quick: "Quick Links",
       quickItems: ["Prayer Times", "Donations", "Community Updates"]
     },
@@ -354,7 +357,8 @@ export const translations: Record<Lang, Copy> = {
       today: "Today",
       adhan: "Adhan",
       iqamah: "Iqamah",
-      timeLeft: "Time left"
+      timeLeft: "Time left",
+      next: "Next"
     },
     poster: {
       kicker: "Donation Campaign",
@@ -611,6 +615,7 @@ export const translations: Record<Lang, Copy> = {
       contact: "যোগাযোগ",
       phone: "ফোন: +৮৮০ ১XXXXXXXXX",
       email: "ইমেইল: info@baitunnajat.org",
+      website: "ওয়েবসাইট",
       quick: "দ্রুত লিংক",
       quickItems: ["নামাজের সময়", "দান", "কমিউনিটি আপডেট"]
     },
@@ -623,7 +628,8 @@ export const translations: Record<Lang, Copy> = {
       today: "আজ",
       adhan: "আজান",
       iqamah: "ইকামত",
-      timeLeft: "বাকি সময়"
+      timeLeft: "বাকি সময়",
+      next: "পরবর্তী"
     },
     poster: {
       kicker: "দান ক্যাম্পেইন",

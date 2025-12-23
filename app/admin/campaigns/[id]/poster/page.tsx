@@ -38,8 +38,9 @@ export default async function CampaignPosterPage({
     redirect(withLang("/admin/campaigns", lang));
   }
 
+  const origin = getOrigin();
   const path = `/campaigns/share/${campaign.share_token}${lang === "bn" ? "?lang=bn" : ""}`;
-  const target = `${getOrigin()}${path}`;
+  const target = `${origin}${path}`;
   const qrData = await QRCode.toDataURL(target, { width: 420, margin: 1 });
   const donationHadiths = [
     {
@@ -98,6 +99,11 @@ export default async function CampaignPosterPage({
             <div>
               <div className="text-sm font-semibold text-moss-900">{copy.footer.title}</div>
               <div className="text-xs text-moss-600">{copy.footer.address}</div>
+              <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-moss-100 bg-moss-50 px-3 py-1 text-xs font-semibold text-moss-600">
+                <span>{copy.footer.website}</span>
+                <span className="h-1 w-1 rounded-full bg-moss-300" />
+                <span className="text-moss-700">{origin}</span>
+              </div>
             </div>
             <DownloadPosterButton
               targetId="poster-capture"
