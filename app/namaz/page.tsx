@@ -93,7 +93,7 @@ export default function NamazGuidePage({ searchParams }: { searchParams?: { lang
             {copy.namazGuide.duasItems.map((dua) => (
               <div key={dua.name} className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-4">
                 <div className="text-sm font-semibold text-moss-800">{dua.name}</div>
-                <div className={`${arabicFont.className} mt-3 text-2xl text-moss-900`} dir="rtl">
+                <div className={`${arabicFont.className} mt-3 text-2xl leading-relaxed text-moss-900`} dir="rtl">
                   {dua.arabic}
                 </div>
                 <div className="mt-4 grid gap-3 text-sm text-moss-700">
@@ -133,7 +133,7 @@ export default function NamazGuidePage({ searchParams }: { searchParams?: { lang
             {copy.namazGuide.specialItems.map((dua) => (
               <div key={dua.name} className="rounded-2xl border border-moss-100 bg-moss-50 px-4 py-4">
                 <div className="text-sm font-semibold text-moss-800">{dua.name}</div>
-                <div className={`${arabicFont.className} mt-3 text-2xl text-moss-900`} dir="rtl">
+                <div className={`${arabicFont.className} mt-3 text-2xl leading-relaxed text-moss-900`} dir="rtl">
                   {dua.arabic}
                 </div>
                 <div className="mt-4 grid gap-3 text-sm text-moss-700">
