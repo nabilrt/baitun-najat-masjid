@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07152F"/>
+      <stop offset="1" stop-color="#132B59"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F5E2B2"/>
+      <stop offset="1" stop-color="#D7AF5A"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1600" fill="url(#bg)"/>
+  <circle cx="800" cy="800" r="480" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="18"/>
+  <circle cx="800" cy="800" r="560" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="18"/>
+  <path d="M430 585c0-24 18-42 42-42h656c24 0 42 18 42 42v42c0 24-18 42-42 42h-20v392c0 24-18 42-42 42H534c-24 0-42-18-42-42V669h-20c-24 0-42-18-42-42z" fill="url(#gold)"/>
+  <path d="M594 1101V798c0-115 93-208 208-208s208 93 208 208v303" fill="none" stroke="#FAF5E8" stroke-width="64" stroke-linecap="round"/>
+  <path d="M656 662c42-81 122-130 209-130 89 0 169 51 211 137" fill="none" stroke="#FAF5E8" stroke-width="30" stroke-linecap="round"/>
+  <rect x="710" y="893" width="180" height="208" rx="24" fill="#07152F"/>
+  <circle cx="800" cy="762" r="46" fill="#07152F"/>
+  <text x="800" y="1265" fill="#FAF5E8" font-size="82" font-family="Georgia, serif" text-anchor="middle">Baitun Najat</text>
+  <text x="800" y="1338" fill="#D7E2F6" font-size="34" font-family="Arial, sans-serif" text-anchor="middle" letter-spacing="6">JAME MASJID</text>
+</svg>

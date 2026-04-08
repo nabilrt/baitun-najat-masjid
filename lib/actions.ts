@@ -25,6 +25,29 @@ function toNumber(value: FormDataEntryValue | null) {
   return Number(value.toString());
 }
 
+function normalizePrayerTime(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return null;
+  const twelveMatch = trimmed.match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+  if (twelveMatch) {
+    const hours = Number(twelveMatch[1]);
+    const minutes = twelveMatch[2];
+    const meridiem = twelveMatch[3].toUpperCase();
+    if (Number.isNaN(hours) || hours < 1 || hours > 12) return null;
+    return `${hours}:${minutes} ${meridiem}`;
+  }
+  const twentyFourMatch = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+  if (twentyFourMatch) {
+    const hours = Number(twentyFourMatch[1]);
+    const minutes = twentyFourMatch[2];
+    if (Number.isNaN(hours) || hours < 0 || hours > 23) return null;
+    const meridiem = hours >= 12 ? "PM" : "AM";
+    const displayHours = hours % 12 === 0 ? 12 : hours % 12;
+    return `${displayHours}:${minutes} ${meridiem}`;
+  }
+  return null;
+}
+
 export async function submitDonationAction(formData: FormData) {
   const name = formData.get("name")?.toString().trim();
   const amount = toNumber(formData.get("amount"));
@@ -67,8 +90,10 @@ export async function updatePrayerTimeAction(formData: FormData) {
   const azanTime = formData.get("azanTime")?.toString().trim();
   const prayerTime = formData.get("prayerTime")?.toString().trim();
   const lang = formData.get("lang")?.toString().trim();
-  if (!id || !azanTime || !prayerTime) return;
-  await updatePrayerTime(id, nameBn || "", azanTime, prayerTime);
+  const normalizedAzan = azanTime ? normalizePrayerTime(azanTime) : null;
+  const normalizedPrayer = prayerTime ? normalizePrayerTime(prayerTime) : null;
+  if (!id || !normalizedAzan || !normalizedPrayer) return;
+  await updatePrayerTime(id, nameBn || "", normalizedAzan, normalizedPrayer);
   revalidatePath("/admin/prayer");
   revalidatePath("/admin");
   revalidatePath("/");

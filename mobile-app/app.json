@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Baitun Najat",
+    "slug": "baitun-najat-mobile",
+    "scheme": "baitunnajat",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "plugins": ["expo-router"],
+    "splash": {
+      "backgroundColor": "#07152F",
+      "resizeMode": "contain"
+    },
+    "experiments": {
+      "typedRoutes": true
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.baitunnajat.mobile"
+    },
+    "android": {
+      "package": "com.baitunnajat.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#091937"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "single"
+    }
+  }
+}

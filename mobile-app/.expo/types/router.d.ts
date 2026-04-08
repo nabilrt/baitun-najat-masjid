@@ -1,0 +1,14 @@
+/* eslint-disable */
+import * as Router from 'expo-router';
+
+export * from 'expo-router';
+
+declare module 'expo-router' {
+  export namespace ExpoRouter {
+    export interface __routes<T extends string | object = string> {
+      hrefInputParams: { pathname: Router.RelativePathString, params?: Router.UnknownInputParams } | { pathname: Router.ExternalPathString, params?: Router.UnknownInputParams } | { pathname: `/announcements`; params?: Router.UnknownInputParams; } | { pathname: `/campaigns`; params?: Router.UnknownInputParams; } | { pathname: `/donate`; params?: Router.UnknownInputParams; } | { pathname: `/guides`; params?: Router.UnknownInputParams; } | { pathname: `/`; params?: Router.UnknownInputParams; } | { pathname: `/prayer`; params?: Router.UnknownInputParams; } | { pathname: `/_sitemap`; params?: Router.UnknownInputParams; } | { pathname: `/campaign/[slug]`, params: Router.UnknownInputParams & { slug: string | number; } };
+      hrefOutputParams: { pathname: Router.RelativePathString, params?: Router.UnknownOutputParams } | { pathname: Router.ExternalPathString, params?: Router.UnknownOutputParams } | { pathname: `/announcements`; params?: Router.UnknownOutputParams; } | { pathname: `/campaigns`; params?: Router.UnknownOutputParams; } | { pathname: `/donate`; params?: Router.UnknownOutputParams; } | { pathname: `/guides`; params?: Router.UnknownOutputParams; } | { pathname: `/`; params?: Router.UnknownOutputParams; } | { pathname: `/prayer`; params?: Router.UnknownOutputParams; } | { pathname: `/_sitemap`; params?: Router.UnknownOutputParams; } | { pathname: `/campaign/[slug]`, params: Router.UnknownOutputParams & { slug: string; } };
+      href: Router.RelativePathString | Router.ExternalPathString | `/announcements${`?${string}` | `#${string}` | ''}` | `/campaigns${`?${string}` | `#${string}` | ''}` | `/donate${`?${string}` | `#${string}` | ''}` | `/guides${`?${string}` | `#${string}` | ''}` | `/${`?${string}` | `#${string}` | ''}` | `/prayer${`?${string}` | `#${string}` | ''}` | `/_sitemap${`?${string}` | `#${string}` | ''}` | { pathname: Router.RelativePathString, params?: Router.UnknownInputParams } | { pathname: Router.ExternalPathString, params?: Router.UnknownInputParams } | { pathname: `/announcements`; params?: Router.UnknownInputParams; } | { pathname: `/campaigns`; params?: Router.UnknownInputParams; } | { pathname: `/donate`; params?: Router.UnknownInputParams; } | { pathname: `/guides`; params?: Router.UnknownInputParams; } | { pathname: `/`; params?: Router.UnknownInputParams; } | { pathname: `/prayer`; params?: Router.UnknownInputParams; } | { pathname: `/_sitemap`; params?: Router.UnknownInputParams; } | `/campaign/${Router.SingleRoutePart<T>}${`?${string}` | `#${string}` | ''}` | { pathname: `/campaign/[slug]`, params: Router.UnknownInputParams & { slug: string | number; } };
+    }
+  }
+}

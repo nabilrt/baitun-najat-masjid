@@ -5,6 +5,31 @@ import SavedAlert from "../SavedAlert";
 
 export const runtime = "nodejs";
 
+function toTwelveHourDisplay(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed) return "";
+  const twelveMatch = trimmed.match(/^(\d{1,2}):(\d{2})\s*([AP]M)$/i);
+  if (twelveMatch) {
+    const hours = Number(twelveMatch[1]);
+    const minutes = twelveMatch[2];
+    const meridiem = twelveMatch[3].toUpperCase();
+    if (!Number.isNaN(hours) && hours >= 1 && hours <= 12) {
+      return `${hours}:${minutes} ${meridiem}`;
+    }
+  }
+  const twentyFourMatch = trimmed.match(/^(\d{1,2}):(\d{2})$/);
+  if (twentyFourMatch) {
+    const hours = Number(twentyFourMatch[1]);
+    const minutes = twentyFourMatch[2];
+    if (!Number.isNaN(hours) && hours >= 0 && hours <= 23) {
+      const meridiem = hours >= 12 ? "PM" : "AM";
+      const displayHours = hours % 12 === 0 ? 12 : hours % 12;
+      return `${displayHours}:${minutes} ${meridiem}`;
+    }
+  }
+  return trimmed;
+}
+
 export default async function AdminPrayerPage({ searchParams }: { searchParams?: { lang?: string; saved?: string } }) {
   const lang = getLang(searchParams?.lang);
   const copy = translations[lang];
@@ -36,10 +61,26 @@ export default async function AdminPrayerPage({ searchParams }: { searchParams?:
                   <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-3 py-2 text-sm" form={`prayer-${time.id}`} name="nameBn" defaultValue={time.name_bn ?? ""} />
                 </td>
                 <td className="py-3">
-                  <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-3 py-2 text-sm" form={`prayer-${time.id}`} name="azanTime" defaultValue={time.azan_time} />
+                  <input
+                    className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-3 py-2 text-sm"
+                    form={`prayer-${time.id}`}
+                    name="azanTime"
+                    placeholder="4:00 PM"
+                    defaultValue={toTwelveHourDisplay(time.azan_time)}
+                    pattern="^(0?[1-9]|1[0-2]):[0-5][0-9]\\s?(AM|PM)$"
+                    title="Use 12-hour time like 4:00 PM"
+                  />
                 </td>
                 <td className="py-3">
-                  <input className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-3 py-2 text-sm" form={`prayer-${time.id}`} name="prayerTime" defaultValue={time.prayer_time} />
+                  <input
+                    className="w-full rounded-2xl border border-moss-100 bg-moss-50 px-3 py-2 text-sm"
+                    form={`prayer-${time.id}`}
+                    name="prayerTime"
+                    placeholder="4:00 PM"
+                    defaultValue={toTwelveHourDisplay(time.prayer_time)}
+                    pattern="^(0?[1-9]|1[0-2]):[0-5][0-9]\\s?(AM|PM)$"
+                    title="Use 12-hour time like 4:00 PM"
+                  />
                 </td>
                 <td className="py-3">
                   <form action={updatePrayerTimeAction} id={`prayer-${time.id}`}>
