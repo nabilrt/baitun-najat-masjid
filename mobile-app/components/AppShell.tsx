@@ -4,7 +4,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import { colors } from "@/lib/theme";
-import { BottomNav } from "@/components/BottomNav";
 
 type Props = PropsWithChildren<{
   title: string;
@@ -13,10 +12,9 @@ type Props = PropsWithChildren<{
   refreshing?: boolean;
   onRefresh?: () => void;
   error?: string | null;
-  activeTab?: "home" | "prayer" | "campaigns" | "guides" | "donate";
 }>;
 
-export function AppShell({ title, subtitle, loading, refreshing, onRefresh, error, activeTab, children }: Props) {
+export function AppShell({ title, subtitle, loading, refreshing, onRefresh, error, children }: Props) {
   if (loading) {
     return (
       <LinearGradient colors={[colors.ink, colors.navy]} style={styles.loadingWrap}>
@@ -49,7 +47,6 @@ export function AppShell({ title, subtitle, loading, refreshing, onRefresh, erro
           ) : null}
           {children}
         </ScrollView>
-        <BottomNav active={activeTab} />
       </SafeAreaView>
     </LinearGradient>
   );

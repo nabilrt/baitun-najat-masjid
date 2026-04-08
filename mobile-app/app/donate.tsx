@@ -53,7 +53,6 @@ export default function DonateScreen() {
       loading={configQuery.loading || campaignsQuery.loading}
       refreshing={configQuery.refreshing || campaignsQuery.refreshing}
       error={configQuery.error || campaignsQuery.error}
-      activeTab="donate"
       onRefresh={() => {
         configQuery.reload();
         campaignsQuery.reload();

@@ -14,7 +14,6 @@ export default function GuidesScreen() {
       loading={query.loading}
       refreshing={query.refreshing}
       error={query.error}
-      activeTab="guides"
       onRefresh={query.reload}
     >
       <View style={styles.card}>

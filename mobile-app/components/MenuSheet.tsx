@@ -21,9 +21,12 @@ type Props = {
 
 export function MenuSheet({ open, onClose, menu }: Props) {
   return (
-    <Modal transparent animationType="slide" visible={open} onRequestClose={onClose}>
-      <Pressable style={styles.backdrop} onPress={onClose}>
+    <Modal transparent animationType="fade" visible={open} onRequestClose={onClose}>
+      <View style={styles.backdrop}>
+        <Pressable style={styles.dismissLayer} onPress={onClose} />
         <View style={styles.panel}>
+          <View style={styles.cornerImage} />
+          <View style={styles.arch} />
           <View style={styles.handle} />
           <Text style={styles.brand}>Baitun Najat</Text>
           {menu.filter((item) => item.enabled).map((item) => (
@@ -39,42 +42,67 @@ export function MenuSheet({ open, onClose, menu }: Props) {
               }}
             >
               <Text style={styles.label}>{item.label}</Text>
-              <Ionicons name="chevron-forward" size={18} color={colors.goldSoft} />
+              <Ionicons name="chevron-forward" size={18} color="#8FA0C7" />
             </Pressable>
           ))}
         </View>
-      </Pressable>
+      </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  backdrop: { flex: 1, backgroundColor: "rgba(4, 9, 20, 0.42)", justifyContent: "flex-end" },
+  backdrop: { flex: 1, backgroundColor: "rgba(4, 9, 20, 0.28)", flexDirection: "row", justifyContent: "flex-end" },
+  dismissLayer: { flex: 1 },
   panel: {
-    backgroundColor: colors.ink,
-    borderTopLeftRadius: 28,
-    borderTopRightRadius: 28,
+    width: "74%",
+    backgroundColor: "#071736",
+    borderTopLeftRadius: 30,
+    borderBottomLeftRadius: 30,
     paddingHorizontal: 20,
-    paddingTop: 14,
+    paddingTop: 24,
     paddingBottom: 32,
-    gap: 6
+    gap: 6,
+    overflow: "hidden"
+  },
+  cornerImage: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: 88,
+    height: 88,
+    backgroundColor: "#D79F61",
+    borderBottomRightRadius: 60
+  },
+  arch: {
+    position: "absolute",
+    top: 22,
+    left: 26,
+    right: 26,
+    height: 92,
+    borderTopLeftRadius: 48,
+    borderTopRightRadius: 48,
+    borderWidth: 1.5,
+    borderBottomWidth: 0,
+    borderColor: "rgba(255,255,255,0.38)"
   },
   handle: {
-    alignSelf: "center",
-    width: 56,
-    height: 5,
+    alignSelf: "flex-end",
+    width: 22,
+    height: 22,
     borderRadius: 999,
-    backgroundColor: "rgba(255,255,255,0.18)",
-    marginBottom: 10
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.26)",
+    marginBottom: 18
   },
-  brand: { color: "white", fontSize: 24, fontWeight: "800", marginBottom: 10 },
+  brand: { color: "white", fontSize: 28, fontWeight: "500", marginBottom: 14, textAlign: "center", lineHeight: 34 },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: 15,
+    paddingVertical: 13,
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: "rgba(255,255,255,0.12)"
   },
-  label: { color: "#EFF4FF", fontSize: 16, fontWeight: "600" }
+  label: { color: "#DCE6FB", fontSize: 14, fontWeight: "500" }
 });

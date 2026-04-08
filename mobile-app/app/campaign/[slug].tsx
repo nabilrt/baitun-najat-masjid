@@ -19,7 +19,6 @@ export default function CampaignDetailScreen() {
       loading={query.loading}
       refreshing={query.refreshing}
       error={query.error}
-      activeTab="campaigns"
       onRefresh={query.reload}
     >
       {campaign ? (

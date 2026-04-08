@@ -1,17 +1,23 @@
 import { useMemo, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
+import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { AppShell } from "@/components/AppShell";
 import { MenuSheet } from "@/components/MenuSheet";
-import { PrayerCard } from "@/components/PrayerCard";
 import { useApi } from "@/lib/api";
 import { colors } from "@/lib/theme";
 import { getNextPrayer } from "@/lib/time";
 import type { AppConfig, HomeResponse } from "@/lib/types";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1564760055775-d63b17a55c44?auto=format&fit=crop&w=1200&q=80";
+const tiles = [
+  { key: "prayer", label: "Prayer times", icon: "time-outline", route: "/prayer" },
+  { key: "campaigns", label: "Campaigns", icon: "wallet-outline", route: "/campaigns" },
+  { key: "guides", label: "Guides", icon: "book-outline", route: "/guides" },
+  { key: "donate", label: "Donate", icon: "heart-outline", route: "/donate" },
+  { key: "announcements", label: "Notice", icon: "notifications-outline", route: "/announcements" }
+] as const;
 
 export default function HomeScreen() {
   const configQuery = useApi<AppConfig>("/api/mobile/app-config");
@@ -23,206 +29,170 @@ export default function HomeScreen() {
     [homeQuery.data]
   );
 
+  const activePrayerText = nextPrayer ? `${nextPrayer.prayer_time} ${nextPrayer.name.toUpperCase()}` : "--:--";
+  const refresh = () => {
+    configQuery.reload();
+    homeQuery.reload();
+  };
+
+  if (configQuery.loading || homeQuery.loading) {
+    return (
+      <LinearGradient colors={[colors.ink, "#10264C"]} style={styles.loadingWrap}>
+        <StatusBar style="light" />
+        <Text style={styles.loadingText}>Loading live data...</Text>
+      </LinearGradient>
+    );
+  }
+
   return (
     <>
-      <AppShell
-        title={configQuery.data?.brand.name || "Baitun Najat"}
-        subtitle={configQuery.data?.brand.address || "Mosque community app"}
-        loading={configQuery.loading || homeQuery.loading}
-        refreshing={configQuery.refreshing || homeQuery.refreshing}
-        error={configQuery.error || homeQuery.error}
-        activeTab="home"
-        onRefresh={() => {
-          configQuery.reload();
-          homeQuery.reload();
-        }}
-      >
-        <View style={styles.topRow}>
-          <Pressable style={styles.iconButton} onPress={() => setMenuOpen(true)}>
-            <Ionicons name="menu" size={22} color="white" />
-          </Pressable>
-          <Pressable style={styles.iconButton} onPress={() => router.push("/announcements")}>
-            <Ionicons name="notifications-outline" size={21} color="white" />
-          </Pressable>
-        </View>
-
-        <View style={styles.hero}>
-          <Image source={{ uri: HERO_IMAGE }} style={styles.heroImage} />
-          <View style={styles.heroOverlay} />
-          <View style={styles.arch} />
-          <View style={styles.heroContent}>
-            <Text style={styles.heroTitle}>Prayer time</Text>
-            {nextPrayer ? (
-              <>
-                <Text style={styles.heroTime}>{nextPrayer.prayer_time}</Text>
-                <Text style={styles.heroLabel}>Next jama&apos;ah: {nextPrayer.name}</Text>
-              </>
-            ) : null}
-          </View>
-        </View>
-
-        <View style={styles.quickGrid}>
-          {(configQuery.data?.menu || []).filter((item) => item.enabled).map((item) => (
-            <Pressable
-              key={`${item.key}-${item.label}`}
-              style={styles.quickItem}
-              onPress={() => {
-                if (item.key === "home") return;
-                if (item.key === "prayer") router.push("/prayer");
-                if (item.key === "campaigns") router.push("/campaigns");
-                if (item.key === "donate") router.push("/donate");
-                if (item.key === "namaz-guide" || item.key === "hadith-library") router.push("/guides");
-                if (item.key === "announcements") router.push("/announcements");
-              }}
-            >
-              <Text style={styles.quickLabel}>{item.label}</Text>
-            </Pressable>
-          ))}
-        </View>
-
-        <View style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>Today&apos;s Prayer Schedule</Text>
-          <View style={styles.list}>
-            {homeQuery.data?.prayer.items.map((item) => (
-              <PrayerCard key={item.id} item={item} highlighted={item.id === nextPrayer?.id} />
-            ))}
-          </View>
-        </View>
-
-        {homeQuery.data?.announcements?.length ? (
-          <View style={styles.sectionCard}>
-            <Text style={styles.sectionTitle}>Latest Announcement</Text>
-            <View style={styles.announcementCard}>
-              <Text style={styles.announcementTitle}>{homeQuery.data.announcements[0].title}</Text>
-              <Text style={styles.announcementText}>{homeQuery.data.announcements[0].message}</Text>
-            </View>
-          </View>
-        ) : null}
-
-        <View style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>Active Campaigns</Text>
-          <View style={styles.list}>
-            {homeQuery.data?.campaigns.map((campaign) => (
-              <Pressable
-                key={campaign.id}
-                style={styles.campaignCard}
-                onPress={() => router.push(`/campaign/${campaign.slug}`)}
-              >
-                <Text style={styles.campaignTitle}>{campaign.title}</Text>
-                <Text style={styles.campaignText} numberOfLines={2}>
-                  {campaign.description}
-                </Text>
-                <Text style={styles.campaignMeta}>
-                  BDT {campaign.total_confirmed} raised
-                  {campaign.goal_amount ? ` of BDT ${campaign.goal_amount}` : ""}
-                </Text>
+      <LinearGradient colors={[colors.ink, "#10264C"]} style={styles.root}>
+        <StatusBar style="light" />
+        <SafeAreaView edges={["top", "bottom"]} style={styles.safe}>
+          <ScrollView
+            contentContainerStyle={styles.content}
+            refreshControl={<RefreshControl refreshing={configQuery.refreshing || homeQuery.refreshing} onRefresh={refresh} tintColor={colors.gold} />}
+          >
+            <View style={styles.headerRow}>
+              <Pressable style={styles.smallButton} onPress={() => setMenuOpen(true)}>
+                <Ionicons name="menu" size={18} color="#F4F7FD" />
               </Pressable>
-            ))}
-          </View>
-        </View>
-
-        {homeQuery.data?.hadith?.items?.length ? (
-          <View style={styles.sectionCard}>
-            <Text style={styles.sectionTitle}>Hadith Reflection</Text>
-            <View style={styles.hadithCard}>
-              <Text style={styles.hadithText}>"{homeQuery.data.hadith.items[0].text}"</Text>
-              <Text style={styles.hadithSource}>{homeQuery.data.hadith.items[0].source}</Text>
+              <View style={styles.headerSpacer} />
+              <Pressable style={styles.smallButton} onPress={() => router.push("/announcements")}>
+                <Ionicons name="settings-outline" size={18} color="#F4F7FD" />
+              </Pressable>
             </View>
-          </View>
-        ) : null}
-      </AppShell>
+
+            <View style={styles.heroCard}>
+              <View style={styles.heroArch} />
+              <View style={[styles.hanging, styles.hangingLeft]} />
+              <View style={[styles.hanging, styles.hangingRight]} />
+              <Text style={styles.heroTitle}>Prayer time</Text>
+              <Text style={styles.heroTime}>{activePrayerText}</Text>
+              <Text style={styles.heroDate}>
+                {new Date().toLocaleDateString(undefined, {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long"
+                })}
+              </Text>
+            </View>
+
+            {(configQuery.error || homeQuery.error) ? (
+              <View style={styles.errorCard}>
+                <Text style={styles.errorTitle}>Unable to load live data</Text>
+                <Text style={styles.errorText}>{configQuery.error || homeQuery.error}</Text>
+              </View>
+            ) : null}
+
+            <View style={styles.grid}>
+              {tiles.map((tile, index) => (
+                <Pressable
+                  key={tile.key}
+                  style={[styles.tile, index === 4 && styles.tileWide]}
+                  onPress={() => router.push(tile.route)}
+                >
+                  <Ionicons name={tile.icon} size={26} color="#EEF3FD" />
+                  <Text style={styles.tileLabel}>{tile.label}</Text>
+                </Pressable>
+              ))}
+            </View>
+
+            <View style={styles.dots}>
+              <View style={styles.dotActive} />
+              <View style={styles.dot} />
+              <View style={styles.dot} />
+            </View>
+          </ScrollView>
+        </SafeAreaView>
+      </LinearGradient>
       <MenuSheet open={menuOpen} onClose={() => setMenuOpen(false)} menu={configQuery.data?.menu || []} />
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  topRow: { flexDirection: "row", justifyContent: "space-between" },
-  iconButton: {
-    width: 46,
-    height: 46,
+  root: { flex: 1 },
+  safe: { flex: 1 },
+  content: { paddingHorizontal: 18, paddingTop: 6, paddingBottom: 24 },
+  loadingWrap: { flex: 1, alignItems: "center", justifyContent: "center" },
+  loadingText: { color: "white", fontSize: 16, fontWeight: "600" },
+  headerRow: { flexDirection: "row", alignItems: "center", marginBottom: 18 },
+  headerSpacer: { flex: 1 },
+  smallButton: {
+    width: 32,
+    height: 32,
     borderRadius: 16,
-    backgroundColor: "rgba(255,255,255,0.1)",
     alignItems: "center",
     justifyContent: "center"
   },
-  hero: {
-    height: 290,
+  heroCard: {
+    backgroundColor: "#071736",
     borderRadius: 30,
-    overflow: "hidden",
-    backgroundColor: colors.navySoft
+    minHeight: 278,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 20,
+    paddingVertical: 26
   },
-  heroImage: { width: "100%", height: "100%", position: "absolute" },
-  heroOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: "rgba(9, 22, 49, 0.45)" },
-  arch: {
+  heroArch: {
     position: "absolute",
-    top: -18,
-    left: 18,
-    right: 18,
-    height: 126,
+    top: 30,
+    left: 20,
+    right: 20,
+    height: 86,
+    borderTopLeftRadius: 52,
+    borderTopRightRadius: 52,
     borderWidth: 2,
-    borderColor: "rgba(255,255,255,0.55)",
     borderBottomWidth: 0,
-    borderTopLeftRadius: 70,
-    borderTopRightRadius: 70
+    borderColor: "rgba(255,255,255,0.72)"
   },
-  heroContent: {
+  hanging: {
     position: "absolute",
-    left: 24,
-    right: 24,
-    bottom: 28,
-    alignItems: "center"
+    top: 40,
+    width: 10,
+    height: 72,
+    borderRadius: 999,
+    backgroundColor: "rgba(255,255,255,0.14)"
   },
-  heroTitle: { color: "white", fontSize: 35, fontWeight: "800" },
-  heroTime: { color: colors.goldSoft, fontSize: 30, fontWeight: "800", marginTop: 10 },
-  heroLabel: { color: "#E2E9F7", fontSize: 15, marginTop: 6 },
-  quickGrid: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
-  quickItem: {
-    width: "31.5%",
-    minHeight: 92,
-    backgroundColor: "rgba(255,255,255,0.08)",
-    borderRadius: 22,
-    padding: 12,
-    justifyContent: "flex-end",
+  hangingLeft: { left: 34 },
+  hangingRight: { right: 34 },
+  heroTitle: { color: "white", fontSize: 22, fontWeight: "500" },
+  heroTime: { color: "#F7E7B5", fontSize: 24, fontWeight: "800", marginTop: 10, textAlign: "center" },
+  heroDate: { color: "#F4F6FB", fontSize: 15, marginTop: 8, opacity: 0.9 },
+  errorCard: {
+    marginTop: 16,
+    backgroundColor: "#402128",
+    borderRadius: 18,
+    padding: 14,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.08)"
+    borderColor: "#A85766"
   },
-  quickLabel: { color: "white", fontSize: 14, fontWeight: "700" },
-  sectionCard: {
-    backgroundColor: colors.mist,
-    borderRadius: 28,
-    padding: 18,
-    gap: 14
-  },
-  sectionTitle: { color: colors.text, fontSize: 19, fontWeight: "800" },
-  list: { gap: 12 },
-  campaignCard: {
-    backgroundColor: "white",
-    borderRadius: 22,
-    padding: 16,
-    gap: 8,
-    borderWidth: 1,
-    borderColor: colors.border
-  },
-  campaignTitle: { color: colors.text, fontSize: 16, fontWeight: "800" },
-  campaignText: { color: colors.textMuted, fontSize: 14, lineHeight: 20 },
-  campaignMeta: { color: "#84642A", fontSize: 13, fontWeight: "700" },
-  announcementCard: {
-    backgroundColor: "#FFF7E3",
-    borderRadius: 22,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: "#F0D998",
-    gap: 8
-  },
-  announcementTitle: { color: colors.text, fontSize: 16, fontWeight: "800" },
-  announcementText: { color: "#6D5A2A", fontSize: 14, lineHeight: 21 },
-  hadithCard: {
-    backgroundColor: colors.navy,
-    borderRadius: 24,
-    padding: 18,
+  errorTitle: { color: "#FFE7EB", fontSize: 15, fontWeight: "800" },
+  errorText: { color: "#F2C2CB", fontSize: 13, lineHeight: 18, marginTop: 4 },
+  grid: {
+    marginTop: 18,
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: 10
   },
-  hadithText: { color: "white", fontSize: 16, lineHeight: 24, fontWeight: "700" },
-  hadithSource: { color: colors.goldSoft, fontSize: 13, fontWeight: "700" }
+  tile: {
+    width: "48.5%",
+    minHeight: 108,
+    borderRadius: 8,
+    backgroundColor: "#0B1D42",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10
+  },
+  tileWide: {
+    width: "100%",
+    minHeight: 84
+  },
+  tileLabel: { color: "#EAF0FB", fontSize: 13, fontWeight: "500" },
+  dots: { flexDirection: "row", justifyContent: "center", gap: 6, marginTop: 16 },
+  dotActive: { width: 22, height: 4, borderRadius: 999, backgroundColor: "#F6E7B3" },
+  dot: { width: 6, height: 4, borderRadius: 999, backgroundColor: "rgba(255,255,255,0.32)" }
 });

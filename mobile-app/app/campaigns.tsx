@@ -15,7 +15,6 @@ export default function CampaignsScreen() {
       loading={query.loading}
       refreshing={query.refreshing}
       error={query.error}
-      activeTab="campaigns"
       onRefresh={query.reload}
     >
       <View style={styles.list}>
