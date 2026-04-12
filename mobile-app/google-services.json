@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "628480256540",
+    "project_id": "baitun-najat",
+    "storage_bucket": "baitun-najat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628480256540:android:a15e06726d1b95bfea8dd9",
+        "android_client_info": {
+          "package_name": "com.abidnabil.baitunnajat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmdDlisa7wVSigobzeEPKCmRN1Aln4Uuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

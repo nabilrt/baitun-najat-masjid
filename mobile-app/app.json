@@ -13,6 +13,11 @@
     "experiments": {
       "typedRoutes": true
     },
+    "extra": {
+      "eas": {
+        "projectId": "d6fe9a58-88b2-4fd0-a726-e8d43418c9a5"
+      }
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.baitunnajat.mobile"

@@ -7,7 +7,8 @@ const assets = {
   icon: "./assets/icon.png",
   adaptiveIcon: "./assets/adaptive-icon.png",
   splash: "./assets/splash.png",
-  favicon: "./assets/favicon.png"
+  favicon: "./assets/favicon.png",
+  googleServices: "./google-services.json"
 };
 
 function fileExists(relativePath: string) {
@@ -34,6 +35,11 @@ const config: ExpoConfig = {
   experiments: {
     typedRoutes: true
   },
+  extra: {
+    eas: {
+      projectId: "d6fe9a58-88b2-4fd0-a726-e8d43418c9a5"
+    }
+  },
   splash: {
     backgroundColor: "#07152F",
     resizeMode: "contain",
@@ -45,6 +51,7 @@ const config: ExpoConfig = {
   },
   android: {
     package: "com.baitunnajat.mobile",
+    ...(fileExists(assets.googleServices) ? { googleServicesFile: assets.googleServices } : {}),
     adaptiveIcon: {
       backgroundColor: "#091937",
       ...(fileExists(assets.adaptiveIcon) ? { foregroundImage: assets.adaptiveIcon } : {})

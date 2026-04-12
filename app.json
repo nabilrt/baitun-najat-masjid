@@ -1,12 +1,21 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#07152F"
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "d5f7ef2f-27c4-4c63-970e-b731748337c0"
       }
     },
     "android": {
-      "package": "com.abidnabil.baitunnajat"
+      "package": "com.abidnabil.baitunnajat",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }
