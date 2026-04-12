@@ -1,5 +1,5 @@
 import { apiError, apiOk } from "../../../../../lib/mobile-api";
-import { listPrayerReminderPreferences, upsertMobileDevice } from "../../../../../lib/db";
+import { upsertMobileDevice } from "../../../../../lib/db";
 
 export const runtime = "nodejs";
 
@@ -16,13 +16,5 @@ export async function POST(request: Request) {
     platform: body?.platform ?? null,
     lang: body?.lang ?? null
   });
-
-  const preferences = await listPrayerReminderPreferences(token);
-  return apiOk({
-    token,
-    preferences: preferences.map((item) => ({
-      prayerId: item.prayer_id,
-      enabled: Boolean(item.enabled)
-    }))
-  });
+  return apiOk({ token });
 }

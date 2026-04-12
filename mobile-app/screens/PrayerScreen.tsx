@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { Alert, Pressable, StyleSheet, Switch, Text, View } from "react-native";
+import { useMemo } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { AppShell } from "@/components/AppShell";
@@ -7,7 +7,6 @@ import { useApi } from "@/lib/api";
 import { getHijriDate } from "@/lib/date";
 import { formatLocalizedDigits } from "@/lib/format";
 import { useLanguage } from "@/lib/language";
-import { loadReminderState, setPrayerReminderPreference, syncReminderState, type ReminderState } from "@/lib/prayer-reminders";
 import { colors } from "@/lib/theme";
 import { getNextPrayer } from "@/lib/time";
 import type { PrayerTime } from "@/lib/types";
@@ -24,26 +23,8 @@ const prayerIcons: Record<string, keyof typeof Ionicons.glyphMap> = {
 export default function PrayerScreen() {
   const { lang, t } = useLanguage();
   const query = useApi<{ items: PrayerTime[] }>("/api/mobile/prayer-times");
-  const [reminders, setReminders] = useState<ReminderState>({});
   const nextPrayer = useMemo(() => (query.data ? getNextPrayer(query.data.items) : null), [query.data]);
   const hijriDate = useMemo(() => getHijriDate(lang), [lang]);
-
-  useEffect(() => {
-    if (!query.data?.items) return;
-    const prayers = query.data.items;
-    syncReminderState(prayers)
-      .then(setReminders)
-      .catch(() => loadReminderState(prayers).then(setReminders).catch(() => setReminders({})));
-  }, [query.data]);
-
-  async function toggleReminder(item: PrayerTime, enabled: boolean) {
-    try {
-      await setPrayerReminderPreference(item.id, enabled, lang);
-      setReminders((current) => ({ ...current, [`prayer:${item.id}`]: enabled }));
-    } catch (error) {
-      Alert.alert(t.reminders, error instanceof Error ? error.message : t.reminderPermissionError);
-    }
-  }
 
   return (
     <AppShell
@@ -89,18 +70,6 @@ export default function PrayerScreen() {
                     {formatLocalizedDigits(item.prayer_time, lang)}
                   </Text>
                 </View>
-              </View>
-              <View style={styles.reminderRow}>
-                <View style={styles.reminderCopy}>
-                  <Text style={styles.reminderTitle}>{t.reminders}</Text>
-                  <Text style={styles.reminderText}>{t.reminderBeforeIqamah}</Text>
-                </View>
-                <Switch
-                  value={Boolean(reminders[`prayer:${item.id}`])}
-                  onValueChange={(value) => toggleReminder(item, value)}
-                  trackColor={{ false: "#D4D9E1", true: "#9FCCED" }}
-                  thumbColor={Boolean(reminders[`prayer:${item.id}`]) ? colors.navy : "#FFFFFF"}
-                />
               </View>
             </View>
           );
@@ -188,10 +157,6 @@ const styles = StyleSheet.create({
   timeLabel: { color: "#5F687A", fontSize: 11, fontWeight: "800", letterSpacing: 1.4, textTransform: "uppercase" },
   activeTimeLabel: { color: "#34627E" },
   timeValue: { color: colors.navy, fontSize: 24, fontWeight: "600" },
-  reminderRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12, paddingTop: 2 },
-  reminderCopy: { flex: 1 },
-  reminderTitle: { color: colors.navy, fontSize: 13, fontWeight: "700" },
-  reminderText: { color: "#5F687A", fontSize: 11, lineHeight: 16, marginTop: 2 },
   guideSection: { gap: 14 },
   guideCard: { backgroundColor: "#F2F4F7", borderRadius: 28, padding: 20, flexDirection: "row", alignItems: "center", gap: 16 },
   guideIcon: { width: 56, height: 56, borderRadius: 18, backgroundColor: "#AFDDFE", alignItems: "center", justifyContent: "center" },

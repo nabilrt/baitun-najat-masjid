@@ -29,15 +29,6 @@ type MobileDevice = {
   updated_at: string;
 };
 
-type PrayerReminderPreference = {
-  id: number;
-  expo_push_token: string;
-  prayer_id: number;
-  enabled: number;
-  created_at: string;
-  updated_at: string;
-};
-
 type Donation = {
   id: number;
   name: string;
@@ -244,23 +235,6 @@ async function initDb() {
         lang TEXT,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL
-      )`,
-      `CREATE TABLE IF NOT EXISTS prayer_reminder_preferences (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        expo_push_token TEXT NOT NULL,
-        prayer_id INTEGER NOT NULL,
-        enabled INTEGER NOT NULL DEFAULT 1,
-        created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL,
-        UNIQUE(expo_push_token, prayer_id)
-      )`,
-      `CREATE TABLE IF NOT EXISTS prayer_reminder_logs (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        expo_push_token TEXT NOT NULL,
-        prayer_id INTEGER NOT NULL,
-        reminder_date TEXT NOT NULL,
-        created_at TEXT NOT NULL,
-        UNIQUE(expo_push_token, prayer_id, reminder_date)
       )`
     ];
 
@@ -489,54 +463,6 @@ export async function listMobileDevices(): Promise<MobileDevice[]> {
 export async function deleteMobileDevice(token: string) {
   await initDb();
   await exec("DELETE FROM mobile_devices WHERE expo_push_token = ?", [token]);
-  await exec("DELETE FROM prayer_reminder_preferences WHERE expo_push_token = ?", [token]);
-}
-
-export async function setPrayerReminderPreference(token: string, prayerId: number, enabled: boolean) {
-  await initDb();
-  const now = new Date().toISOString();
-  await exec(
-    `INSERT INTO prayer_reminder_preferences (expo_push_token, prayer_id, enabled, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?)
-     ON CONFLICT(expo_push_token, prayer_id) DO UPDATE SET enabled = excluded.enabled, updated_at = excluded.updated_at`,
-    [token, prayerId, enabled ? 1 : 0, now, now]
-  );
-}
-
-export async function listPrayerReminderPreferences(token: string): Promise<PrayerReminderPreference[]> {
-  await initDb();
-  const res = await exec("SELECT * FROM prayer_reminder_preferences WHERE expo_push_token = ? ORDER BY prayer_id", [token]);
-  return res.rows as unknown as PrayerReminderPreference[];
-}
-
-export async function listReminderRecipientsForPrayer(prayerId: number): Promise<MobileDevice[]> {
-  await initDb();
-  const res = await exec(
-    `SELECT d.*
-     FROM mobile_devices d
-     INNER JOIN prayer_reminder_preferences p ON p.expo_push_token = d.expo_push_token
-     WHERE p.prayer_id = ? AND p.enabled = 1`,
-    [prayerId]
-  );
-  return res.rows as unknown as MobileDevice[];
-}
-
-export async function markPrayerReminderSent(token: string, prayerId: number, reminderDate: string) {
-  await initDb();
-  const now = new Date().toISOString();
-  await exec(
-    "INSERT OR IGNORE INTO prayer_reminder_logs (expo_push_token, prayer_id, reminder_date, created_at) VALUES (?, ?, ?, ?)",
-    [token, prayerId, reminderDate, now]
-  );
-}
-
-export async function wasPrayerReminderSent(token: string, prayerId: number, reminderDate: string) {
-  await initDb();
-  const res = await exec(
-    "SELECT COUNT(*) as count FROM prayer_reminder_logs WHERE expo_push_token = ? AND prayer_id = ? AND reminder_date = ?",
-    [token, prayerId, reminderDate]
-  );
-  return Number(res.rows[0]?.count ?? 0) > 0;
 }
 
 export async function deleteHadith(id: number) {
