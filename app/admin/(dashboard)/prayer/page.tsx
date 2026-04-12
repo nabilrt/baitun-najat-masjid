@@ -67,8 +67,8 @@ export default async function AdminPrayerPage({ searchParams }: { searchParams?:
                     name="azanTime"
                     placeholder="4:00 PM"
                     defaultValue={toTwelveHourDisplay(time.azan_time)}
-                    pattern="^(0?[1-9]|1[0-2]):[0-5][0-9]\\s?(AM|PM)$"
-                    title="Use 12-hour time like 4:00 PM"
+                    inputMode="text"
+                    autoCapitalize="characters"
                   />
                 </td>
                 <td className="py-3">
@@ -78,8 +78,8 @@ export default async function AdminPrayerPage({ searchParams }: { searchParams?:
                     name="prayerTime"
                     placeholder="4:00 PM"
                     defaultValue={toTwelveHourDisplay(time.prayer_time)}
-                    pattern="^(0?[1-9]|1[0-2]):[0-5][0-9]\\s?(AM|PM)$"
-                    title="Use 12-hour time like 4:00 PM"
+                    inputMode="text"
+                    autoCapitalize="characters"
                   />
                 </td>
                 <td className="py-3">
