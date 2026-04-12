@@ -1,5 +1,6 @@
+import { useCallback } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { AppShell } from "@/components/AppShell";
 import { useLanguage } from "@/lib/language";
 import { useNotifications } from "@/lib/notifications";
@@ -8,6 +9,12 @@ import { colors } from "@/lib/theme";
 export default function NotificationsScreen() {
   const { lang, t } = useLanguage();
   const notifications = useNotifications();
+
+  useFocusEffect(
+    useCallback(() => {
+      notifications.reload().catch(() => {});
+    }, [notifications])
+  );
 
   return (
     <AppShell
