@@ -265,12 +265,16 @@ type Copy = {
       title: string;
       fields: {
         text: string;
+        textBn: string;
         source: string;
+        sourceBn: string;
       };
       add: string;
       table: {
         text: string;
+        textBn: string;
         source: string;
+        sourceBn: string;
         remove: string;
       };
       delete: string;
@@ -813,12 +817,16 @@ export const translations: Record<Lang, Copy> = {
         title: "Hadiths",
         fields: {
           text: "Hadith text",
-          source: "Source"
+          textBn: "Hadith text (Bangla)",
+          source: "Source",
+          sourceBn: "Source (Bangla)"
         },
         add: "Add Hadith",
         table: {
           text: "Hadith",
+          textBn: "Hadith (Bangla)",
           source: "Source",
+          sourceBn: "Source (Bangla)",
           remove: "Remove"
         },
         delete: "Delete"
@@ -1348,12 +1356,16 @@ export const translations: Record<Lang, Copy> = {
         title: "হাদিস",
         fields: {
           text: "হাদিসের লেখা",
-          source: "সূত্র"
+          textBn: "হাদিসের লেখা (বাংলা)",
+          source: "সূত্র",
+          sourceBn: "সূত্র (বাংলা)"
         },
         add: "হাদিস যোগ করুন",
         table: {
           text: "হাদিস",
+          textBn: "হাদিস (বাংলা)",
           source: "সূত্র",
+          sourceBn: "সূত্র (বাংলা)",
           remove: "মুছুন"
         },
         delete: "মুছুন"

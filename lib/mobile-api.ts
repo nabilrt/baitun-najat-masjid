@@ -18,5 +18,5 @@ export function getBearerToken(request: Request) {
 }
 
 export function normalizeLang(value: string | null): Lang {
-  return value === "bn" ? "bn" : "en";
+  return value === "en" ? "en" : "bn";
 }

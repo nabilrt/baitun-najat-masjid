@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Baitun Najat - Gallery</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "primary-fixed": "#d3e3ff",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#e0e3e6",
+                        "secondary": "#356380",
+                        "tertiary-container": "#003e4f",
+                        "tertiary-fixed": "#baeaff",
+                        "outline-variant": "#c3c6cf",
+                        "surface-container-highest": "#e0e3e6",
+                        "on-tertiary-fixed": "#001f29",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "background": "#f7f9fc",
+                        "on-background": "#191c1e",
+                        "primary": "#002446",
+                        "inverse-primary": "#abc8f5",
+                        "secondary-container": "#afddfe",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-fixed": "#001e2e",
+                        "on-tertiary-container": "#64abc7",
+                        "on-secondary-container": "#34627e",
+                        "surface-container-low": "#f2f4f7",
+                        "on-secondary-fixed-variant": "#194b67",
+                        "on-primary-container": "#87a4cf",
+                        "surface-dim": "#d8dadd",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary-fixed": "#c7e7ff",
+                        "outline": "#73777f",
+                        "on-primary-fixed-variant": "#2a486e",
+                        "on-tertiary-fixed-variant": "#004d62",
+                        "on-primary-fixed": "#001c39",
+                        "inverse-on-surface": "#eff1f4",
+                        "tertiary": "#002733",
+                        "primary-container": "#1a3a5f",
+                        "surface-container": "#eceef1",
+                        "on-surface-variant": "#43474e",
+                        "tertiary-fixed-dim": "#89d0ed",
+                        "primary-fixed-dim": "#abc8f5",
+                        "surface": "#f7f9fc",
+                        "secondary-fixed-dim": "#9fcced",
+                        "surface-tint": "#426087",
+                        "surface-bright": "#f7f9fc",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#191c1e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Plus Jakarta Sans"],
+                        "label": ["Plus Jakarta Sans"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f7f9fc;
+        }
+        h1, h2, h3, .font-serif {
+            font-family: 'Noto Serif', serif;
+        }
+        .masonry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: 200px;
+            gap: 24px;
+        }
+        .masonry-item-tall { grid-row: span 2; }
+        .masonry-item-wide { grid-column: span 2; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface selection:bg-secondary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-slate-50/70 dark:bg-blue-950/70 backdrop-blur-xl flex items-center justify-center h-16 px-6 py-4">
+<div class="flex items-center justify-between w-full max-w-7xl">
+<button class="p-2 text-blue-700/60 dark:text-blue-300/60 hover:bg-blue-100/20 transition-all rounded-full active:scale-95">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-serif text-2xl font-semibold text-blue-950 dark:text-blue-50 tracking-tight">Baitun Najat</h1>
+<button class="p-2 text-blue-700/60 dark:text-blue-300/60 hover:bg-blue-100/20 transition-all rounded-full active:scale-95">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-7xl mx-auto">
+<!-- Gallery Intro -->
+<div class="mb-12">
+<h2 class="text-display-sm text-primary font-headline font-bold text-4xl mb-2">Sacred Spaces</h2>
+<p class="text-on-surface-variant font-body max-w-lg leading-relaxed">A visual journey through the tranquility and architectural heritage of Baitun Najat Jame Masjid.</p>
+</div>
+<!-- Filter Chips (Custom UI Element) -->
+<div class="flex gap-3 mb-10 overflow-x-auto pb-4 no-scrollbar">
+<button class="px-6 py-2 bg-primary text-on-primary rounded-full text-sm font-medium transition-all shadow-[0_0_15px_rgba(0,36,70,0.15)]">All Frames</button>
+<button class="px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full text-sm font-medium hover:bg-surface-container-highest transition-all">Interior</button>
+<button class="px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full text-sm font-medium hover:bg-surface-container-highest transition-all">Exterior</button>
+<button class="px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full text-sm font-medium hover:bg-surface-container-highest transition-all">Gardens</button>
+<button class="px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-full text-sm font-medium hover:bg-surface-container-highest transition-all">Architecture</button>
+</div>
+<!-- Gallery Grid (Asymmetric Bento/Masonry Style) -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Large Focus Image -->
+<div class="md:col-span-8 group relative overflow-hidden rounded-[32px] bg-surface-container h-[400px] shadow-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Stunning wide angle interior of a grand mosque with intricate geometric domes, warm ambient lighting, and elegant blue carpet patterns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7b5gpaMuZ9W06ubCv0uHUPm8uN_rU7QBUQ72WGiJJc6tvJSl1V2goD6BcrASnDctR992PPstfteFKau0AN_UWaOzpl2iL2FzD_MxaMXARdZ8ozwWel3q_TgiPsPZ96f3SuXebBj1QK_iV6-beOejuolNora3ub57gCuRzmmVWJTH301Pklpevrwakp0Y1GRjT_PFs4qJe62UkA7QpdZM5NxUKE3D1cKL2nrnrH2oX3lPNnMmIhhCzMXOcJ1rr1068khITe4SdivhJ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+<span class="text-white/70 text-xs font-label uppercase tracking-widest mb-2">Main Prayer Hall</span>
+<h3 class="text-white text-2xl font-headline font-semibold">The Great Dome Architecture</h3>
+</div>
+</div>
+<!-- Tall Vertical Image -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-[32px] bg-surface-container h-[400px] md:h-auto shadow-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Ornate marble archway of a mosque exterior with traditional Islamic calligraphy and deep blue evening sky background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5gEJyUuOd5A1e_U7rnA4rpxtH_jPsiCmghA7hAfCuu64CKD445R1-Y6qkcApbxmD0VgRKDKeh5CIgW_BMb1r3_MZelSMm75o0KUt9hcQith4RUgrs9J70-oDZ4m7zpm6Bq_gr2FqrNWlXTAURVA9XeWZoketAJDWqjWWszpgFz0LTEaFB0qc4MkCWZNLmmhfjngSaJ2XtG0vZSHILtcaGg0lqCOATxZhqSkbLNRDxCkXNGZrD01jWpgpYk6F4Rh2NSWDf2q4Zh5G0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+<span class="text-white/70 text-xs font-label uppercase tracking-widest mb-2">Exterior Detail</span>
+<h3 class="text-white text-xl font-headline font-semibold">Gateway to Peace</h3>
+</div>
+</div>
+<!-- Square Images Group -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-[32px] bg-surface-container h-[300px] shadow-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Lush green botanical garden with white blooming flowers and traditional stone pathway within a mosque courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLbSicvzyiQCMIuRXsMFviuh9z3oxYTh7KbW0MXc0ODShjzh13dBipuXsYvi2etA0j4hAqctBKCgHHJYTLd7V9h4NSgFk3_mtf8UGl9TbeAWP4takjcDpEYfNeQK3rcfz83ZtFKeC8jAto8VNhUof92Vq3yZuZ0bJopDrbIwJ2Cu2owCNK22qcwnFFY8JEHETVoX-55N1CaZuoLn1yTjqkfmkJcABLbY9mda__5g22GbY743T1kej4wJ82L7IULl3CIvb7xZyb6wk_"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+<span class="text-white/70 text-xs font-label uppercase tracking-widest mb-1">Community Garden</span>
+<h3 class="text-white text-lg font-headline">Zenith Courtyard</h3>
+</div>
+</div>
+<div class="md:col-span-4 group relative overflow-hidden rounded-[32px] bg-surface-container h-[300px] shadow-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close up of a traditional crystal chandelier hanging from a beautifully decorated Islamic dome with gold and blue accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3NgvRzr-QALUWfBQlB9ORXXcrk4hZJTeYTIPh_iSAc_wwq1a0X5-2MUE1XjOJTi0Ym_xZIl9sDkS615ZgfZlgf0vnf-UXCxkcoazltNn2AwG9PtnBqCk7vgm9KHUL0Mh73FNfNL31PW61HJ_3fzmbQlMZ4XY-CruMjvZsCVVDSs6Cqu47R3CAluYHQfk09PtwD0sKOD-4zhazz-L25nRbmfFb-j-zY2XVIQ-pFQwQ5QKiEi94lxF2JwfBFIslDlCNqtCB8EVswtcg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+<span class="text-white/70 text-xs font-label uppercase tracking-widest mb-1">Interior Lighting</span>
+<h3 class="text-white text-lg font-headline">Celestial Illumination</h3>
+</div>
+</div>
+<!-- Wide Secondary Focus -->
+<div class="md:col-span-4 group relative overflow-hidden rounded-[32px] bg-surface-container h-[300px] shadow-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Serene reflection pool in a marble courtyard under moonlight with the mosque silhouette in the background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmYQFAqL2BlMlu2MHCHTohUif7pwMVNUbLS-0sOksWkbtxGXj6F1ksdpFhFfI0rv_zoLQvT5HEN2aUR7-H5LhfidbAQMBtxeJgSQ7E61eMS6dAibhzJzWCyXGI4E5TJTJPgXO9oPoedplVQg5M6xRDXiqCGkwOVjBAjJT7CPx0yZdZRyLvj5fvmxn7b49zlxvQ384vqtEiGstDbexltY8ip_0yDUfq9pkntHa9h5Gq9gWQzYKpd_-URktv_tRiIFzADy62FeXAxM7h"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+<span class="text-white/70 text-xs font-label uppercase tracking-widest mb-1">Nightscape</span>
+<h3 class="text-white text-lg font-headline">The Reflection Pool</h3>
+</div>
+</div>
+<!-- More grid items -->
+<div class="md:col-span-6 group relative overflow-hidden rounded-[32px] bg-surface-container h-[350px] shadow-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Detailed view of a mihrab prayer niche with gold leaf calligraphy and blue mosaic tiling under soft directional light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBR4uGGBnffSdFNd-FUt5TPZL0WKwComqU8je3RTBmLACgLHuj_CKo0FyrtT5lxYxrKM_Rmdu6yzM00aVPGYVhOVjmUQiOuTumGkF8eiChzGP8aEJ7WGogsSNnf4Onu7MHNWV3VwSkM0EJ8EwkT0sOBJmZmRSTlh3P-x_AYfd6nFNy93FGJfOEVB9EKiEdyajNNlaXG8PvK6Z4mxE1m3QJdJTj2GIROIcgUSDVEUqaR4uuiCtNLMS6-txWFVKckH1gBQNPlTJIrK9mF"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+<span class="text-white/70 text-xs font-label uppercase tracking-widest mb-2">Artistry</span>
+<h3 class="text-white text-xl font-headline font-semibold">The Sacred Mihrab</h3>
+</div>
+</div>
+<div class="md:col-span-6 group relative overflow-hidden rounded-[32px] bg-surface-container h-[350px] shadow-sm">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Top view of communal prayer mats lined up neatly in the main hall with morning sun rays streaming through side windows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlrKaLI61gjYue_iLom-a6GCkTz3HM9enlNXhbbxJyBKEjEYlxAgcTkSEINEBbwm-opSPS1MSQFWlRBIoMA-572cg0WALhBpK1XKfsJbywlCmccVVXGuNlysYUcwnQHkmeI68dRARqArpcWDx0duRc9zXCVuunaSE4dztMoj-EiAySwL91jrqB2Iadk7Q3gkI_Tbby739oTtyiZymynUkBqQzLKHZqPVqwwVmQC9pthwlXo7GQptVEzF-qwAKAbnvo1ZBS21NDpowQ"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+<span class="text-white/70 text-xs font-label uppercase tracking-widest mb-2">Prayer Space</span>
+<h3 class="text-white text-xl font-headline font-semibold">Unity in Line</h3>
+</div>
+</div>
+</div>
+<!-- Pagination/Load More -->
+<div class="mt-16 flex justify-center">
+<button class="px-10 py-4 bg-primary-container text-on-primary-container rounded-2xl font-semibold flex items-center gap-2 hover:bg-primary transition-colors active:scale-95 group shadow-lg">
+<span>Discover More Moments</span>
+<span class="material-symbols-outlined transition-transform group-hover:translate-y-1">expand_more</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-slate-50/80 dark:bg-blue-950/80 backdrop-blur-xl rounded-t-[32px]">
+<a class="flex flex-col items-center justify-center text-blue-800 dark:text-blue-300 opacity-60 hover:bg-blue-100/40 dark:hover:bg-blue-800/40 transition-colors px-5 py-2" href="#">
+<span class="material-symbols-outlined mb-1">home</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-blue-800 dark:text-blue-300 opacity-60 hover:bg-blue-100/40 dark:hover:bg-blue-800/40 transition-colors px-5 py-2" href="#">
+<span class="material-symbols-outlined mb-1">schedule</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Timings</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-800 text-blue-950 dark:text-blue-50 rounded-2xl px-5 py-2 shadow-[0_0_15px_rgba(159,204,237,0.3)] active:scale-95 duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined mb-1">photo_library</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Gallery</span>
+</a>
+<a class="flex flex-col items-center justify-center text-blue-800 dark:text-blue-300 opacity-60 hover:bg-blue-100/40 dark:hover:bg-blue-800/40 transition-colors px-5 py-2" href="#">
+<span class="material-symbols-outlined mb-1">volunteer_activism</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider">Give</span>
+</a>
+</nav>
+<!-- Custom Floating Action Button (FAB) suppressed on Gallery per rules -->
+</body></html>

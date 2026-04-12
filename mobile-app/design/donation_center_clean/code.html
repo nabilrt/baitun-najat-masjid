@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Baitun Najat - Donation Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#2d3133",
+                    "primary-fixed": "#d3e3ff",
+                    "error-container": "#ffdad6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-variant": "#e0e3e6",
+                    "secondary": "#356380",
+                    "tertiary-container": "#003e4f",
+                    "tertiary-fixed": "#baeaff",
+                    "outline-variant": "#c3c6cf",
+                    "surface-container-highest": "#e0e3e6",
+                    "on-tertiary-fixed": "#001f29",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "background": "#f7f9fc",
+                    "on-background": "#191c1e",
+                    "primary": "#002446",
+                    "inverse-primary": "#abc8f5",
+                    "secondary-container": "#afddfe",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#001e2e",
+                    "on-tertiary-container": "#64abc7",
+                    "on-secondary-container": "#34627e",
+                    "surface-container-low": "#f2f4f7",
+                    "on-secondary-fixed-variant": "#194b67",
+                    "on-primary-container": "#87a4cf",
+                    "surface-dim": "#d8dadd",
+                    "surface-container-high": "#e6e8eb",
+                    "secondary-fixed": "#c7e7ff",
+                    "outline": "#73777f",
+                    "on-primary-fixed-variant": "#2a486e",
+                    "on-tertiary-fixed-variant": "#004d62",
+                    "on-primary-fixed": "#001c39",
+                    "inverse-on-surface": "#eff1f4",
+                    "tertiary": "#002733",
+                    "primary-container": "#1a3a5f",
+                    "surface-container": "#eceef1",
+                    "on-surface-variant": "#43474e",
+                    "tertiary-fixed-dim": "#89d0ed",
+                    "primary-fixed-dim": "#abc8f5",
+                    "surface": "#f7f9fc",
+                    "secondary-fixed-dim": "#9fcced",
+                    "surface-tint": "#426087",
+                    "surface-bright": "#f7f9fc",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#191c1e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .najat-glow {
+            box-shadow: 0 0 20px rgba(159, 204, 237, 0.4);
+        }
+        .glass-header {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/70 backdrop-blur-xl flex items-center justify-center h-16 px-6">
+<div class="flex items-center justify-between w-full max-w-7xl">
+<div class="flex items-center gap-2">
+<span class="font-serif text-2xl font-semibold text-blue-950">Baitun Najat</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-blue-700/60 font-medium hover:text-blue-900 transition-all" href="#">Home</a>
+<a class="text-blue-700/60 font-medium hover:text-blue-900 transition-all" href="#">Timings</a>
+<a class="text-blue-700/60 font-medium hover:text-blue-900 transition-all" href="#">Gallery</a>
+<a class="text-blue-900 font-bold" href="#">Give</a>
+</div>
+<button class="material-symbols-outlined text-blue-950">menu</button>
+</div>
+</header>
+<main class="pt-24 px-4 max-w-5xl mx-auto">
+<!-- Hero Section -->
+<section class="mb-12">
+<h1 class="font-serif text-4xl md:text-5xl font-bold text-primary tracking-tight mb-4">Invest in your <span class="italic">Akhirah</span></h1>
+<p class="text-on-surface-variant text-lg max-w-2xl leading-relaxed">Your generous contributions support the maintenance of the House of Allah and empower our community services.</p>
+</section>
+<!-- Bento Grid Donation Categories -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+<!-- Main Giving Options -->
+<div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Sadaqah Card -->
+<div class="bg-surface-container-highest p-8 rounded-[24px] relative overflow-hidden group cursor-pointer border border-transparent hover:border-primary/10 transition-all">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-primary text-3xl mb-4">favorite</span>
+<h3 class="font-serif text-2xl font-bold text-primary mb-2">Sadaqah</h3>
+<p class="text-on-surface-variant text-sm mb-6">General charity for mosque operations and community welfare.</p>
+<button class="bg-primary text-on-primary px-6 py-3 rounded-xl text-sm font-semibold hover:opacity-90 transition-all">Give Sadaqah</button>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-[120px]">volunteer_activism</span>
+</div>
+</div>
+<!-- Zakat Card -->
+<div class="bg-primary-container p-8 rounded-[24px] relative overflow-hidden group cursor-pointer transition-all">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-3xl mb-4" style="font-variation-settings: 'FILL' 1;">payments</span>
+<h3 class="font-serif text-2xl font-bold text-white mb-2">Zakat</h3>
+<p class="text-blue-100/70 text-sm mb-6">Fulfill your obligatory duty. 100% distribution to those in need.</p>
+<button class="bg-secondary-fixed text-primary px-6 py-3 rounded-xl text-sm font-semibold hover:bg-white transition-all">Calculate &amp; Give</button>
+</div>
+</div>
+</div>
+<!-- Active Campaign (Sidebar Bento) -->
+<div class="md:col-span-4 bg-surface-container-low p-6 rounded-[24px] flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<span class="text-[10px] uppercase tracking-widest font-bold text-primary px-2 py-1 bg-secondary-fixed rounded-full">Urgent</span>
+<span class="text-xs text-on-surface-variant font-medium">82% Reached</span>
+</div>
+<h4 class="font-serif text-xl font-bold text-primary mb-2">New Library Wing</h4>
+<p class="text-on-surface-variant text-xs mb-6">Expanding our educational space for future generations.</p>
+<!-- Progress Bar -->
+<div class="w-full h-2 bg-surface-variant rounded-full overflow-hidden mb-2">
+<div class="h-full bg-primary rounded-full" style="width: 82%;"></div>
+</div>
+<div class="flex justify-between text-[11px] font-bold text-primary">
+<span>$41,000 Raised</span>
+<span>$50,000 Goal</span>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-primary/20 rounded-xl text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all">Support Project</button>
+</div>
+</div>
+<!-- Secure Payment Form -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+<div class="space-y-6">
+<div class="bg-white p-8 rounded-[32px] shadow-[0_12px_32px_rgba(0,36,70,0.04)]">
+<h2 class="font-serif text-2xl font-bold text-primary mb-6">Payment Details</h2>
+<form class="space-y-5">
+<div class="grid grid-cols-3 gap-3 mb-6">
+<button class="py-3 rounded-xl border-2 border-primary bg-primary/5 text-primary font-bold text-sm" type="button">$20</button>
+<button class="py-3 rounded-xl border-2 border-transparent bg-surface-container-low text-on-surface-variant font-bold text-sm" type="button">$50</button>
+<button class="py-3 rounded-xl border-2 border-transparent bg-surface-container-low text-on-surface-variant font-bold text-sm" type="button">Custom</button>
+</div>
+<div>
+<label class="block text-xs font-bold text-primary uppercase tracking-wider mb-2">Mobile Banking Number</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 text-primary placeholder:text-blue-300 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="01X-XXXX-XXXX" type="text"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 flex gap-2">
+<span class="bg-white px-2 py-1 rounded text-[10px] font-bold text-blue-900 border border-blue-100">Bkash</span>
+<span class="bg-white px-2 py-1 rounded text-[10px] font-bold text-blue-900 border border-blue-100">Nagad</span>
+</div>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-primary uppercase tracking-wider mb-2">Transaction ID</label>
+<input class="w-full bg-surface-container-low border-none rounded-xl py-4 px-5 text-primary placeholder:text-blue-300 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Enter Reference" type="text"/>
+</div>
+<div class="pt-4">
+<button class="w-full bg-primary text-on-primary py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-2 shadow-xl shadow-primary/20 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">shield</span>
+                                Confirm Donation
+                            </button>
+</div>
+</form>
+<p class="mt-6 text-center text-[11px] text-on-surface-variant opacity-60">
+                        All transactions are encrypted and processed securely. 
+                        Baitun Najat does not store your financial details.
+                    </p>
+</div>
+</div>
+<div class="space-y-8">
+<div class="rounded-[32px] overflow-hidden aspect-[4/3] relative">
+<img alt="Interior of a modern mosque" class="w-full h-full object-cover" data-alt="Modern mosque interior with sunlight streaming through geometric windows onto blue patterned carpets, peaceful and serene atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChoZukrp5IN9NnA49LtvZxWJwdhF5U_7YaBclN-5aGQ5LxtW5bh7JbDucOmvH77_CFxVG0TtEQ_OpADJqDOxRRXwWuA0j5ZH6tgvgQbQluKd0m9oqo9DETyJN2NxHwLPYjMh__3LWZWLCP4DFirtWYEZQmsqArBe8-vZoGTVY8tc8cMr3fwTJR_Mp59zr_sZT_OHLs2BBSupsoGYQSjPfgoPeE9tqiM9U5lzaQyr0h3C4OqnxMXxOIpmzcWPH-8JbRgGoo-4lgancE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-8">
+<div>
+<p class="text-white/80 font-serif italic text-xl mb-2">"The believer's shade on the Day of Resurrection will be their charity."</p>
+<p class="text-white/60 text-xs">— Prophet Muhammad (PBUH)</p>
+</div>
+</div>
+</div>
+<div class="bg-secondary-fixed/30 p-6 rounded-[24px]">
+<h4 class="font-serif font-bold text-primary mb-3">Impact Highlight</h4>
+<div class="space-y-4">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-xl">restaurant</span>
+</div>
+<div>
+<p class="text-sm font-bold text-primary">Free Iftar Meals</p>
+<p class="text-xs text-on-surface-variant">2,400+ meals served last Ramadan thanks to your donations.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-slate-50/80 backdrop-blur-xl flex justify-around items-center px-4 pb-6 pt-3 md:hidden">
+<div class="flex flex-col items-center justify-center text-blue-800 dark:text-blue-300 opacity-60 transition-colors">
+<span class="material-symbols-outlined">home</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-blue-800 dark:text-blue-300 opacity-60 transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider mt-1">Timings</span>
+</div>
+<div class="flex flex-col items-center justify-center text-blue-800 dark:text-blue-300 opacity-60 transition-colors">
+<span class="material-symbols-outlined">photo_library</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider mt-1">Gallery</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-blue-100 dark:bg-blue-800 text-blue-950 dark:text-blue-50 rounded-2xl px-5 py-2 shadow-[0_0_15px_rgba(159,204,237,0.3)] scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+<span class="font-sans text-[11px] font-medium uppercase tracking-wider mt-1">Give</span>
+</div>
+</nav>
+</body></html>

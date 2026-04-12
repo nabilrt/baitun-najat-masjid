@@ -320,8 +320,12 @@ export default async function HomePage({ searchParams }: { searchParams?: { lang
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           {hadiths.map((hadith) => (
             <div className="rounded-3xl bg-white p-6 shadow-soft" key={hadith.id}>
-              <blockquote className="text-moss-900 text-base leading-relaxed">“{hadith.text}”</blockquote>
-              <cite className="mt-4 block text-sm text-moss-600 not-italic">{hadith.source}</cite>
+              <blockquote className="text-moss-900 text-base leading-relaxed">
+                “{lang === "bn" ? hadith.text_bn || hadith.text : hadith.text}”
+              </blockquote>
+              <cite className="mt-4 block text-sm text-moss-600 not-italic">
+                {lang === "bn" ? hadith.source_bn || hadith.source : hadith.source}
+              </cite>
             </div>
           ))}
         </div>

@@ -1,11 +1,13 @@
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { useLanguage } from "@/lib/language";
 import { colors } from "@/lib/theme";
 
 const routes: Record<string, string> = {
   home: "/",
   prayer: "/prayer",
+  gallery: "/gallery",
   campaigns: "/campaigns",
   donate: "/donate",
   "namaz-guide": "/guides",
@@ -20,6 +22,7 @@ type Props = {
 };
 
 export function MenuSheet({ open, onClose, menu }: Props) {
+  const { t, toggleLang } = useLanguage();
   return (
     <Modal transparent animationType="fade" visible={open} onRequestClose={onClose}>
       <View style={styles.backdrop}>
@@ -28,7 +31,12 @@ export function MenuSheet({ open, onClose, menu }: Props) {
           <View style={styles.cornerImage} />
           <View style={styles.arch} />
           <View style={styles.handle} />
-          <Text style={styles.brand}>Baitun Najat</Text>
+          <View style={styles.headerRow}>
+            <Text style={styles.brand}>{t.appName}</Text>
+            <Pressable style={styles.langButton} onPress={toggleLang}>
+              <Text style={styles.langText}>{t.switchLang}</Text>
+            </Pressable>
+          </View>
           {menu.filter((item) => item.enabled).map((item) => (
             <Pressable
               key={`${item.key}-${item.label}`}
@@ -65,6 +73,7 @@ const styles = StyleSheet.create({
     gap: 6,
     overflow: "hidden"
   },
+  headerRow: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 14 },
   cornerImage: {
     position: "absolute",
     top: 0,
@@ -95,7 +104,14 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,255,255,0.26)",
     marginBottom: 18
   },
-  brand: { color: "white", fontSize: 28, fontWeight: "500", marginBottom: 14, textAlign: "center", lineHeight: 34 },
+  brand: { color: "white", fontSize: 28, fontWeight: "500", flex: 1, textAlign: "center", lineHeight: 34 },
+  langButton: {
+    backgroundColor: "rgba(255,255,255,0.10)",
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 8
+  },
+  langText: { color: "#DCE6FB", fontSize: 12, fontWeight: "800" },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",

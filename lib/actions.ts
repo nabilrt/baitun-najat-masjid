@@ -14,11 +14,14 @@ import {
   deleteDonation,
   deleteAnnouncement,
   deleteHadith,
+  getPrayerTime,
+  listMobileDevices,
   restoreCampaign,
   restoreAnnouncement,
   updatePrayerTime
 } from "./db";
 import { clearAdminSession, isValidAdmin, setAdminSession } from "./auth";
+import { sendExpoPushNotifications } from "./push";
 
 function toNumber(value: FormDataEntryValue | null) {
   if (!value) return NaN;
@@ -93,7 +96,27 @@ export async function updatePrayerTimeAction(formData: FormData) {
   const normalizedAzan = azanTime ? normalizePrayerTime(azanTime) : null;
   const normalizedPrayer = prayerTime ? normalizePrayerTime(prayerTime) : null;
   if (!id || !normalizedAzan || !normalizedPrayer) return;
+  const before = await getPrayerTime(id);
   await updatePrayerTime(id, nameBn || "", normalizedAzan, normalizedPrayer);
+  if (before && (before.azan_time !== normalizedAzan || before.prayer_time !== normalizedPrayer || (nameBn || "") !== (before.name_bn || ""))) {
+    const devices = await listMobileDevices();
+    await sendExpoPushNotifications(
+      devices.map((device) => {
+        const prayerName = device.lang === "bn" ? nameBn || before.name_bn || before.name : before.name;
+        const previousTime = device.lang === "bn" ? before.prayer_time : before.prayer_time;
+        const nextTime = device.lang === "bn" ? normalizedPrayer : normalizedPrayer;
+        return {
+          to: device.expo_push_token,
+          title: device.lang === "bn" ? `${prayerName} এর সময় আপডেট হয়েছে` : `${prayerName} prayer time updated`,
+          body:
+            device.lang === "bn"
+              ? `ইকামাহ ${previousTime} থেকে ${nextTime} করা হয়েছে।`
+              : `Iqamah changed from ${previousTime} to ${nextTime}.`,
+          data: { url: "/prayer", type: "prayer-time-change", prayerId: id }
+        };
+      })
+    );
+  }
   revalidatePath("/admin/prayer");
   revalidatePath("/admin");
   revalidatePath("/");
@@ -105,12 +128,15 @@ export async function updatePrayerTimeAction(formData: FormData) {
 
 export async function addHadithAction(formData: FormData) {
   const text = formData.get("text")?.toString().trim();
+  const textBn = formData.get("textBn")?.toString().trim();
   const source = formData.get("source")?.toString().trim();
-  if (!text || !source) return;
-  await addHadith(text, source);
+  const sourceBn = formData.get("sourceBn")?.toString().trim();
+  if (!text || !textBn || !source || !sourceBn) return;
+  await addHadith(text, textBn, source, sourceBn);
   revalidatePath("/admin/hadiths");
   revalidatePath("/admin");
   revalidatePath("/");
+  revalidatePath("/hadiths");
 }
 
 export async function deleteHadithAction(formData: FormData) {
@@ -120,6 +146,7 @@ export async function deleteHadithAction(formData: FormData) {
   revalidatePath("/admin/hadiths");
   revalidatePath("/admin");
   revalidatePath("/");
+  revalidatePath("/hadiths");
 }
 
 export async function confirmDonationAction(formData: FormData) {

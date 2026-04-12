@@ -12,8 +12,30 @@ type PrayerTime = {
 type Hadith = {
   id: number;
   text: string;
+  text_bn: string | null;
   source: string;
+  source_bn: string | null;
+  category: string | null;
+  category_bn: string | null;
   created_at: string;
+};
+
+type MobileDevice = {
+  id: number;
+  expo_push_token: string;
+  platform: string | null;
+  lang: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+type PrayerReminderPreference = {
+  id: number;
+  expo_push_token: string;
+  prayer_id: number;
+  enabled: number;
+  created_at: string;
+  updated_at: string;
 };
 
 type Donation = {
@@ -80,6 +102,50 @@ async function exec(sql: string, args: InArgs = []) {
   return getClient().execute({ sql, args });
 }
 
+async function ensureColumn(table: string, column: string, definition: string) {
+  const res = await exec(`PRAGMA table_info(${table})`);
+  const exists = res.rows.some((row) => String(row.name) === column);
+  if (!exists) {
+    try {
+      await exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      if (!message.includes(`duplicate column name: ${column}`)) {
+        throw error;
+      }
+    }
+  }
+}
+
+function classifyHadith(text: string, textBn?: string | null) {
+  const source = `${text} ${textBn ?? ""}`.toLowerCase();
+  if (
+    /(prayer|pray|prostrat|sujud|mosque|adhan|iqamah|witr|rakah|rows|fajr|isha|asr|dhuhr|maghrib|salah|salat)/.test(source) ||
+    /(নামাজ|সালাত|সিজদা|মসজিদ|আজান|ইকামত|কাতার|বিতর|ফজর|এশা|আসর|যোহর|মাগরিব)/.test(source)
+  ) {
+    return { category: "Prayer", category_bn: "নামাজ" };
+  }
+  if (
+    /(fast|fasting|ramadan|shawwal|suhoor|iftar|arafah|ashura|laylat al-qadr|laylatul qadr|ar-rayyan)/.test(source) ||
+    /(রোজা|রমজান|শাওয়াল|সাহরি|ইফতার|আরাফা|আশুরা|লাইলাতুল কদর|শবে কদর|রাইয়্যান)/.test(source)
+  ) {
+    return { category: "Fasting", category_bn: "রোজা" };
+  }
+  if (
+    /(charity|sadaq|spend|poor|neighbor|water|date|wealth|family|smile|road|tree|seeds)/.test(source) ||
+    /(সদকা|দান|গরিব|প্রতিবেশী|পানি|খেজুর|সম্পদ|পরিবার|হাসি|রাস্তা|গাছ|বীজ)/.test(source)
+  ) {
+    return { category: "Charity", category_bn: "দান" };
+  }
+  if (/(knowledge|learn|teach|scholar|qur'an|quran)/.test(source) || /(জ্ঞান|শেখে|শেখায়|শিক্ষা|আলেম|কুরআন)/.test(source)) {
+    return { category: "Knowledge", category_bn: "জ্ঞান" };
+  }
+  if (/(character|anger|believes|brother|strong)/.test(source) || /(চরিত্র|রাগ|ঈমানদার|ভাই|শক্তিশালী)/.test(source)) {
+    return { category: "Character", category_bn: "আখলাক" };
+  }
+  return { category: "General", category_bn: "সাধারণ" };
+}
+
 function slugify(input: string) {
   return input
     .toLowerCase()
@@ -123,7 +189,11 @@ async function initDb() {
       `CREATE TABLE IF NOT EXISTS hadiths (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         text TEXT NOT NULL,
+        text_bn TEXT,
         source TEXT NOT NULL,
+        source_bn TEXT,
+        category TEXT,
+        category_bn TEXT,
         created_at TEXT NOT NULL
       )`,
       `CREATE TABLE IF NOT EXISTS donations (
@@ -166,12 +236,42 @@ async function initDb() {
         slug TEXT NOT NULL,
         token TEXT NOT NULL,
         created_at TEXT NOT NULL
+      )`,
+      `CREATE TABLE IF NOT EXISTS mobile_devices (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        expo_push_token TEXT NOT NULL UNIQUE,
+        platform TEXT,
+        lang TEXT,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL
+      )`,
+      `CREATE TABLE IF NOT EXISTS prayer_reminder_preferences (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        expo_push_token TEXT NOT NULL,
+        prayer_id INTEGER NOT NULL,
+        enabled INTEGER NOT NULL DEFAULT 1,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        UNIQUE(expo_push_token, prayer_id)
+      )`,
+      `CREATE TABLE IF NOT EXISTS prayer_reminder_logs (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        expo_push_token TEXT NOT NULL,
+        prayer_id INTEGER NOT NULL,
+        reminder_date TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        UNIQUE(expo_push_token, prayer_id, reminder_date)
       )`
     ];
 
     for (const sql of statements) {
       await exec(sql);
     }
+
+    await ensureColumn("hadiths", "text_bn", "TEXT");
+    await ensureColumn("hadiths", "source_bn", "TEXT");
+    await ensureColumn("hadiths", "category", "TEXT");
+    await ensureColumn("hadiths", "category_bn", "TEXT");
 
     const prayerCount = await exec("SELECT COUNT(*) as count FROM prayer_times");
     if (Number(prayerCount.rows[0]?.count ?? 0) === 0) {
@@ -194,13 +294,34 @@ async function initDb() {
       const defaults = [
         [
           "The most beloved deeds to Allah are those that are consistent, even if small.",
-          "Sahih al-Bukhari 6464"
+          "আল্লাহর নিকট সবচেয়ে প্রিয় আমল হলো যা নিয়মিত করা হয়, যদিও তা অল্প হয়।",
+          "Sahih al-Bukhari 6464",
+          "সহিহ বুখারি ৬৪৬৪"
         ],
-        ["The best among you are those who learn the Qur'an and teach it.", "Sahih al-Bukhari 5027"],
-        ["Whoever builds a mosque for Allah, Allah will build for him a house in Paradise.", "Sahih Muslim 533"]
+        [
+          "The best among you are those who learn the Qur'an and teach it.",
+          "তোমাদের মধ্যে সেই ব্যক্তি উত্তম, যে কুরআন শিক্ষা করে এবং অন্যকে শিক্ষা দেয়।",
+          "Sahih al-Bukhari 5027",
+          "সহিহ বুখারি ৫০২৭"
+        ],
+        [
+          "Whoever builds a mosque for Allah, Allah will build for him a house in Paradise.",
+          "যে আল্লাহর জন্য একটি মসজিদ নির্মাণ করে, আল্লাহ তার জন্য জান্নাতে একটি ঘর নির্মাণ করেন।",
+          "Sahih Muslim 533",
+          "সহিহ মুসলিম ৫৩৩"
+        ]
       ];
       for (const row of defaults) {
-        await exec("INSERT INTO hadiths (text, source, created_at) VALUES (?, ?, ?)", [row[0], row[1], now]);
+        const topic = classifyHadith(String(row[0]), String(row[1]));
+        await exec("INSERT INTO hadiths (text, text_bn, source, source_bn, category, category_bn, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)", [
+          row[0],
+          row[1],
+          row[2],
+          row[3],
+          topic.category,
+          topic.category_bn,
+          now
+        ]);
       }
     }
 
@@ -255,6 +376,14 @@ async function initDb() {
       await exec("UPDATE prayer_times SET name_bn = ? WHERE id = ?", [map[name] ?? name, row.id]);
     }
 
+    const missingHadithCategory = await exec(
+      "SELECT id, text, text_bn FROM hadiths WHERE category IS NULL OR category = '' OR category_bn IS NULL OR category_bn = ''"
+    );
+    for (const row of missingHadithCategory.rows) {
+      const topic = classifyHadith(String(row.text), row.text_bn ? String(row.text_bn) : null);
+      await exec("UPDATE hadiths SET category = ?, category_bn = ? WHERE id = ?", [topic.category, topic.category_bn, row.id]);
+    }
+
     const displayCount = await exec("SELECT COUNT(*) as count FROM display_links WHERE slug = 'prayer-display'");
     if (Number(displayCount.rows[0]?.count ?? 0) === 0) {
       const token = await uniqueDisplayToken();
@@ -284,6 +413,12 @@ export async function listPrayerTimes(): Promise<PrayerTime[]> {
   return res.rows as unknown as PrayerTime[];
 }
 
+export async function getPrayerTime(id: number): Promise<PrayerTime | null> {
+  await initDb();
+  const res = await exec("SELECT * FROM prayer_times WHERE id = ? LIMIT 1", [id]);
+  return (res.rows[0] as unknown as PrayerTime | undefined) ?? null;
+}
+
 export async function updatePrayerTime(id: number, nameBn: string, azanTime: string, prayerTime: string) {
   await initDb();
   await exec("UPDATE prayer_times SET name_bn = ?, azan_time = ?, prayer_time = ? WHERE id = ?", [
@@ -300,10 +435,108 @@ export async function listHadiths(): Promise<Hadith[]> {
   return res.rows as unknown as Hadith[];
 }
 
-export async function addHadith(text: string, source: string) {
+export async function listHadithsPaginated(page = 1, pageSize = 12) {
+  await initDb();
+  const safePage = Math.max(1, page);
+  const safeSize = Math.max(1, Math.min(50, pageSize));
+  const offset = (safePage - 1) * safeSize;
+  const [itemsRes, countRes] = await Promise.all([
+    exec("SELECT * FROM hadiths ORDER BY created_at DESC LIMIT ? OFFSET ?", [safeSize, offset]),
+    exec("SELECT COUNT(*) as count FROM hadiths")
+  ]);
+  const total = Number(countRes.rows[0]?.count ?? 0);
+  return {
+    items: itemsRes.rows as unknown as Hadith[],
+    total,
+    page: safePage,
+    pageSize: safeSize,
+    totalPages: Math.max(1, Math.ceil(total / safeSize))
+  };
+}
+
+export async function addHadith(text: string, textBn: string | null, source: string, sourceBn: string | null) {
   await initDb();
   const now = new Date().toISOString();
-  await exec("INSERT INTO hadiths (text, source, created_at) VALUES (?, ?, ?)", [text, source, now]);
+  const topic = classifyHadith(text, textBn);
+  await exec("INSERT INTO hadiths (text, text_bn, source, source_bn, category, category_bn, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)", [
+    text,
+    textBn,
+    source,
+    sourceBn,
+    topic.category,
+    topic.category_bn,
+    now
+  ]);
+}
+
+export async function upsertMobileDevice(data: { token: string; platform?: string | null; lang?: string | null }) {
+  await initDb();
+  const now = new Date().toISOString();
+  await exec(
+    `INSERT INTO mobile_devices (expo_push_token, platform, lang, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(expo_push_token) DO UPDATE SET platform = excluded.platform, lang = excluded.lang, updated_at = excluded.updated_at`,
+    [data.token, data.platform ?? null, data.lang ?? null, now, now]
+  );
+}
+
+export async function listMobileDevices(): Promise<MobileDevice[]> {
+  await initDb();
+  const res = await exec("SELECT * FROM mobile_devices ORDER BY updated_at DESC");
+  return res.rows as unknown as MobileDevice[];
+}
+
+export async function deleteMobileDevice(token: string) {
+  await initDb();
+  await exec("DELETE FROM mobile_devices WHERE expo_push_token = ?", [token]);
+  await exec("DELETE FROM prayer_reminder_preferences WHERE expo_push_token = ?", [token]);
+}
+
+export async function setPrayerReminderPreference(token: string, prayerId: number, enabled: boolean) {
+  await initDb();
+  const now = new Date().toISOString();
+  await exec(
+    `INSERT INTO prayer_reminder_preferences (expo_push_token, prayer_id, enabled, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT(expo_push_token, prayer_id) DO UPDATE SET enabled = excluded.enabled, updated_at = excluded.updated_at`,
+    [token, prayerId, enabled ? 1 : 0, now, now]
+  );
+}
+
+export async function listPrayerReminderPreferences(token: string): Promise<PrayerReminderPreference[]> {
+  await initDb();
+  const res = await exec("SELECT * FROM prayer_reminder_preferences WHERE expo_push_token = ? ORDER BY prayer_id", [token]);
+  return res.rows as unknown as PrayerReminderPreference[];
+}
+
+export async function listReminderRecipientsForPrayer(prayerId: number): Promise<MobileDevice[]> {
+  await initDb();
+  const res = await exec(
+    `SELECT d.*
+     FROM mobile_devices d
+     INNER JOIN prayer_reminder_preferences p ON p.expo_push_token = d.expo_push_token
+     WHERE p.prayer_id = ? AND p.enabled = 1`,
+    [prayerId]
+  );
+  return res.rows as unknown as MobileDevice[];
+}
+
+export async function markPrayerReminderSent(token: string, prayerId: number, reminderDate: string) {
+  await initDb();
+  const now = new Date().toISOString();
+  await exec(
+    "INSERT OR IGNORE INTO prayer_reminder_logs (expo_push_token, prayer_id, reminder_date, created_at) VALUES (?, ?, ?, ?)",
+    [token, prayerId, reminderDate, now]
+  );
+}
+
+export async function wasPrayerReminderSent(token: string, prayerId: number, reminderDate: string) {
+  await initDb();
+  const res = await exec(
+    "SELECT COUNT(*) as count FROM prayer_reminder_logs WHERE expo_push_token = ? AND prayer_id = ? AND reminder_date = ?",
+    [token, prayerId, reminderDate]
+  );
+  return Number(res.rows[0]?.count ?? 0) > 0;
 }
 
 export async function deleteHadith(id: number) {

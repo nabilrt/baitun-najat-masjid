@@ -15,11 +15,13 @@ export default async function AdminHadithsPage({ searchParams }: { searchParams?
       <h2 className="text-lg font-semibold text-moss-900">{copy.admin.hadiths.title}</h2>
       <HadithForm copy={copy} />
       <div className="mt-6 overflow-x-auto">
-        <table className="w-full min-w-[520px] text-sm">
+        <table className="w-full min-w-[820px] text-sm">
           <thead className="text-moss-600">
             <tr>
               <th className="pb-3 text-left font-semibold">{copy.admin.hadiths.table.text}</th>
+              <th className="pb-3 text-left font-semibold">{copy.admin.hadiths.table.textBn}</th>
               <th className="pb-3 text-left font-semibold">{copy.admin.hadiths.table.source}</th>
+              <th className="pb-3 text-left font-semibold">{copy.admin.hadiths.table.sourceBn}</th>
               <th className="pb-3 text-left font-semibold">{copy.admin.hadiths.table.remove}</th>
             </tr>
           </thead>
@@ -27,7 +29,9 @@ export default async function AdminHadithsPage({ searchParams }: { searchParams?
             {hadiths.map((hadith) => (
               <tr key={hadith.id} className="border-t border-moss-100">
                 <td className="py-3 text-moss-800">{hadith.text}</td>
+                <td className="py-3 text-moss-800">{hadith.text_bn || "—"}</td>
                 <td className="py-3 text-moss-600">{hadith.source}</td>
+                <td className="py-3 text-moss-600">{hadith.source_bn || "—"}</td>
                 <td className="py-3">
                   <form action={deleteHadithAction}>
                     <input type="hidden" name="id" value={hadith.id} />

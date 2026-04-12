@@ -20,7 +20,17 @@ const config: ExpoConfig = {
   scheme: "baitunnajat",
   orientation: "portrait",
   userInterfaceStyle: "light",
-  plugins: ["expo-router"],
+  plugins: [
+    "expo-router",
+    [
+      "expo-notifications",
+      {
+        icon: "./assets/icon.png",
+        color: "#07152F",
+        sounds: []
+      }
+    ]
+  ],
   experiments: {
     typedRoutes: true
   },

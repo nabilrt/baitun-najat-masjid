@@ -34,7 +34,11 @@ export type Campaign = {
 export type Hadith = {
   id: number;
   text: string;
+  text_bn: string | null;
   source: string;
+  source_bn: string | null;
+  category: string | null;
+  category_bn: string | null;
   created_at: string;
 };
 

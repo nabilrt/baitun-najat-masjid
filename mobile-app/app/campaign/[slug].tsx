@@ -2,10 +2,12 @@ import { router, useLocalSearchParams } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { AppShell } from "@/components/AppShell";
 import { useApi } from "@/lib/api";
+import { useLanguage } from "@/lib/language";
 import { colors } from "@/lib/theme";
 import type { Campaign } from "@/lib/types";
 
 export default function CampaignDetailScreen() {
+  const { t } = useLanguage();
   const params = useLocalSearchParams<{ slug: string }>();
   const query = useApi<{ item: Campaign }>(`/api/mobile/campaigns/${params.slug}`);
 
@@ -14,8 +16,8 @@ export default function CampaignDetailScreen() {
 
   return (
     <AppShell
-      title={campaign?.title || "Campaign"}
-      subtitle="Campaign detail and donor context from the website backend."
+      title={campaign?.title || t.campaigns}
+      subtitle={t.campaignIntro}
       loading={query.loading}
       refreshing={query.refreshing}
       error={query.error}
@@ -23,37 +25,37 @@ export default function CampaignDetailScreen() {
     >
       {campaign ? (
         <>
-          <View style={styles.heroCard}>
-            <Text style={styles.kicker}>Fundraising Campaign</Text>
+          <View style={styles.hero}>
+            <Text style={styles.heroLabel}>{t.fundraisingCampaign}</Text>
             <Text style={styles.heroAmount}>BDT {campaign.total_confirmed}</Text>
-            <Text style={styles.heroSub}>Raised so far{campaign.goal_amount ? ` of BDT ${campaign.goal_amount}` : ""}</Text>
+            <Text style={styles.heroSub}>
+              {t.raisedSoFar}{campaign.goal_amount ? ` / BDT ${campaign.goal_amount}` : ""}
+            </Text>
             <View style={styles.progressTrack}>
               <View style={[styles.progressFill, { width: `${percent}%` }]} />
             </View>
-            <View style={styles.statsRow}>
-              <View style={styles.statPill}>
-                <Text style={styles.statLabel}>Progress</Text>
-                <Text style={styles.statValue}>{percent}%</Text>
+            <View style={styles.metrics}>
+              <View style={styles.metricCard}>
+                <Text style={styles.metricLabel}>{t.progress}</Text>
+                <Text style={styles.metricValue}>{percent}%</Text>
               </View>
-              <View style={styles.statPill}>
-                <Text style={styles.statLabel}>Status</Text>
-                <Text style={styles.statValue}>{campaign.is_active ? "Active" : "Closed"}</Text>
+              <View style={styles.metricCard}>
+                <Text style={styles.metricLabel}>{t.status}</Text>
+                <Text style={styles.metricValue}>{campaign.is_active ? t.active : t.closed}</Text>
               </View>
             </View>
           </View>
 
-          <View style={styles.card}>
-            <Text style={styles.sectionTitle}>About This Campaign</Text>
+          <View style={styles.copyCard}>
+            <Text style={styles.sectionTitle}>{t.aboutCampaign}</Text>
             <Text style={styles.body}>{campaign.description}</Text>
           </View>
 
-          <View style={styles.infoCard}>
-            <Text style={styles.infoTitle}>How to Support</Text>
-            <Text style={styles.infoBody}>
-              Submit your donation from the Donate tab with your bKash number and transaction ID so the mosque can confirm it against this campaign.
-            </Text>
-            <Pressable style={styles.button} onPress={() => router.push("/donate")}>
-              <Text style={styles.buttonText}>Go To Donate</Text>
+          <View style={styles.supportCard}>
+            <Text style={styles.supportTitle}>{t.howToSupport}</Text>
+            <Text style={styles.supportText}>{t.howToSupportText}</Text>
+            <Pressable style={styles.cta} onPress={() => router.push("/donate")}>
+              <Text style={styles.ctaText}>{t.goToDonate}</Text>
             </Pressable>
           </View>
         </>
@@ -63,53 +65,49 @@ export default function CampaignDetailScreen() {
 }
 
 const styles = StyleSheet.create({
-  heroCard: {
-    backgroundColor: "#FFF7E0",
-    borderRadius: 30,
-    padding: 22,
-    borderWidth: 1,
-    borderColor: "#EFD48A",
-    gap: 10
-  },
-  kicker: { color: "#8B6721", fontSize: 12, fontWeight: "700", letterSpacing: 1.8, textTransform: "uppercase" },
-  heroAmount: { color: colors.ink, fontSize: 34, fontWeight: "900" },
-  heroSub: { color: "#715D30", fontSize: 14, lineHeight: 20 },
-  statsRow: { flexDirection: "row", gap: 12, marginTop: 4 },
-  statPill: {
-    flex: 1,
-    backgroundColor: "rgba(255,255,255,0.72)",
-    borderRadius: 18,
-    padding: 14,
-    gap: 4
-  },
-  statLabel: { color: colors.textMuted, fontSize: 12, fontWeight: "700" },
-  statValue: { color: colors.text, fontSize: 18, fontWeight: "800" },
-  card: {
-    backgroundColor: colors.card,
-    borderRadius: 28,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    gap: 14
-  },
-  sectionTitle: { color: colors.text, fontSize: 19, fontWeight: "800" },
-  body: { color: colors.textMuted, fontSize: 15, lineHeight: 23 },
-  progressTrack: { height: 10, borderRadius: 999, backgroundColor: "#E7EEF9", overflow: "hidden" },
-  progressFill: { height: "100%", backgroundColor: colors.gold },
-  infoCard: {
-    backgroundColor: colors.navy,
-    borderRadius: 28,
-    padding: 20,
+  hero: {
+    backgroundColor: "#1A3A5F",
+    borderRadius: 32,
+    padding: 24,
     gap: 12
   },
-  infoTitle: { color: "white", fontSize: 19, fontWeight: "800" },
-  infoBody: { color: "#D6DFF0", fontSize: 14, lineHeight: 21 },
-  button: {
-    backgroundColor: colors.gold,
+  heroLabel: { color: "#9FCCED", fontSize: 11, fontWeight: "700", letterSpacing: 1.8, textTransform: "uppercase" },
+  heroAmount: { color: "white", fontSize: 42, fontWeight: "700" },
+  heroSub: { color: "rgba(255,255,255,0.78)", fontSize: 15, lineHeight: 22 },
+  progressTrack: { height: 10, borderRadius: 999, backgroundColor: "rgba(255,255,255,0.14)", overflow: "hidden", marginTop: 4 },
+  progressFill: { height: "100%", backgroundColor: "#C7E7FF", borderRadius: 999 },
+  metrics: { flexDirection: "row", gap: 12, marginTop: 6 },
+  metricCard: {
+    flex: 1,
+    backgroundColor: "rgba(255,255,255,0.10)",
+    borderRadius: 20,
+    padding: 16,
+    gap: 4
+  },
+  metricLabel: { color: "rgba(255,255,255,0.66)", fontSize: 12, fontWeight: "700" },
+  metricValue: { color: "white", fontSize: 20, fontWeight: "700" },
+  copyCard: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 28,
+    padding: 22,
+    gap: 10
+  },
+  sectionTitle: { color: colors.navy, fontSize: 28, fontWeight: "700" },
+  body: { color: "#5F687A", fontSize: 15, lineHeight: 23 },
+  supportCard: {
+    backgroundColor: "#ECEEF1",
+    borderRadius: 28,
+    padding: 22,
+    gap: 12
+  },
+  supportTitle: { color: colors.navy, fontSize: 24, fontWeight: "700" },
+  supportText: { color: "#5F687A", fontSize: 14, lineHeight: 22 },
+  cta: {
+    backgroundColor: colors.navy,
     borderRadius: 18,
-    paddingVertical: 14,
+    paddingVertical: 15,
     alignItems: "center",
     marginTop: 4
   },
-  buttonText: { color: colors.ink, fontSize: 15, fontWeight: "800" }
+  ctaText: { color: "white", fontSize: 15, fontWeight: "800" }
 });

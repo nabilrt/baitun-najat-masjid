@@ -15,6 +15,7 @@ export async function GET(request: Request) {
     menu: [
       { key: "home", label: copy.nav.home, enabled: true },
       { key: "prayer", label: copy.nav.prayer, enabled: true },
+      { key: "gallery", label: lang === "bn" ? "গ্যালারি" : "Gallery", enabled: true },
       { key: "campaigns", label: copy.nav.campaigns, enabled: true },
       { key: "donate", label: copy.nav.donate, enabled: true },
       { key: "namaz-guide", label: copy.guides.namazTitle, enabled: true },
@@ -24,6 +25,7 @@ export async function GET(request: Request) {
     features: {
       announcements: true,
       prayerTimes: true,
+      gallery: true,
       campaigns: true,
       donations: true,
       namazGuide: true,
