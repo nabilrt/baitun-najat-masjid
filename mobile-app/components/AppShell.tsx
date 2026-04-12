@@ -1,8 +1,11 @@
 import { PropsWithChildren } from "react";
 import { ActivityIndicator, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { useLanguage } from "@/lib/language";
+import { useNotifications } from "@/lib/notifications";
 import { colors } from "@/lib/theme";
 
 type Props = PropsWithChildren<{
@@ -12,6 +15,7 @@ type Props = PropsWithChildren<{
   refreshing?: boolean;
   onRefresh?: () => void;
   error?: string | null;
+  showNotificationsBell?: boolean;
 }>;
 
 export function AppShell({
@@ -21,9 +25,11 @@ export function AppShell({
   refreshing,
   onRefresh,
   error,
+  showNotificationsBell = true,
   children
 }: Props) {
   const { t, toggleLang } = useLanguage();
+  const notifications = useNotifications();
   if (loading) {
     return (
       <View style={styles.loadingWrap}>
@@ -47,9 +53,21 @@ export function AppShell({
             <View style={styles.header}>
               <View style={styles.headerTop}>
                 <Text style={styles.kicker}>{t.appName}</Text>
-                <Pressable style={styles.langButton} onPress={toggleLang}>
-                  <Text style={styles.langButtonText}>{t.switchLang}</Text>
-                </Pressable>
+                <View style={styles.headerActions}>
+                  <Pressable style={styles.langButton} onPress={toggleLang}>
+                    <Text style={styles.langButtonText}>{t.switchLang}</Text>
+                  </Pressable>
+                  {showNotificationsBell ? (
+                    <Pressable style={styles.bellButton} onPress={() => router.push("/notifications")}>
+                      <Ionicons name="notifications-outline" size={18} color={colors.navy} />
+                      {notifications.unreadCount > 0 ? (
+                        <View style={styles.badge}>
+                          <Text style={styles.badgeText}>{notifications.unreadCount > 9 ? "9+" : notifications.unreadCount}</Text>
+                        </View>
+                      ) : null}
+                    </Pressable>
+                  ) : null}
+                </View>
               </View>
               <Text style={styles.title}>{title}</Text>
               {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
@@ -81,6 +99,7 @@ const styles = StyleSheet.create({
     gap: 8
   },
   headerTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 },
+  headerActions: { flexDirection: "row", alignItems: "center", gap: 8 },
   kicker: { color: "#356380", fontSize: 11, fontWeight: "700", letterSpacing: 2, textTransform: "uppercase" },
   langButton: {
     minWidth: 46,
@@ -92,6 +111,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#E3E8F2"
   },
   langButtonText: { color: colors.navy, fontSize: 12, fontWeight: "800" },
+  bellButton: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: "#E3E8F2",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  badge: {
+    position: "absolute",
+    top: 4,
+    right: 3,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: "#D92D20",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 3
+  },
+  badgeText: { color: "white", fontSize: 9, fontWeight: "800" },
   title: { color: colors.navy, fontSize: 32, fontWeight: "700" },
   subtitle: { color: "#5F687A", fontSize: 15, lineHeight: 22, maxWidth: 520 },
   errorCard: {

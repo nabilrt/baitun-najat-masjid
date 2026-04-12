@@ -29,6 +29,17 @@ type MobileDevice = {
   updated_at: string;
 };
 
+type MobileNotification = {
+  id: number;
+  kind: string;
+  title: string;
+  title_bn: string | null;
+  body: string;
+  body_bn: string | null;
+  data_url: string | null;
+  created_at: string;
+};
+
 type Donation = {
   id: number;
   name: string;
@@ -235,6 +246,16 @@ async function initDb() {
         lang TEXT,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL
+      )`,
+      `CREATE TABLE IF NOT EXISTS mobile_notifications (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        kind TEXT NOT NULL,
+        title TEXT NOT NULL,
+        title_bn TEXT,
+        body TEXT NOT NULL,
+        body_bn TEXT,
+        data_url TEXT,
+        created_at TEXT NOT NULL
       )`
     ];
 
@@ -463,6 +484,30 @@ export async function listMobileDevices(): Promise<MobileDevice[]> {
 export async function deleteMobileDevice(token: string) {
   await initDb();
   await exec("DELETE FROM mobile_devices WHERE expo_push_token = ?", [token]);
+}
+
+export async function addMobileNotification(data: {
+  kind: string;
+  title: string;
+  titleBn?: string | null;
+  body: string;
+  bodyBn?: string | null;
+  dataUrl?: string | null;
+}) {
+  await initDb();
+  const now = new Date().toISOString();
+  await exec(
+    `INSERT INTO mobile_notifications (kind, title, title_bn, body, body_bn, data_url, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [data.kind, data.title, data.titleBn ?? null, data.body, data.bodyBn ?? null, data.dataUrl ?? null, now]
+  );
+}
+
+export async function listMobileNotifications(limit = 50): Promise<MobileNotification[]> {
+  await initDb();
+  const safeLimit = Math.max(1, Math.min(100, limit));
+  const res = await exec("SELECT * FROM mobile_notifications ORDER BY created_at DESC LIMIT ?", [safeLimit]);
+  return res.rows as unknown as MobileNotification[];
 }
 
 export async function deleteHadith(id: number) {

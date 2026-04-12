@@ -8,6 +8,7 @@ import {
   addDonation,
   addAnnouncement,
   addHadith,
+  addMobileNotification,
   archiveAnnouncement,
   archiveCampaign,
   confirmDonation,
@@ -99,12 +100,21 @@ export async function updatePrayerTimeAction(formData: FormData) {
   const before = await getPrayerTime(id);
   await updatePrayerTime(id, nameBn || "", normalizedAzan, normalizedPrayer);
   if (before && (before.azan_time !== normalizedAzan || before.prayer_time !== normalizedPrayer || (nameBn || "") !== (before.name_bn || ""))) {
+    const prayerNameBn = nameBn || before.name_bn || before.name;
+    await addMobileNotification({
+      kind: "prayer-time-change",
+      title: `${before.name} prayer time updated`,
+      titleBn: `${prayerNameBn} এর সময় আপডেট হয়েছে`,
+      body: `Iqamah changed from ${before.prayer_time} to ${normalizedPrayer}.`,
+      bodyBn: `ইকামাহ ${before.prayer_time} থেকে ${normalizedPrayer} করা হয়েছে।`,
+      dataUrl: "/prayer"
+    });
     const devices = await listMobileDevices();
     await sendExpoPushNotifications(
       devices.map((device) => {
-        const prayerName = device.lang === "bn" ? nameBn || before.name_bn || before.name : before.name;
-        const previousTime = device.lang === "bn" ? before.prayer_time : before.prayer_time;
-        const nextTime = device.lang === "bn" ? normalizedPrayer : normalizedPrayer;
+        const prayerName = device.lang === "bn" ? prayerNameBn : before.name;
+        const previousTime = before.prayer_time;
+        const nextTime = normalizedPrayer;
         return {
           to: device.expo_push_token,
           title: device.lang === "bn" ? `${prayerName} এর সময় আপডেট হয়েছে` : `${prayerName} prayer time updated`,

@@ -9,6 +9,7 @@ import { useApi } from "@/lib/api";
 import { getHijriDate } from "@/lib/date";
 import { formatLocalizedDigits } from "@/lib/format";
 import { useLanguage } from "@/lib/language";
+import { useNotifications } from "@/lib/notifications";
 import { colors } from "@/lib/theme";
 import { getNextPrayer } from "@/lib/time";
 import type { AppConfig, HomeResponse } from "@/lib/types";
@@ -17,6 +18,7 @@ const heroBackground = require("../../assets/1789.jpg");
 
 export default function HomeScreen() {
   const { lang, t, toggleLang } = useLanguage();
+  const notifications = useNotifications();
   const configQuery = useApi<AppConfig>(`/api/mobile/app-config?lang=${lang}`);
   const homeQuery = useApi<HomeResponse>(`/api/mobile/home?lang=${lang}`);
   const nextPrayer = useMemo(
@@ -70,8 +72,13 @@ export default function HomeScreen() {
               <Pressable style={styles.langSwitch} onPress={toggleLang}>
                 <Text style={styles.langSwitchText}>{t.switchLang}</Text>
               </Pressable>
-              <Pressable style={styles.topIcon} onPress={() => router.push("/announcements")}>
+              <Pressable style={styles.topIcon} onPress={() => router.push("/notifications")}>
                 <Ionicons name="notifications-outline" size={20} color={colors.navy} />
+                {notifications.unreadCount > 0 ? (
+                  <View style={styles.badge}>
+                    <Text style={styles.badgeText}>{notifications.unreadCount > 9 ? "9+" : notifications.unreadCount}</Text>
+                  </View>
+                ) : null}
               </Pressable>
             </View>
           </View>
@@ -185,7 +192,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#E3E8F2"
   },
   langSwitchText: { color: colors.navy, fontSize: 12, fontWeight: "800" },
-  topIcon: { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center" },
+  topIcon: { width: 38, height: 38, borderRadius: 19, alignItems: "center", justifyContent: "center", position: "relative" },
+  badge: {
+    position: "absolute",
+    top: 2,
+    right: 1,
+    minWidth: 16,
+    height: 16,
+    borderRadius: 8,
+    backgroundColor: "#D92D20",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 3
+  },
+  badgeText: { color: "#FFFFFF", fontSize: 9, fontWeight: "800" },
   hero: { borderRadius: 32, overflow: "hidden" },
   heroImage: { minHeight: 360, justifyContent: "flex-end" },
   heroImageInner: { borderRadius: 32 },

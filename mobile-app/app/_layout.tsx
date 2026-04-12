@@ -2,6 +2,7 @@ import { Stack, useRouter } from "expo-router";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { NotificationsProvider } from "@/lib/notifications";
 import { registerPushToken } from "@/lib/prayer-reminders";
 import { colors } from "@/lib/theme";
 import { LanguageProvider, useLanguage } from "@/lib/language";
@@ -53,16 +54,18 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <LanguageProvider>
-        <PushBootstrap />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            animation: "none",
-            contentStyle: { backgroundColor: colors.ink }
-          }}
-        >
-          <Stack.Screen name="(tabs)" />
-        </Stack>
+        <NotificationsProvider>
+          <PushBootstrap />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              animation: "none",
+              contentStyle: { backgroundColor: colors.ink }
+            }}
+          >
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </NotificationsProvider>
       </LanguageProvider>
     </SafeAreaProvider>
   );

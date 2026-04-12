@@ -18,6 +18,17 @@ export type Announcement = {
   created_at: string;
 };
 
+export type MobileNotification = {
+  id: number;
+  kind: string;
+  title: string;
+  title_bn: string | null;
+  body: string;
+  body_bn: string | null;
+  data_url: string | null;
+  created_at: string;
+};
+
 export type Campaign = {
   id: number;
   title: string;
@@ -130,4 +141,8 @@ export type GuidesResponse = {
     subtitle: string;
     categories: Array<{ title: string; items: Array<{ text: string; ref: string }> }>;
   };
+};
+
+export type NotificationsResponse = {
+  items: MobileNotification[];
 };
